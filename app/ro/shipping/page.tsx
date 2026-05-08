@@ -8,46 +8,47 @@ export default function ShippingPage() {
 
       <section className="mx-auto max-w-4xl flex-1 px-6 py-40">
         <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-          Shipping
+          Livrare
         </p>
 
         <h1 className="mb-12 text-5xl font-light md:text-6xl">
-          Delivery information
+          Informații despre livrare
         </h1>
 
         <div className="space-y-10 text-[#d0cabf]">
           <div>
             <h2 className="mb-3 text-2xl font-light text-[#f5f1e8]">
-              Individual confirmation
+              Confirmare individuală
             </h2>
 
             <p className="leading-relaxed">
-              LIGNORAE writing instruments are produced in small numbers.
-              Shipping options, delivery times, and costs are confirmed
-              individually before an order is finalized.
+              Instrumentele de scris LIGNORAE sunt realizate în serii foarte reduse.
+              Opțiunile de livrare, timpii de livrare și costurile sunt
+              confirmate individual înainte ca o comandă să fie finalizată.
             </p>
           </div>
 
           <div>
             <h2 className="mb-3 text-2xl font-light text-[#f5f1e8]">
-              Packaging
+              Ambalare
             </h2>
 
             <p className="leading-relaxed">
-              Each writing instrument is prepared and packaged with care,
-              according to the nature of the product, material, and destination.
+              Fiecare instrument de scris este pregătit și ambalat cu grijă,
+              în funcție de natura produsului, material și destinație.
             </p>
           </div>
 
           <div>
             <h2 className="mb-3 text-2xl font-light text-[#f5f1e8]">
-              Availability
+              Disponibilitate
             </h2>
 
             <p className="leading-relaxed">
-              EU and selected international shipping may be possible after
-              individual confirmation. Final shipping conditions will be updated
-              before commercial launch.
+              Livrarea în Uniunea Europeană și către anumite destinații
+              internaționale poate fi posibilă după confirmare individuală.
+              Condițiile finale de livrare vor fi actualizate înaintea lansării
+              comerciale.
             </p>
           </div>
         </div>

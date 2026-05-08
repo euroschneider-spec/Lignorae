@@ -8,28 +8,30 @@ export default function WithdrawalPage() {
 
       <section className="mx-auto max-w-4xl flex-1 px-6 py-40">
         <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-          Right of Withdrawal
+          Drept de retragere
         </p>
 
         <h1 className="mb-12 text-5xl font-light md:text-6xl">
-          Consumer withdrawal rights
+          Dreptul de retragere al consumatorilor
         </h1>
 
         <div className="space-y-10 text-[#d0cabf]">
           <p className="leading-relaxed">
-            Customers located within the European Union may have the right to
-            withdraw from eligible distance purchase contracts within 14 days,
-            subject to applicable consumer protection regulations.
+            Clienții aflați în Uniunea Europeană pot avea dreptul de a se
+            retrage din anumite contracte la distanță în termen de 14 zile,
+            conform reglementărilor aplicabile privind protecția consumatorilor.
           </p>
 
           <p className="leading-relaxed">
-            Certain handcrafted, personalized, commissioned, or made-to-order
-            products may be excluded from withdrawal rights under applicable law.
+            Anumite produse realizate manual, personalizate, comandate special
+            sau fabricate la cererea clientului pot fi exceptate de la dreptul
+            de retragere, conform legislației aplicabile.
           </p>
 
           <p className="leading-relaxed">
-            Detailed withdrawal conditions, procedures, and return instructions
-            will be published before the commercial launch of online ordering.
+            Condițiile detaliate de retragere, procedurile și instrucțiunile de
+            retur vor fi publicate înaintea lansării comerciale a comenzilor
+            online.
           </p>
         </div>
       </section>

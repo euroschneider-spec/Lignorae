@@ -12,12 +12,12 @@ export default function JournalPage() {
         </p>
 
         <h1 className="mb-8 text-5xl font-light md:text-6xl">
-          Notes from the atelier
+          Note din atelier
         </h1>
 
         <p className="mb-20 max-w-5xl text-xl leading-relaxed text-[#d0cabf]">
-          Experiments, materials, failures, discoveries, reclaimed woods,
-          surface refinement, and the slow construction of LIGNORAE.
+          Experimente & experiențe, materiale, greșeli, descoperiri, lemn recuperat,
+          rafinarea suprafețelor și construcția lentă a LIGNORAE.
         </p>
 
         <div className="space-y-12">
@@ -33,14 +33,15 @@ export default function JournalPage() {
               </p>
 
               <h2 className="mb-5 text-3xl font-light transition duration-300 group-hover:text-[#c6a66a]">
-                Learning the craft of refinement
+                Învățarea meșteșugului
               </h2>
 
               <p className="leading-relaxed text-[#d0cabf]">
-                The first months of LIGNORAE are focused less on perfection and
-                more on discipline: sanding, polishing, correcting mistakes,
-                understanding grain direction, and learning how different woods
-                react under pressure, heat, and polishing compounds.
+                Primele luni LIGNORAE sunt mai puțin despre perfecțiune și mai
+                mult despre disciplină: șlefuire, lustruire, corectarea
+                greșelilor, înțelegerea direcției fibrei și felul în care
+                diferite esențe reacționează la presiune, căldură și compuși de
+                lustruire.
               </p>
             </div>
           </article>
@@ -53,18 +54,18 @@ export default function JournalPage() {
 
             <div className="p-8">
               <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
-                Material Research
+                Cercetarea materialelor
               </p>
 
               <h2 className="mb-5 text-3xl font-light transition duration-300 group-hover:text-[#c6a66a]">
-                Why reclaimed wood matters
+                De ce contează lemnul recuperat?
               </h2>
 
               <p className="leading-relaxed text-[#d0cabf]">
-                Some materials already carry decades or centuries, sometimes
-                even millennia of history. Musical instruments, architectural
-                fragments, and aged hardwoods offer textures and stories
-                impossible to reproduce artificially.
+                Unele materiale poartă deja decenii sau secole, uneori chiar
+                milenii de istorie. Instrumentele muzicale, fragmentele
+                arhitecturale și esențele vechi oferă texturi și povești care
+                nu pot fi reproduse artificial.
               </p>
             </div>
           </article>

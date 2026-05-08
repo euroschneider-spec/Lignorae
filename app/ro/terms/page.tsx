@@ -8,57 +8,59 @@ export default function TermsPage() {
 
       <section className="mx-auto max-w-4xl flex-1 px-6 py-40">
         <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-          Terms & Conditions
+          Termeni și condiții
         </p>
 
         <h1 className="mb-12 text-5xl font-light md:text-6xl">
-          General terms
+          Termeni generali
         </h1>
 
         <div className="space-y-10 text-[#d0cabf]">
   <div>
     <h2 className="mb-3 text-2xl font-light text-[#f5f1e8]">
-      Scope
+      Domeniu de aplicare
     </h2>
 
     <p className="leading-relaxed">
-      LIGNORAE Atelier creates handcrafted writing instruments produced in
-      small numbers and often involving natural, reclaimed, or historically
-      sourced materials.
+      LIGNORAE Atelier creează instrumente de scris realizate manual, produse
+      în serii foarte reduse și implicând adesea materiale naturale, recuperate sau
+      cu proveniență istorică.
     </p>
   </div>
 
   <div>
     <h2 className="mb-3 text-2xl font-light text-[#f5f1e8]">
-      Product character
+      Caracterul produsului
     </h2>
 
     <p className="leading-relaxed">
-      Product appearance, grain, texture, coloration, and minor visual
-      variations may differ naturally from piece to piece due to the
-      characteristics of wood and handcrafted finishing processes.
+      Aspectul produsului, fibra, textura, culoarea și micile variații vizuale
+      pot și vor diferi natural de la o piesă la alta, datorită caracteristicilor
+      lemnului și proceselor de lucru manual.
     </p>
   </div>
 
   <div>
     <h2 className="mb-3 text-2xl font-light text-[#f5f1e8]">
-      Availability and orders
+      Disponibilitate și comenzi
     </h2>
 
     <p className="leading-relaxed">
-      Availability, pricing, production timelines, payment terms, and shipping
-      details are confirmed individually before any order is finalized.
+      Disponibilitatea, prețurile, termenele de producție, condițiile de plată
+      și detaliile de livrare sunt confirmate individual înainte ca o comandă
+      să fie finalizată.
     </p>
   </div>
 
   <div>
     <h2 className="mb-3 text-2xl font-light text-[#f5f1e8]">
-      Commercial launch
+      Lansare comercială
     </h2>
 
     <p className="leading-relaxed">
-      Full commercial terms, payment conditions, customer rights, and detailed
-      order procedures will be updated before official online sales begin.
+      Termenii comerciali compleți, condițiile de plată, drepturile clienților
+      și procedurile detaliate de comandă vor fi actualizate înaintea lansării
+      oficiale a vânzărilor online.
     </p>
   </div>
 </div>

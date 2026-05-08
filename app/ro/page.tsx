@@ -14,7 +14,7 @@ export default function HomePage() {
 
         <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
           <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-            Handcrafted Fountain Pens
+            Stilouri realizate manual
           </p>
 
           <h1 className="mb-6 text-5xl font-light leading-tight md:text-7xl">
@@ -22,24 +22,24 @@ export default function HomePage() {
           </h1>
 
           <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-[#d6d1c7]">
-            Writing instruments handcrafted in Munich from carefully selected
-            woods, shaped slowly, finished by hand, and built to carry stories
-            across generations.
+            Instrumente de scris realizate manual în München, din lemn atent
+            selecționat, formate încet, finisate cu grijă și create pentru a
+            purta povești peste generații.
           </p>
 
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
-              href="/collections"
+              href="/ro/collections"
               className="rounded-full border border-[#c6a66a] px-8 py-3 text-sm uppercase tracking-[0.2em] transition hover:bg-[#c6a66a] hover:text-black hover:shadow-[0_0_25px_rgba(198,166,106,0.35)]"
             >
-              Discover Collections
+              Descoperă colecțiile
             </Link>
 
             <Link
-              href="/journal"
+              href="/ro/journal"
               className="rounded-full border border-white/20 px-8 py-3 text-sm uppercase tracking-[0.2em] transition hover:border-white"
             >
-              Journal
+              Jurnal
             </Link>
           </div>
         </div>
@@ -50,11 +50,11 @@ export default function HomePage() {
   <section className="mx-auto max-w-7xl px-6 pb-28 pt-40">      
         <div className="mb-16">
           <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-            Collections
+            Colecții
           </p>
 
           <h2 className="text-4xl font-light md:text-5xl">
-            Materials with memory
+            Lemn cu memorie
           </h2>
         </div>
 
@@ -69,7 +69,7 @@ export default function HomePage() {
             <div className="p-8">
               <h3 className="mb-4 text-2xl font-light">ORIGIN</h3>
               <p className="leading-relaxed text-[#cfc8bc]">
-                Noble woods selected for texture, warmth, and timeless elegance.
+                Lemn nobil ales pentru textură, căldură și eleganță atemporală.
               </p>
             </div>
           </div>
@@ -84,7 +84,7 @@ export default function HomePage() {
             <div className="p-8">
               <h3 className="mb-4 text-2xl font-light">SONORA</h3>
               <p className="leading-relaxed text-[#cfc8bc]">
-                Reclaimed musical instruments transformed into writing tools.
+                Lemn recuperat din instrumente muzicale, transformate în instrumente de scris.
               </p>
             </div>
           </div>
@@ -99,7 +99,7 @@ export default function HomePage() {
             <div className="p-8">
               <h3 className="mb-4 text-2xl font-light">SACRA</h3>
               <p className="leading-relaxed text-[#cfc8bc]">
-                Historic sacred woods carrying centuries of memory and silence.
+                Lemn istoric sacru, purtând secole de memorie și tăcere, uneori durere.
               </p>
             </div>
           </div>
@@ -107,24 +107,24 @@ export default function HomePage() {
 
         <div className="mx-auto mt-20 max-w-5xl rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-10 text-center">
           <p className="mb-4 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
-            First Edition
+            Prima ediție
           </p>
 
           <h2 className="mb-6 text-4xl font-light">
-            The first LIGNORAE instruments are in preparation.
+            Primele instrumente LIGNORAE sunt în pregătire.
           </h2>
 
           <p className="mx-auto mb-8 max-w-3xl text-lg leading-relaxed text-[#d0cabf]">
-            The first pieces will be produced in small numbers, with material,
-            finish, and availability confirmed individually before each order.
-            Early enquiries are welcome.
+            Primele piese vor fi realizate în număr redus, iar lemnul,
+            execuția și disponibilitatea vor fi confirmate individual înaintea
+            fiecărei comenzi.
           </p>
 
           <Link
-            href="/contact"
+            href="/ro/contact"
             className="inline-block rounded-full border border-[#c6a66a] px-8 py-3 text-sm uppercase tracking-[0.2em] transition hover:bg-[#c6a66a] hover:text-black hover:shadow-[0_0_25px_rgba(198,166,106,0.35)]"
           >
-            Request availability
+            Solicită informații despre disponibilitate
           </Link>
         </div>
       </section>
@@ -138,17 +138,16 @@ export default function HomePage() {
 
         <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
           <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-            The Atelier
+            Atelierul
           </p>
 
           <h2 className="mb-8 text-4xl font-light md:text-6xl">
-            Built slowly. Finished by hand.
+            Construit încet. Finisat cu grijă.
           </h2>
 
           <p className="mx-auto max-w-2xl text-lg leading-relaxed text-[#d6d1c7]">
-            Every LIGNORAE writing instrument begins as raw material, shaped
-            through patience, experimentation, sanding, polishing, and countless
-            small corrections invisible to the human eye.
+            Fiecare instrument de scris LIGNORAE începe atunci când material brut prinde formă cu răbdare, încercări repetate, șlefuire, lustruire și multe
+            corecții mici, aproape invizibile la final.
           </p>
         </div>
       </section>

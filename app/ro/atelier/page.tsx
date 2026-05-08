@@ -12,13 +12,13 @@ export default function AtelierPage() {
         </p>
 
         <h1 className="mb-8 text-5xl font-light md:text-6xl">
-          The workshop behind LIGNORAE
+          Atelierul LIGNORAE
         </h1>
 
         <p className="max-w-3xl text-lg leading-relaxed text-[#d0cabf]">
-          LIGNORAE is a small independent atelier based in Munich,
-          focused on handcrafted fountain pens made from carefully
-          selected woods with character, history, and permanence.
+          LIGNORAE este un mic atelier independent din München,
+          dedicat producției artizanale de stilouri din lemn atent selecționat,
+          cu caracter, istorie și permanență.
         </p>
 
         <div className="mt-16 overflow-hidden rounded-3xl border border-white/10">
@@ -27,33 +27,33 @@ export default function AtelierPage() {
 <div className="mt-20 grid gap-8 md:grid-cols-2">
   <div className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-8">
     <p className="mb-4 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
-      What we do
+      Ce facem
     </p>
 
     <h2 className="mb-5 text-3xl font-light">
-      Elegant writing instruments made in small numbers
+      Instrumente de scris elegante, realizate în număr redus
     </h2>
 
     <p className="leading-relaxed text-[#d0cabf]">
-      LIGNORAE focuses on handcrafted fountain pens made in small numbers,
-      with attention to wood selection, shaping, finishing, assembly, and
-      the quiet discipline of repeated improvement.
+      LIGNORAE se concentrează pe stilouri realizate manual în serii foarte mici,
+      cu atenție pentru selecția lemnului, formare, strunjire și asamblare. Disciplina noastră vine din tăcerea îmbunătățirii prin efort susținut constant.
     </p>
   </div>
 
   <div className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-8">
     <p className="mb-4 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
-      How we work
+      Cum lucrăm
     </p>
 
     <h2 className="mb-5 text-3xl font-light">
-      Slowly, visibly, passionately
+      Încet, vizibil, cu pasiune
     </h2>
 
     <p className="leading-relaxed text-[#d0cabf]">
-      The atelier is still growing. Experiments, failures, sanding marks,
-      finish tests, and material studies are part of the process. The goal
-      is not speed, but a writing instrument that feels considered.
+      Atelierul este încă în creștere. Încercările, greșelile, urmele de
+      șlefuire, testele de suprafață și studiul materialelor fac parte din
+      proces. Scopul nu este viteza, ci un instrument de scris care nu doar că se simte
+      gândit cu atenție, ci chiar este gândit și executat cu atenția izvorâtă din pasiune.
     </p>
   </div>
 </div>
