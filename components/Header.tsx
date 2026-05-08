@@ -2,15 +2,42 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  const isGerman = pathname.startsWith("/de");
+  const isRomanian = pathname.startsWith("/ro");
+  const prefix = isGerman ? "/de" : isRomanian ? "/ro" : "";
+
+  const labels = isGerman
+    ? {
+        collections: "Kollektionen",
+        atelier: "Atelier",
+        journal: "Journal",
+        contact: "Kontakt",
+      }
+    : isRomanian
+    ? {
+        collections: "Colecții",
+        atelier: "Atelier",
+        journal: "Jurnal",
+        contact: "Contact",
+      }
+    : {
+        collections: "Collections",
+        atelier: "Atelier",
+        journal: "Journal",
+        contact: "Contact",
+      };
 
   return (
     <header className="fixed left-0 top-0 z-50 w-full border-b border-[#4a3522]/60 bg-[#0b0907]/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center gap-4">
+        <Link href={`${prefix}/`} className="flex items-center gap-4">
           <Image
             src="/logo.png"
             alt="LIGNORAE logo"
@@ -26,20 +53,20 @@ export default function Header() {
         </Link>
 
         <nav className="hidden items-center gap-8 text-xs uppercase tracking-[0.22em] text-[#d6d1c7] md:flex">
-          <Link href="/collections" className="transition hover:text-[#c6a66a]">
-            Collections
+          <Link href={`${prefix}/collections`} className="transition hover:text-[#c6a66a]">
+            {labels.collections}
           </Link>
 
-          <Link href="/atelier" className="transition hover:text-[#c6a66a]">
-            Atelier
+          <Link href={`${prefix}/atelier`} className="transition hover:text-[#c6a66a]">
+            {labels.atelier}
           </Link>
 
-          <Link href="/journal" className="transition hover:text-[#c6a66a]">
-            Journal
+          <Link href={`${prefix}/journal`} className="transition hover:text-[#c6a66a]">
+            {labels.journal}
           </Link>
 
-          <Link href="/contact" className="transition hover:text-[#c6a66a]">
-            Contact
+          <Link href={`${prefix}/contact`} className="transition hover:text-[#c6a66a]">
+            {labels.contact}
           </Link>
         </nav>
 
@@ -60,36 +87,20 @@ export default function Header() {
       >
         <nav className="border-t border-[#4a3522]/60 bg-[#0b0907]/95 px-6 py-6">
           <div className="mx-auto flex max-w-7xl flex-col gap-5 text-sm uppercase tracking-[0.25em] text-[#d6d1c7]">
-            <Link
-              href="/collections"
-              onClick={() => setMenuOpen(false)}
-              className="transition hover:text-[#c6a66a]"
-            >
-              Collections
+            <Link href={`${prefix}/collections`} onClick={() => setMenuOpen(false)} className="transition hover:text-[#c6a66a]">
+              {labels.collections}
             </Link>
 
-            <Link
-              href="/atelier"
-              onClick={() => setMenuOpen(false)}
-              className="transition hover:text-[#c6a66a]"
-            >
-              Atelier
+            <Link href={`${prefix}/atelier`} onClick={() => setMenuOpen(false)} className="transition hover:text-[#c6a66a]">
+              {labels.atelier}
             </Link>
 
-            <Link
-              href="/journal"
-              onClick={() => setMenuOpen(false)}
-              className="transition hover:text-[#c6a66a]"
-            >
-              Journal
+            <Link href={`${prefix}/journal`} onClick={() => setMenuOpen(false)} className="transition hover:text-[#c6a66a]">
+              {labels.journal}
             </Link>
 
-            <Link
-              href="/contact"
-              onClick={() => setMenuOpen(false)}
-              className="transition hover:text-[#c6a66a]"
-            >
-              Contact
+            <Link href={`${prefix}/contact`} onClick={() => setMenuOpen(false)} className="transition hover:text-[#c6a66a]">
+              {labels.contact}
             </Link>
           </div>
         </nav>
