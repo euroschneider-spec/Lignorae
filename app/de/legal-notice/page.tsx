@@ -8,36 +8,36 @@ export default function LegalNoticePage() {
 
       <section className="mx-auto max-w-4xl flex-1 px-6 py-40">
         <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-          Legal Notice
+          Impressum
         </p>
 
         <h1 className="mb-12 text-5xl font-light md:text-6xl">
-          Legal information
+          Rechtliche Angaben
         </h1>
 
         <div className="space-y-10 text-[#d0cabf]">
           <div>
             <h2 className="mb-3 text-2xl font-light text-[#f5f1e8]">
-              Business information
+              Angaben zum Unternehmen
             </h2>
 
             <p className="leading-relaxed">
               LIGNORAE Atelier
               <br />
-              Munich, Germany
+              München, Deutschland
               <br />
-              Full legal business information will be updated after official
-              company registration.
+              Die vollständigen rechtlichen Unternehmensangaben werden nach
+              der offiziellen Gewerbe- bzw. Unternehmensregistrierung ergänzt.
             </p>
           </div>
 
           <div>
             <h2 className="mb-3 text-2xl font-light text-[#f5f1e8]">
-              Contact
+              Kontakt
             </h2>
 
             <p className="leading-relaxed">
-              Email:
+              E-Mail:
               <br />
               info@lignorae.com
             </p>
@@ -45,25 +45,25 @@ export default function LegalNoticePage() {
 
           <div>
             <h2 className="mb-3 text-2xl font-light text-[#f5f1e8]">
-              Responsible for content
+              Verantwortlich für den Inhalt
             </h2>
 
             <p className="leading-relaxed">
               LIGNORAE Atelier
               <br />
-              Munich, Germany
+              81673 München, Deutschland
             </p>
           </div>
 
           <div>
             <h2 className="mb-3 text-2xl font-light text-[#f5f1e8]">
-              Liability for links
+              Haftung für Links
             </h2>
 
             <p className="leading-relaxed">
-              External links are provided for informational purposes only.
-              Responsibility for linked content lies solely with the respective
-              website operators.
+              Externe Links dienen ausschließlich der Information. Für die
+              Inhalte verlinkter Seiten sind allein die jeweiligen Betreiber
+              verantwortlich.
             </p>
           </div>
         </div>

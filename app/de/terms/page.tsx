@@ -8,57 +8,59 @@ export default function TermsPage() {
 
       <section className="mx-auto max-w-4xl flex-1 px-6 py-40">
         <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-          Terms & Conditions
+          AGB
         </p>
 
         <h1 className="mb-12 text-5xl font-light md:text-6xl">
-          General terms
+          Allgemeine Geschäftsbedingungen
         </h1>
 
         <div className="space-y-10 text-[#d0cabf]">
   <div>
     <h2 className="mb-3 text-2xl font-light text-[#f5f1e8]">
-      Scope
+      Geltungsbereich
     </h2>
 
     <p className="leading-relaxed">
-      LIGNORAE Atelier creates handcrafted writing instruments produced in
-      small numbers and often involving natural, reclaimed, or historically
-      sourced materials.
+      LIGNORAE Atelier fertigt handgefertigte Schreibinstrumente in kleinen
+      Mengen, häufig unter Verwendung natürlicher, wiedergewonnener oder
+      historisch bezogener Materialien.
     </p>
   </div>
 
   <div>
     <h2 className="mb-3 text-2xl font-light text-[#f5f1e8]">
-      Product character
+      Produktcharakter
     </h2>
 
     <p className="leading-relaxed">
-      Product appearance, grain, texture, coloration, and minor visual
-      variations may differ naturally from piece to piece due to the
-      characteristics of wood and handcrafted finishing processes.
+      Erscheinungsbild, Maserung, Struktur, Farbgebung und kleinere visuelle
+      Abweichungen können sich aufgrund der Eigenschaften von Holz und der
+      handwerklichen Veredelung von Stück zu Stück natürlich unterscheiden.
     </p>
   </div>
 
   <div>
     <h2 className="mb-3 text-2xl font-light text-[#f5f1e8]">
-      Availability and orders
+      Verfügbarkeit und Bestellungen
     </h2>
 
     <p className="leading-relaxed">
-      Availability, pricing, production timelines, payment terms, and shipping
-      details are confirmed individually before any order is finalized.
+      Verfügbarkeit, Preise, Produktionszeiten, Zahlungsbedingungen und
+      Versanddetails werden individuell bestätigt, bevor eine Bestellung
+      abgeschlossen wird.
     </p>
   </div>
 
   <div>
     <h2 className="mb-3 text-2xl font-light text-[#f5f1e8]">
-      Commercial launch
+      Kommerzieller Launch
     </h2>
 
     <p className="leading-relaxed">
-      Full commercial terms, payment conditions, customer rights, and detailed
-      order procedures will be updated before official online sales begin.
+      Vollständige Geschäftsbedingungen, Zahlungsbedingungen,
+      Kundenrechte und detaillierte Bestellabläufe werden vor dem offiziellen
+      Start des Online-Verkaufs ergänzt.
     </p>
   </div>
 </div>

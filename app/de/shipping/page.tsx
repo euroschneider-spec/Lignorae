@@ -8,46 +8,46 @@ export default function ShippingPage() {
 
       <section className="mx-auto max-w-4xl flex-1 px-6 py-40">
         <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-          Shipping
+          Versand
         </p>
 
         <h1 className="mb-12 text-5xl font-light md:text-6xl">
-          Delivery information
+          Informationen zur Lieferung
         </h1>
 
         <div className="space-y-10 text-[#d0cabf]">
           <div>
             <h2 className="mb-3 text-2xl font-light text-[#f5f1e8]">
-              Individual confirmation
+              Individuelle Bestätigung
             </h2>
 
             <p className="leading-relaxed">
-              LIGNORAE writing instruments are produced in small numbers.
-              Shipping options, delivery times, and costs are confirmed
-              individually before an order is finalized.
+              LIGNORAE Schreibinstrumente entstehen in kleinen Mengen.
+              Versandoptionen, Lieferzeiten und Kosten werden individuell
+              bestätigt, bevor eine Bestellung abgeschlossen wird.
             </p>
           </div>
 
           <div>
             <h2 className="mb-3 text-2xl font-light text-[#f5f1e8]">
-              Packaging
+              Verpackung
             </h2>
 
             <p className="leading-relaxed">
-              Each writing instrument is prepared and packaged with care,
-              according to the nature of the product, material, and destination.
+              Jedes Schreibinstrument wird sorgfältig vorbereitet und verpackt,
+              angepasst an Produkt, Material und Zielort.
             </p>
           </div>
 
           <div>
             <h2 className="mb-3 text-2xl font-light text-[#f5f1e8]">
-              Availability
+              Verfügbarkeit
             </h2>
 
             <p className="leading-relaxed">
-              EU and selected international shipping may be possible after
-              individual confirmation. Final shipping conditions will be updated
-              before commercial launch.
+              Versand innerhalb der EU und in ausgewählte internationale Länder
+              kann nach individueller Bestätigung möglich sein. Die endgültigen
+              Versandbedingungen werden vor dem kommerziellen Launch ergänzt.
             </p>
           </div>
         </div>

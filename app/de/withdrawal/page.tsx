@@ -8,28 +8,31 @@ export default function WithdrawalPage() {
 
       <section className="mx-auto max-w-4xl flex-1 px-6 py-40">
         <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-          Right of Withdrawal
+          Widerrufsrecht
         </p>
 
         <h1 className="mb-12 text-5xl font-light md:text-6xl">
-          Consumer withdrawal rights
+          Widerrufsrecht für Verbraucher
         </h1>
 
         <div className="space-y-10 text-[#d0cabf]">
           <p className="leading-relaxed">
-            Customers located within the European Union may have the right to
-            withdraw from eligible distance purchase contracts within 14 days,
-            subject to applicable consumer protection regulations.
+            Verbraucher innerhalb der Europäischen Union können bei bestimmten
+            Fernabsatzverträgen das Recht haben, den Vertrag innerhalb von 14
+            Tagen zu widerrufen, vorbehaltlich der geltenden
+            Verbraucherschutzbestimmungen.
           </p>
 
           <p className="leading-relaxed">
-            Certain handcrafted, personalized, commissioned, or made-to-order
-            products may be excluded from withdrawal rights under applicable law.
+            Bestimmte handgefertigte, personalisierte, beauftragte oder nach
+            Kundenspezifikation angefertigte Produkte können nach geltendem
+            Recht vom Widerrufsrecht ausgeschlossen sein.
           </p>
 
           <p className="leading-relaxed">
-            Detailed withdrawal conditions, procedures, and return instructions
-            will be published before the commercial launch of online ordering.
+            Detaillierte Widerrufsbedingungen, Abläufe und Rücksendehinweise
+            werden vor dem kommerziellen Start der Online-Bestellung
+            veröffentlicht.
           </p>
         </div>
       </section>
