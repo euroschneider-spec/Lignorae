@@ -12,12 +12,12 @@ export default function JournalPage() {
         </p>
 
         <h1 className="mb-8 text-5xl font-light md:text-6xl">
-          Notes from the atelier
+          Notizen aus dem Atelier
         </h1>
 
         <p className="mb-20 max-w-5xl text-xl leading-relaxed text-[#d0cabf]">
-          Experiments, materials, failures, discoveries, reclaimed woods,
-          surface refinement, and the slow construction of LIGNORAE.
+          Experimente, Materialien, Fehler, Entdeckungen, wiedergewonnene
+          Hölzer, Oberflächenveredelung und der langsame Aufbau von LIGNORAE.
         </p>
 
         <div className="space-y-12">
@@ -33,14 +33,15 @@ export default function JournalPage() {
               </p>
 
               <h2 className="mb-5 text-3xl font-light transition duration-300 group-hover:text-[#c6a66a]">
-                Learning the craft of refinement
+                Die Kunst der Veredelung lernen
               </h2>
 
               <p className="leading-relaxed text-[#d0cabf]">
-                The first months of LIGNORAE are focused less on perfection and
-                more on discipline: sanding, polishing, correcting mistakes,
-                understanding grain direction, and learning how different woods
-                react under pressure, heat, and polishing compounds.
+                Die ersten Monate von LIGNORAE stehen weniger im Zeichen der
+                Perfektion als der Disziplin: schleifen, polieren, Fehler
+                korrigieren, Maserungsverläufe verstehen und lernen, wie
+                unterschiedliche Hölzer auf Druck, Wärme und Poliermittel
+                reagieren.
               </p>
             </div>
           </article>
@@ -53,18 +54,19 @@ export default function JournalPage() {
 
             <div className="p-8">
               <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
-                Material Research
+                Materialforschung
               </p>
 
               <h2 className="mb-5 text-3xl font-light transition duration-300 group-hover:text-[#c6a66a]">
-                Why reclaimed wood matters
+                Warum wiedergewonnenes Holz zählt
               </h2>
 
               <p className="leading-relaxed text-[#d0cabf]">
-                Some materials already carry decades or centuries, sometimes
-                even millennia of history. Musical instruments, architectural
-                fragments, and aged hardwoods offer textures and stories
-                impossible to reproduce artificially.
+                Manche Materialien tragen bereits Jahrzehnte oder Jahrhunderte,
+                manchmal sogar Jahrtausende Geschichte in sich. Musikinstrumente,
+                architektonische Fragmente und gealterte Harthölzer bieten
+                Strukturen und Geschichten, die sich künstlich nicht nachbilden
+                lassen.
               </p>
             </div>
           </article>

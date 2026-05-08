@@ -12,13 +12,13 @@ export default function AtelierPage() {
         </p>
 
         <h1 className="mb-8 text-5xl font-light md:text-6xl">
-          The workshop behind LIGNORAE
+          Die Werkstatt hinter LIGNORAE
         </h1>
 
         <p className="max-w-3xl text-lg leading-relaxed text-[#d0cabf]">
-          LIGNORAE is a small independent atelier based in Munich,
-          focused on handcrafted fountain pens made from carefully
-          selected woods with character, history, and permanence.
+          LIGNORAE ist ein kleines unabhängiges Atelier in München,
+          spezialisiert auf handgefertigte Füllfederhalter aus sorgfältig
+          ausgewählten Hölzern mit Charakter, Geschichte und Beständigkeit.
         </p>
 
         <div className="mt-16 overflow-hidden rounded-3xl border border-white/10">
@@ -27,33 +27,35 @@ export default function AtelierPage() {
 <div className="mt-20 grid gap-8 md:grid-cols-2">
   <div className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-8">
     <p className="mb-4 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
-      What we do
+      Was wir tun
     </p>
 
     <h2 className="mb-5 text-3xl font-light">
-      Elegant writing instruments made in small numbers
+      Elegante Schreibinstrumente in kleinen Mengen
     </h2>
 
     <p className="leading-relaxed text-[#d0cabf]">
-      LIGNORAE focuses on handcrafted fountain pens made in small numbers,
-      with attention to wood selection, shaping, finishing, assembly, and
-      the quiet discipline of repeated improvement.
+      LIGNORAE konzentriert sich auf handgefertigte Füllfederhalter in
+      kleinen Mengen, mit besonderer Aufmerksamkeit für Holzauswahl,
+      Formgebung, Veredelung, Montage und die ruhige Disziplin stetiger
+      Verbesserung.
     </p>
   </div>
 
   <div className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-8">
     <p className="mb-4 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
-      How we work
+      Wie wir arbeiten
     </p>
 
     <h2 className="mb-5 text-3xl font-light">
-      Slowly, visibly, passionately
+      Langsam, sichtbar, mit Hingabe
     </h2>
 
     <p className="leading-relaxed text-[#d0cabf]">
-      The atelier is still growing. Experiments, failures, sanding marks,
-      finish tests, and material studies are part of the process. The goal
-      is not speed, but a writing instrument that feels considered.
+      Das Atelier wächst noch. Versuche, Fehler, Schleifspuren,
+      Oberflächentests und Materialstudien gehören zum Prozess. Das Ziel
+      ist nicht Geschwindigkeit, sondern ein Schreibinstrument, das bewusst
+      und sorgfältig gestaltet wirkt.
     </p>
   </div>
 </div>
