@@ -22,6 +22,7 @@ export default function PrivacyPolicyPage() {
             </h2>
 
             <p className="leading-relaxed">
+	      Diese Website kann ein funktionales Sprachpräferenz-Cookie verwenden, um die gewählte Sprache zu speichern. Derzeit werden keine Marketing- oder Analytics-Cookies eingesetzt.
               Der Schutz personenbezogener Daten ist LIGNORAE Atelier wichtig.
               Personenbezogene Informationen, die über diese Website übermittelt
               werden, behandeln wir vertraulich und gemäß den geltenden

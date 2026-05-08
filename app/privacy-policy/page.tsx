@@ -22,6 +22,8 @@ export default function PrivacyPolicyPage() {
             </h2>
 
             <p className="leading-relaxed">
+	      This website may use a functional language preference cookie to remember the  selected language. No marketing or analytics cookies are currently used.
+
               Protecting personal data is important to LIGNORAE Atelier.
               Personal information submitted through this website is handled
               confidentially and in accordance with applicable data protection

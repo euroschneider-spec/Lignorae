@@ -22,6 +22,7 @@ export default function PrivacyPolicyPage() {
             </h2>
 
             <p className="leading-relaxed">
+	      Acest website poate folosi un cookie funcțional pentru preferința de limbă, pentru a reține limba selectată. În prezent nu folosim cookie-uri de marketing sau analiză.
               Protejarea datelor personale este importantă pentru LIGNORAE Atelier.
               Informațiile personale transmise prin acest website sunt tratate
               confidențial și în conformitate cu reglementările aplicabile
