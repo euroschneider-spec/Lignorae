@@ -10,6 +10,17 @@ export default function Footer() {
   const isRomanian = pathname.startsWith("/ro");
   const prefix = isGerman ? "/de" : isRomanian ? "/ro" : "";
 
+  const basePath = pathname.replace(/^\/(de|ro)(?=\/|$)/, "") || "/";
+
+  function languageHref(language: "en" | "de" | "ro") {
+    if (language === "en") return basePath;
+    return `/${language}${basePath === "/" ? "" : basePath}`;
+  }
+
+  function setLanguageCookie(language: "en" | "de" | "ro") {
+    document.cookie = `lignorae-language=${language}; path=/; max-age=31536000`;
+  }
+
   const text = isGerman
     ? {
         statement:
@@ -126,13 +137,25 @@ export default function Footer() {
         </p>
 
         <div className="flex gap-4 text-xs uppercase tracking-[0.25em]">
-          <Link href="/" className={!isGerman && !isRomanian ? "text-[#c6a66a]" : "text-[#6f6558] hover:text-[#c6a66a]"}>
+          <Link
+            href={languageHref("en")}
+            onClick={() => setLanguageCookie("en")}
+            className={!isGerman && !isRomanian ? "text-[#c6a66a]" : "text-[#6f6558] hover:text-[#c6a66a]"}
+          >
             EN
           </Link>
-          <Link href="/de" className={isGerman ? "text-[#c6a66a]" : "text-[#6f6558] hover:text-[#c6a66a]"}>
+          <Link
+            href={languageHref("de")}
+            onClick={() => setLanguageCookie("de")}
+            className={isGerman ? "text-[#c6a66a]" : "text-[#6f6558] hover:text-[#c6a66a]"}
+          >
             DE
           </Link>
-          <Link href="/ro" className={isRomanian ? "text-[#c6a66a]" : "text-[#6f6558] hover:text-[#c6a66a]"}>
+          <Link
+            href={languageHref("ro")}
+            onClick={() => setLanguageCookie("ro")}
+            className={isRomanian ? "text-[#c6a66a]" : "text-[#6f6558] hover:text-[#c6a66a]"}
+          >
             RO
           </Link>
         </div>
