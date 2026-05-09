@@ -24,7 +24,7 @@ export async function POST(request: Request) {
 
     const data = await resend.emails.send({
       from: "LIGNORAE <onboarding@resend.dev>",
-      to: ["euroschneider@gmail.com"],
+      to: ["info@lignorae.com"],
       subject: `New LIGNORAE enquiry: ${enquiryType}`,
       replyTo: email,
 
