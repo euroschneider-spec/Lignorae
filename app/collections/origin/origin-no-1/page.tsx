@@ -51,8 +51,8 @@ export default function OriginNo1Page() {
           </div>
 
           <div className="hidden md:block">
-            <div className="overflow-hidden rounded-[2rem] border border-[#4a3522]/70 bg-[#21170f]/80 shadow-2xl">
-              <div className="aspect-[4/5] bg-[url('/origin-no-01.jpg')] bg-cover bg-center" />
+            <div className="group overflow-hidden rounded-[2rem] border border-[#c6a66a]/35 bg-[#21170f]/80 shadow-2xl transition duration-500 hover:border-[#c6a66a]/70 hover:shadow-[0_0_35px_rgba(198,166,106,0.18)]">
+              <div className="aspect-[4/5] bg-[url('/origin-no-01.jpg')] bg-cover bg-center transition duration-700 group-hover:scale-105" />
             </div>
           </div>
         </div>
@@ -60,12 +60,12 @@ export default function OriginNo1Page() {
 
       <FadeIn>
         <section className="mx-auto grid max-w-7xl gap-10 px-6 py-28 md:grid-cols-[1fr_1fr]">
-          <div className="overflow-hidden rounded-3xl border border-[#4a3522]/70 bg-[#21170f]">
-            <div className="aspect-[4/3] bg-[url('/origin-no-01.jpg')] bg-cover bg-center" />
+          <div className="group overflow-hidden rounded-3xl border border-[#c6a66a]/30 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/70 hover:shadow-[0_0_30px_rgba(198,166,106,0.14)]">
+            <div className="aspect-[4/3] bg-[url('/origin-no-01.jpg')] bg-cover bg-center transition duration-700 group-hover:scale-105" />
           </div>
 
-          <div className="overflow-hidden rounded-3xl border border-[#4a3522]/70 bg-[#21170f]">
-            <div className="aspect-[4/3] bg-[url('/origin-no-01-detail.jpg')] bg-cover bg-center" />
+          <div className="group overflow-hidden rounded-3xl border border-[#c6a66a]/30 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/70 hover:shadow-[0_0_30px_rgba(198,166,106,0.14)]">
+            <div className="aspect-[4/3] bg-[url('/origin-no-01-detail.jpg')] bg-cover bg-center transition duration-700 group-hover:scale-105" />
           </div>
         </section>
       </FadeIn>
@@ -78,14 +78,14 @@ export default function OriginNo1Page() {
             </p>
 
             <h2 className="mb-8 text-4xl font-light md:text-5xl">
-              A first study in proportion and surface.
+              A first study in proportion, warmth, and surface.
             </h2>
           </div>
 
           <div className="space-y-6 text-lg leading-relaxed text-[#d0cabf]">
             <p>
               ORIGIN No. 01 belongs to the first generation of LIGNORAE writing
-              instruments: objects created not for speed, but for learning the
+              instruments: objects created not for speed, but to understand the
               discipline of material, proportion, finishing, and assembly.
             </p>
 
@@ -98,7 +98,7 @@ export default function OriginNo1Page() {
             <p>
               As an early atelier piece, it documents the beginning of the
               LIGNORAE language: natural material, quiet construction, and an
-              object designed to feel personal before it feels decorative.
+              object designed to feel personal before it feels ornamental.
             </p>
           </div>
         </section>
@@ -123,14 +123,14 @@ export default function OriginNo1Page() {
                 <p className="mb-2 text-xs uppercase tracking-[0.25em] text-[#c6a66a]">
                   Material
                 </p>
-                <p className="text-xl font-light">Figured wood</p>
+                <p className="text-xl font-light">East indian palisander</p>
               </div>
 
               <div className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-6">
                 <p className="mb-2 text-xs uppercase tracking-[0.25em] text-[#c6a66a]">
                   Status
                 </p>
-                <p className="text-xl font-light">Archive piece</p>
+                <p className="text-xl font-light">Prototype archive</p>
               </div>
 
               <div className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-6">
@@ -151,13 +151,13 @@ export default function OriginNo1Page() {
           </p>
 
           <h2 className="mb-6 text-4xl font-light md:text-5xl">
-            Similar pieces may be requested individually.
+            Future pieces may be requested individually.
           </h2>
 
           <p className="mx-auto mb-10 max-w-3xl text-lg leading-relaxed text-[#d0cabf]">
             Each LIGNORAE instrument is produced in small numbers. Material,
             finish, nib configuration, and availability are confirmed personally
-            before any order is accepted.
+            before any commission or order is accepted.
           </p>
 
           <Link
