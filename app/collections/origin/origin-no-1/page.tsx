@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FadeIn from "@/components/FadeIn";
 
-export default function OriginNo01Page() {
+export default function OriginNo1Page() {
   return (
     <main className="min-h-screen bg-[#1a130d] text-[#f5f1e8]">
       <Header />
