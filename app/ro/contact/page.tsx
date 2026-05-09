@@ -46,17 +46,17 @@ export default function ContactPage() {
 
       <section className="mx-auto max-w-6xl flex-1 px-6 py-40">
         <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-          Kontakt
+          Contact
         </p>
 
         <h1 className="mb-8 text-5xl font-light md:text-6xl">
-          Verfügbarkeit anfragen
+          Solicită disponibilitatea
         </h1>
 
         <p className="mb-12 max-w-3xl text-lg leading-relaxed text-[#d0cabf]">
-          Die erste LIGNORAE Edition befindet sich derzeit in Vorbereitung.
-          Anfragen zu Vorbestellungen, Einzelanfertigungen, Kooperationen und
-          ausgewählten Händlergesprächen sind bereits möglich.
+          Prima ediție LIGNORAE este în prezent în pregătire. Sunt deschise
+          solicitările pentru precomenzi, piese la comandă, colaborări și
+          discuții selectate cu parteneri B2B și retail.
         </p>
 
         <div className="grid gap-10 md:grid-cols-[1.1fr_0.9fr]">
@@ -66,56 +66,56 @@ export default function ContactPage() {
           >
             <div className="mb-6">
               <label className="mb-2 block text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
-                Name
+                Nume
               </label>
               <input
                 name="name"
                 type="text"
                 required
-                placeholder="Ihr Name"
+                placeholder="Numele dumneavoastră"
                 className="w-full rounded-xl border border-[#4a3522]/70 bg-[#120d09] px-4 py-3 text-[#f5f1e8] outline-none placeholder:text-[#7f7568] focus:border-[#c6a66a]"
               />
             </div>
 
             <div className="mb-6">
               <label className="mb-2 block text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
-                E-Mail
+                E-mail
               </label>
               <input
                 name="email"
                 type="email"
                 required
-                placeholder="ihre@email.de"
+                placeholder="emailul@dumneavoastră.ro"
                 className="w-full rounded-xl border border-[#4a3522]/70 bg-[#120d09] px-4 py-3 text-[#f5f1e8] outline-none placeholder:text-[#7f7568] focus:border-[#c6a66a]"
               />
             </div>
 
             <div className="mb-6">
               <label className="mb-2 block text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
-                Art der Anfrage
+                Tipul solicitării
               </label>
               <select
                 name="enquiryType"
                 required
                 className="w-full rounded-xl border border-[#4a3522]/70 bg-[#120d09] px-4 py-3 text-[#f5f1e8] outline-none focus:border-[#c6a66a]"
               >
-                <option>Vorbestellungsanfrage</option>
-                <option>Einzelanfertigung</option>
-                <option>Handel / B2B Kooperation</option>
-                <option>Presse / Partnerschaft</option>
-                <option>Sonstiges</option>
+                <option>Solicitare de precomandă</option>
+                <option>Piesă la comandă</option>
+                <option>Retail / colaborare B2B</option>
+                <option>Presă / parteneriat</option>
+                <option>Altceva</option>
               </select>
             </div>
 
             <div className="mb-8">
               <label className="mb-2 block text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
-                Nachricht
+                Mesaj
               </label>
               <textarea
                 name="message"
                 required
                 rows={7}
-                placeholder="Beschreiben Sie kurz, wonach Sie suchen..."
+                placeholder="Spuneți-ne pe scurt ce căutați..."
                 className="w-full rounded-xl border border-[#4a3522]/70 bg-[#120d09] px-4 py-3 text-[#f5f1e8] outline-none placeholder:text-[#7f7568] focus:border-[#c6a66a]"
               />
             </div>
@@ -125,29 +125,29 @@ export default function ContactPage() {
               disabled={status === "sending"}
               className="rounded-full border border-[#c6a66a] px-8 py-3 text-sm uppercase tracking-[0.2em] transition hover:bg-[#c6a66a] hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
             >
-              {status === "sending" ? "Wird gesendet..." : "Anfrage senden"}
+              {status === "sending" ? "Se trimite..." : "Trimite solicitarea"}
             </button>
 
             {status === "success" && (
               <p className="mt-5 text-sm leading-relaxed text-[#c6a66a]">
-                Vielen Dank. Ihre Anfrage wurde erfolgreich gesendet.
+                Vă mulțumim. Solicitarea a fost trimisă cu succes.
               </p>
             )}
 
             {status === "error" && (
               <p className="mt-5 text-sm leading-relaxed text-red-300">
-                Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut oder kontaktieren Sie das Atelier direkt per E-Mail.
+                Ceva nu a funcționat. Încercați din nou sau contactați atelierul direct prin e-mail.
               </p>
             )}
 
             <p className="mt-5 text-sm leading-relaxed text-[#9f9588]">
-              Ihre Anfrage wird direkt an das Atelier gesendet.
+              Solicitarea va fi trimisă direct către atelier.
             </p>
           </form>
 
           <div className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-8">
             <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
-              Direkte E-Mail
+              E-mail direct
             </p>
 
             <a
@@ -159,26 +159,26 @@ export default function ContactPage() {
 
             <div className="mt-10 border-t border-[#4a3522]/70 pt-8">
               <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
-                Erste Edition
+                Prima ediție
               </p>
 
               <p className="leading-relaxed text-[#d0cabf]">
-                Die ersten LIGNORAE Schreibinstrumente entstehen in kleinen
-                Mengen. Frühe Anfragen werden persönlich bearbeitet; Material,
-                Verfügbarkeit, Preis und Lieferung werden vor jeder
-                Auftragsbestätigung individuell besprochen.
+                Primele instrumente de scris LIGNORAE sunt pregătite în număr
+                foarte redus. Solicitările timpurii vor fi gestionate personal,
+                iar materialele, disponibilitatea, prețul și livrarea vor fi
+                discutate înaintea confirmării oricărei comenzi.
               </p>
             </div>
 
             <div className="mt-10 border-t border-[#4a3522]/70 pt-8">
               <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
-                Standort
+                Locație
               </p>
 
               <p className="leading-relaxed text-[#d0cabf]">
                 LIGNORAE Atelier
                 <br />
-                München, Deutschland
+                München, Germania
               </p>
             </div>
           </div>

@@ -15,14 +15,21 @@ export async function POST(request: Request) {
 
     const { name, email, enquiryType, message } = body;
 
+    if (!name || !email || !enquiryType || !message) {
+      return Response.json(
+        { error: "Missing required fields" },
+        { status: 400 }
+      );
+    }
+
     const data = await resend.emails.send({
       from: "LIGNORAE <onboarding@resend.dev>",
-      to: ["info@lignorae.com"],
+      to: ["euroschneider@gmail.com"],
       subject: `New LIGNORAE enquiry: ${enquiryType}`,
       replyTo: email,
 
       html: `
-        <div style="font-family:Arial,sans-serif;padding:20px;">
+        <div style="font-family:Arial,sans-serif;padding:20px;line-height:1.6;color:#1a130d;">
           <h2>New LIGNORAE Contact Request</h2>
 
           <p><strong>Name:</strong> ${name}</p>
@@ -31,7 +38,7 @@ export async function POST(request: Request) {
 
           <hr />
 
-          <p>${message}</p>
+          <p style="white-space:pre-wrap;">${message}</p>
         </div>
       `,
     });
