@@ -1,7 +1,45 @@
+"use client";
+
+import { FormEvent, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export default function ContactPage() {
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setStatus("sending");
+
+    const formData = new FormData(event.currentTarget);
+
+    const payload = {
+      name: String(formData.get("name") || ""),
+      email: String(formData.get("email") || ""),
+      enquiryType: String(formData.get("enquiryType") || ""),
+      message: String(formData.get("message") || ""),
+    };
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send enquiry");
+      }
+
+      setStatus("success");
+      event.currentTarget.reset();
+    } catch {
+      setStatus("error");
+    }
+  }
+
   return (
     <main className="flex min-h-screen flex-col bg-[#1a130d] text-[#f5f1e8]">
       <Header />
@@ -22,13 +60,18 @@ export default function ContactPage() {
         </p>
 
         <div className="grid gap-10 md:grid-cols-[1.1fr_0.9fr]">
-          <form className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-8">
+          <form
+            onSubmit={handleSubmit}
+            className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-8"
+          >
             <div className="mb-6">
               <label className="mb-2 block text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
                 Name
               </label>
               <input
+                name="name"
                 type="text"
+                required
                 placeholder="Ihr Name"
                 className="w-full rounded-xl border border-[#4a3522]/70 bg-[#120d09] px-4 py-3 text-[#f5f1e8] outline-none placeholder:text-[#7f7568] focus:border-[#c6a66a]"
               />
@@ -39,7 +82,9 @@ export default function ContactPage() {
                 E-Mail
               </label>
               <input
+                name="email"
                 type="email"
+                required
                 placeholder="ihre@email.de"
                 className="w-full rounded-xl border border-[#4a3522]/70 bg-[#120d09] px-4 py-3 text-[#f5f1e8] outline-none placeholder:text-[#7f7568] focus:border-[#c6a66a]"
               />
@@ -49,7 +94,11 @@ export default function ContactPage() {
               <label className="mb-2 block text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
                 Art der Anfrage
               </label>
-              <select className="w-full rounded-xl border border-[#4a3522]/70 bg-[#120d09] px-4 py-3 text-[#f5f1e8] outline-none focus:border-[#c6a66a]">
+              <select
+                name="enquiryType"
+                required
+                className="w-full rounded-xl border border-[#4a3522]/70 bg-[#120d09] px-4 py-3 text-[#f5f1e8] outline-none focus:border-[#c6a66a]"
+              >
                 <option>Vorbestellungsanfrage</option>
                 <option>Einzelanfertigung</option>
                 <option>Handel / B2B Kooperation</option>
@@ -63,22 +112,36 @@ export default function ContactPage() {
                 Nachricht
               </label>
               <textarea
+                name="message"
+                required
                 rows={7}
                 placeholder="Beschreiben Sie kurz, wonach Sie suchen..."
                 className="w-full rounded-xl border border-[#4a3522]/70 bg-[#120d09] px-4 py-3 text-[#f5f1e8] outline-none placeholder:text-[#7f7568] focus:border-[#c6a66a]"
               />
             </div>
 
-            <a
-              href="mailto:info@lignorae.com?subject=LIGNORAE%20Enquiry"
-              className="inline-block rounded-full border border-[#c6a66a] px-8 py-3 text-sm uppercase tracking-[0.2em] transition hover:bg-[#c6a66a] hover:text-black"
+            <button
+              type="submit"
+              disabled={status === "sending"}
+              className="rounded-full border border-[#c6a66a] px-8 py-3 text-sm uppercase tracking-[0.2em] transition hover:bg-[#c6a66a] hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
             >
-              Anfrage senden
-            </a>
+              {status === "sending" ? "Wird gesendet..." : "Anfrage senden"}
+            </button>
+
+            {status === "success" && (
+              <p className="mt-5 text-sm leading-relaxed text-[#c6a66a]">
+                Vielen Dank. Ihre Anfrage wurde erfolgreich gesendet.
+              </p>
+            )}
+
+            {status === "error" && (
+              <p className="mt-5 text-sm leading-relaxed text-red-300">
+                Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut oder kontaktieren Sie das Atelier direkt per E-Mail.
+              </p>
+            )}
 
             <p className="mt-5 text-sm leading-relaxed text-[#9f9588]">
-              Dieses Anfrageformular ist für den Launch vorbereitet. Bis zur
-              Aktivierung kontaktieren Sie das Atelier bitte direkt per E-Mail.
+              Ihre Anfrage wird direkt an das Atelier gesendet.
             </p>
           </form>
 
