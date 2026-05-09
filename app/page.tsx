@@ -2,8 +2,16 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FadeIn from "@/components/FadeIn";
+import { prisma } from "@/lib/prisma";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const pieces = await prisma.piece.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+    take: 3,
+  });
+
   return (
     <main className="min-h-screen bg-[#1a130d] text-[#f5f1e8]">
       <Header />
@@ -127,6 +135,60 @@ export default function HomePage() {
             Request availability
           </Link>
         </div>
+
+        {pieces.length > 0 && (
+          <div className="mt-20">
+            <div className="mb-10 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
+                  Current archive
+                </p>
+
+                <h2 className="text-4xl font-light md:text-5xl">
+                  Recently added pieces
+                </h2>
+              </div>
+
+              <Link
+                href="/collections"
+                className="text-sm uppercase tracking-[0.25em] text-[#c6a66a] transition hover:text-[#f5f1e8]"
+              >
+                View all pieces
+              </Link>
+            </div>
+
+            <div className="grid gap-10 md:grid-cols-3">
+              {pieces.map((piece) => (
+                <Link
+                  key={piece.id}
+                  href={`/pieces/${piece.slug}`}
+                  className="group overflow-hidden rounded-3xl border border-[#4a3522]/70 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/60"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden">
+                    <div
+                      className="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-105"
+                      style={{ backgroundImage: `url('${piece.image}')` }}
+                    />
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                  </div>
+
+                  <div className="p-8">
+                    <p className="mb-3 text-xs uppercase tracking-[0.25em] text-[#c6a66a]">
+                      {piece.collection}
+                    </p>
+
+                    <h3 className="mb-4 text-2xl font-light">{piece.title}</h3>
+
+                    <p className="leading-relaxed text-[#cfc8bc]">
+                      {piece.shortDescription}
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
       </section>
     </FadeIn>
 

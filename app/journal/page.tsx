@@ -1,7 +1,18 @@
+import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { prisma } from "@/lib/prisma";
 
-export default function JournalPage() {
+export default async function JournalPage() {
+  const posts = await prisma.journalPost.findMany({
+    where: {
+      published: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
   return (
     <main className="flex min-h-screen flex-col bg-[#1a130d] text-[#f5f1e8]">
       <Header />
@@ -20,55 +31,50 @@ export default function JournalPage() {
           surface refinement, and the slow construction of LIGNORAE.
         </p>
 
-        <div className="space-y-12">
-          <article className="group overflow-hidden rounded-3xl border border-[#4a3522]/70 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/60">
-            <div className="relative aspect-[16/9] overflow-hidden">
-  <div className="absolute inset-0 bg-[url('/atelier.jpg')] bg-cover bg-[position:center_35%] transition duration-700 group-hover:scale-105" />
-  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-</div>
+        {posts.length === 0 ? (
+          <div className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-10 text-center">
+            <p className="text-lg leading-relaxed text-[#d0cabf]">
+              No journal entries have been published yet.
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-12">
+            {posts.map((post) => (
+              <Link
+                key={post.id}
+                href={`/journal/${post.slug}`}
+                className="group block overflow-hidden rounded-3xl border border-[#4a3522]/70 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/60"
+              >
+                {post.coverImage && (
+                  <div className="relative aspect-[16/9] overflow-hidden">
+                    <div
+                      className="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-105"
+                      style={{ backgroundImage: `url('${post.coverImage}')` }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                  </div>
+                )}
 
-            <div className="p-8">
-              <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
-                April 2026
-              </p>
+                <div className="p-8">
+                  <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
+                    {post.createdAt.toLocaleDateString("en-GB", {
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </p>
 
-              <h2 className="mb-5 text-3xl font-light transition duration-300 group-hover:text-[#c6a66a]">
-                Learning the craft of refinement
-              </h2>
+                  <h2 className="mb-5 text-3xl font-light transition duration-300 group-hover:text-[#c6a66a]">
+                    {post.title}
+                  </h2>
 
-              <p className="leading-relaxed text-[#d0cabf]">
-                The first months of LIGNORAE are focused less on perfection and
-                more on discipline: sanding, polishing, correcting mistakes,
-                understanding grain direction, and learning how different woods
-                react under pressure, heat, and polishing compounds.
-              </p>
-            </div>
-          </article>
-
-          <article className="group overflow-hidden rounded-3xl border border-[#4a3522]/70 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/60">
-            <div className="relative aspect-[16/9] overflow-hidden">
-  <div className="absolute inset-0 bg-[url('/sonora.jpg')] bg-cover bg-center transition duration-700 group-hover:scale-105" />
-  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-</div>
-
-            <div className="p-8">
-              <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
-                Material Research
-              </p>
-
-              <h2 className="mb-5 text-3xl font-light transition duration-300 group-hover:text-[#c6a66a]">
-                Why reclaimed wood matters
-              </h2>
-
-              <p className="leading-relaxed text-[#d0cabf]">
-                Some materials already carry decades or centuries, sometimes
-                even millennia of history. Musical instruments, architectural
-                fragments, and aged hardwoods offer textures and stories
-                impossible to reproduce artificially.
-              </p>
-            </div>
-          </article>
-        </div>
+                  <p className="leading-relaxed text-[#d0cabf]">
+                    {post.excerpt}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
       </section>
 
       <Footer />

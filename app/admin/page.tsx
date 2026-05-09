@@ -8,6 +8,12 @@ export default async function AdminPage() {
     },
   });
 
+  const journalPosts = await prisma.journalPost.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
   return (
     <main className="min-h-screen bg-[#120d09] px-6 py-16 text-[#f5f1e8]">
       <div className="mx-auto max-w-6xl">
@@ -18,7 +24,7 @@ export default async function AdminPage() {
             </p>
 
             <h1 className="text-5xl font-light">
-              LIGNOARE website administration
+              LIGNORAE website administration
             </h1>
           </div>
 
@@ -57,7 +63,7 @@ export default async function AdminPage() {
             </p>
 
             <p className="text-5xl font-light">
-              0
+              {journalPosts.length}
             </p>
           </div>
         </div>
@@ -74,9 +80,21 @@ export default async function AdminPage() {
               </h2>
             </div>
 
-            <button className="rounded-full border border-[#c6a66a]/50 px-5 py-2 text-sm uppercase tracking-[0.2em] text-[#c6a66a] transition hover:border-[#c6a66a] hover:bg-[#c6a66a] hover:text-black">
-              Add piece
-            </button>
+            <div className="flex flex-wrap justify-end gap-3">
+              <Link
+                href="/admin/journal/new"
+                className="rounded-full border border-[#c6a66a]/50 px-5 py-2 text-sm uppercase tracking-[0.2em] text-[#c6a66a] transition hover:border-[#c6a66a] hover:bg-[#c6a66a] hover:text-black"
+              >
+                Add journal entry
+              </Link>
+
+              <Link
+                href="/admin/pieces/new"
+                className="rounded-full border border-[#c6a66a]/50 px-5 py-2 text-sm uppercase tracking-[0.2em] text-[#c6a66a] transition hover:border-[#c6a66a] hover:bg-[#c6a66a] hover:text-black"
+              >
+                Add piece
+              </Link>
+            </div>
           </div>
 
           <div className="overflow-hidden rounded-2xl border border-[#4a3522]/70">
