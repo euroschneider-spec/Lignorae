@@ -25,6 +25,7 @@ export default function NewPiecePage() {
 
         <form
           action={createPiece}
+          encType="multipart/form-data"
           className="space-y-6 rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 shadow-2xl shadow-black/30 md:p-8"
         >
           <div className="grid gap-5 md:grid-cols-2">
@@ -146,31 +147,33 @@ export default function NewPiecePage() {
           <div className="grid gap-5 md:grid-cols-2">
             <label className="space-y-2">
               <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-                Main image path / URL
+                Main image
               </span>
               <input
-                name="image"
+                name="imageFile"
+                type="file"
+                accept="image/*"
                 required
-                placeholder="/images/pieces/example.jpg"
-                className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+                className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] file:mr-4 file:rounded-full file:border-0 file:bg-[#c6a66a] file:px-4 file:py-2 file:text-xs file:font-semibold file:uppercase file:tracking-[0.18em] file:text-black hover:file:bg-[#e0c17d]"
               />
             </label>
 
             <label className="space-y-2">
               <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-                Detail image path / URL
+                Detail image
               </span>
               <input
-                name="detailImage"
-                placeholder="/images/pieces/example-detail.jpg"
-                className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+                name="detailImageFile"
+                type="file"
+                accept="image/*"
+                className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] file:mr-4 file:rounded-full file:border-0 file:bg-[#c6a66a] file:px-4 file:py-2 file:text-xs file:font-semibold file:uppercase file:tracking-[0.18em] file:text-black hover:file:bg-[#e0c17d]"
               />
             </label>
           </div>
 
           <div className="rounded-2xl border border-[#c6a66a]/20 bg-black/30 p-4 text-sm leading-relaxed text-[#d0cabf]">
-            Image upload with Browse will be added next through persistent storage.
-            For now, use an existing public image path or URL.
+            Images are uploaded to persistent storage and the generated public
+            URLs are saved automatically with the piece.
           </div>
 
           <div className="flex justify-end pt-4">

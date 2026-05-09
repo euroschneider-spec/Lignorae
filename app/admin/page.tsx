@@ -86,21 +86,12 @@ export default async function AdminPage() {
               </h2>
             </div>
 
-            <div className="flex flex-wrap justify-end gap-3">
-              <Link
-                href="/admin/journal/new"
-                className="rounded-full border border-[#c6a66a]/50 px-5 py-2 text-sm uppercase tracking-[0.2em] text-[#c6a66a] transition hover:border-[#c6a66a] hover:bg-[#c6a66a] hover:text-black"
-              >
-                Add journal entry
-              </Link>
-
-              <Link
-                href="/admin/pieces/new"
-                className="rounded-full border border-[#c6a66a]/50 px-5 py-2 text-sm uppercase tracking-[0.2em] text-[#c6a66a] transition hover:border-[#c6a66a] hover:bg-[#c6a66a] hover:text-black"
-              >
-                Add piece
-              </Link>
-            </div>
+            <Link
+              href="/admin/pieces/new"
+              className="rounded-full border border-[#c6a66a]/50 px-5 py-2 text-sm uppercase tracking-[0.2em] text-[#c6a66a] transition hover:border-[#c6a66a] hover:bg-[#c6a66a] hover:text-black"
+            >
+              Add piece
+            </Link>
           </div>
 
           <div className="overflow-hidden rounded-2xl border border-[#4a3522]/70">
@@ -158,15 +149,27 @@ export default async function AdminPage() {
                           </form>
                         )}
 
-                        <form action={deletePiece}>
-                          <input type="hidden" name="pieceId" value={piece.id} />
-                          <button
-                            type="submit"
-                            className="rounded-full border border-red-500/40 px-4 py-2 text-xs uppercase tracking-[0.18em] text-red-300 transition hover:border-red-400 hover:bg-red-500 hover:text-white"
-                          >
+                        <details className="relative">
+                          <summary className="cursor-pointer list-none rounded-full border border-red-500/40 px-4 py-2 text-xs uppercase tracking-[0.18em] text-red-300 transition hover:border-red-400 hover:bg-red-500 hover:text-white">
                             Delete
-                          </button>
-                        </form>
+                          </summary>
+
+                          <form
+                            action={deletePiece}
+                            className="absolute right-0 z-10 mt-2 w-52 rounded-2xl border border-red-500/30 bg-[#18110b] p-3 shadow-2xl shadow-black/50"
+                          >
+                            <input type="hidden" name="pieceId" value={piece.id} />
+                            <p className="mb-3 text-xs leading-relaxed text-[#d0cabf]">
+                              Delete this piece permanently?
+                            </p>
+                            <button
+                              type="submit"
+                              className="w-full rounded-full bg-red-500 px-4 py-2 text-xs uppercase tracking-[0.18em] text-white transition hover:bg-red-400"
+                            >
+                              Confirm delete
+                            </button>
+                          </form>
+                        </details>
                       </div>
                     </td>
                   </tr>
@@ -253,15 +256,27 @@ export default async function AdminPage() {
                             </form>
                           )}
 
-                          <form action={deleteJournalPost}>
-                            <input type="hidden" name="postId" value={post.id} />
-                            <button
-                              type="submit"
-                              className="rounded-full border border-red-500/40 px-4 py-2 text-xs uppercase tracking-[0.18em] text-red-300 transition hover:border-red-400 hover:bg-red-500 hover:text-white"
-                            >
+                          <details className="relative">
+                            <summary className="cursor-pointer list-none rounded-full border border-red-500/40 px-4 py-2 text-xs uppercase tracking-[0.18em] text-red-300 transition hover:border-red-400 hover:bg-red-500 hover:text-white">
                               Delete
-                            </button>
-                          </form>
+                            </summary>
+
+                            <form
+                              action={deleteJournalPost}
+                              className="absolute right-0 z-10 mt-2 w-52 rounded-2xl border border-red-500/30 bg-[#18110b] p-3 shadow-2xl shadow-black/50"
+                            >
+                              <input type="hidden" name="postId" value={post.id} />
+                              <p className="mb-3 text-xs leading-relaxed text-[#d0cabf]">
+                                Delete this post permanently?
+                              </p>
+                              <button
+                                type="submit"
+                                className="w-full rounded-full bg-red-500 px-4 py-2 text-xs uppercase tracking-[0.18em] text-white transition hover:bg-red-400"
+                              >
+                                Confirm delete
+                              </button>
+                            </form>
+                          </details>
                         </div>
                       </td>
                     </tr>

@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -10,6 +11,22 @@ function createSlug(value: string) {
     .trim()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
+}
+
+async function uploadPieceImage(file: File | null, slug: string, suffix: string) {
+  if (!file || file.size === 0) {
+    return null;
+  }
+
+  const extension = file.name.split(".").pop() || "jpg";
+  const safeSuffix = suffix.replace(/[^a-z0-9-]/gi, "-").toLowerCase();
+  const pathname = `pieces/${slug}-${safeSuffix}-${Date.now()}.${extension}`;
+
+  const blob = await put(pathname, file, {
+    access: "public",
+  });
+
+  return blob.url;
 }
 
 export async function createPiece(formData: FormData) {
@@ -22,13 +39,20 @@ export async function createPiece(formData: FormData) {
   const atelier = String(formData.get("atelier") || "").trim();
   const shortDescription = String(formData.get("shortDescription") || "").trim();
   const story = String(formData.get("story") || "").trim();
-  const image = String(formData.get("image") || "").trim();
-  const detailImage = String(formData.get("detailImage") || "").trim();
+  const imageFile = formData.get("imageFile") as File | null;
+  const detailImageFile = formData.get("detailImageFile") as File | null;
 
   const slug = slugInput || createSlug(title);
 
-  if (!title || !slug || !collection || !status || !shortDescription || !image) {
+  if (!title || !slug || !collection || !status || !shortDescription) {
     throw new Error("Missing required piece fields.");
+  }
+
+  const image = await uploadPieceImage(imageFile, slug, "main");
+  const detailImage = await uploadPieceImage(detailImageFile, slug, "detail");
+
+  if (!image) {
+    throw new Error("Missing required main image.");
   }
 
   await prisma.piece.create({
@@ -60,6 +84,10 @@ export async function createPiece(formData: FormData) {
 
   revalidatePath("/admin");
   revalidatePath("/");
+  revalidatePath("/collections");
+  revalidatePath("/collections/origin");
+  revalidatePath("/collections/sacra");
+  revalidatePath("/collections/sonora");
 
   redirect("/admin");
 }
