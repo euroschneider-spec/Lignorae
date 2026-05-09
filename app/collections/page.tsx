@@ -94,7 +94,7 @@ export default function CollectionsPage() {
               className="group overflow-hidden rounded-3xl border border-[#c6a66a]/30 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/70 hover:shadow-[0_0_30px_rgba(198,166,106,0.14)]"
             >
               <div className="relative aspect-[16/10] overflow-hidden">
-                <div className="absolute inset-0 bg-[url('/origin-no-01.jpg')] bg-cover bg-center transition duration-700 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-[url('/origin-no-1.jpg')] bg-cover bg-center transition duration-700 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
               </div>
               <div className="p-8">
@@ -119,56 +119,95 @@ export default function CollectionsPage() {
               </div>
             </Link>
 
-            <div className="group overflow-hidden rounded-3xl border border-[#4a3522]/70 bg-[#21170f]/70 opacity-80 transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/50">
-              <div className="relative aspect-[16/10] overflow-hidden bg-[#120d09]">
-                <div className="absolute inset-0 bg-[url('/origin.jpg')] bg-cover bg-center opacity-25 transition duration-700 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent" />
+            <Link
+              href="/collections/origin/origin-no-2"
+              className="group overflow-hidden rounded-3xl border border-[#c6a66a]/30 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/70 hover:shadow-[0_0_30px_rgba(198,166,106,0.14)]"
+            >
+              <div className="relative aspect-[16/10] overflow-hidden">
+                <div className="absolute inset-0 bg-[url('/origin-no-2.jpg')] bg-cover bg-center transition duration-700 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
               </div>
               <div className="p-8">
-                <p className="mb-4 text-xs uppercase tracking-[0.25em] text-[#c6a66a]">
-                  Coming later
+                <div className="mb-4 flex flex-wrap gap-3 text-xs uppercase tracking-[0.22em] text-[#c6a66a]">
+                  <span className="rounded-full border border-[#c6a66a]/40 px-3 py-1">
+                    ORIGIN
+                  </span>
+                  <span className="rounded-full border border-[#c6a66a]/40 px-3 py-1">
+                    Prototype archive
+                  </span>
+                </div>
+                <h3 className="mb-4 text-3xl font-light transition duration-300 group-hover:text-[#c6a66a]">
+                  ORIGIN No. 2
+                </h3>
+                <p className="mb-6 leading-relaxed text-[#cfc8bc]">
+                  A warm, gold-accented study in linear grain, polished metal,
+                  and the calm presence of natural material.
                 </p>
-                <h3 className="mb-4 text-3xl font-light">ORIGIN No. 2</h3>
-                <p className="leading-relaxed text-[#9f9588]">
-                  Reserved for a future LIGNORAE instrument with its own
-                  material story and photographic archive.
+                <p className="text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
+                  View instrument →
                 </p>
               </div>
-            </div>
+            </Link>
 
-            <div className="group overflow-hidden rounded-3xl border border-[#4a3522]/70 bg-[#21170f]/70 opacity-80 transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/50">
-              <div className="relative aspect-[16/10] overflow-hidden bg-[#120d09]">
-                <div className="absolute inset-0 bg-[url('/origin.jpg')] bg-cover bg-center opacity-25 transition duration-700 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent" />
+            <Link
+              href="/collections/origin/origin-no-3"
+              className="group overflow-hidden rounded-3xl border border-[#c6a66a]/30 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/70 hover:shadow-[0_0_30px_rgba(198,166,106,0.14)]"
+            >
+              <div className="relative aspect-[16/10] overflow-hidden">
+                <div className="absolute inset-0 bg-[url('/origin-no-3.jpg')] bg-cover bg-center transition duration-700 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
               </div>
               <div className="p-8">
-                <p className="mb-4 text-xs uppercase tracking-[0.25em] text-[#c6a66a]">
-                  Coming later
+                <div className="mb-4 flex flex-wrap gap-3 text-xs uppercase tracking-[0.22em] text-[#c6a66a]">
+                  <span className="rounded-full border border-[#c6a66a]/40 px-3 py-1">
+                    ORIGIN
+                  </span>
+                  <span className="rounded-full border border-[#c6a66a]/40 px-3 py-1">
+                    Prototype archive
+                  </span>
+                </div>
+                <h3 className="mb-4 text-3xl font-light transition duration-300 group-hover:text-[#c6a66a]">
+                  ORIGIN No. 3
+                </h3>
+                <p className="mb-6 leading-relaxed text-[#cfc8bc]">
+                  A darker, more contemplative study in polished depth, golden
+                  reflections, shadow, and grain.
                 </p>
-                <h3 className="mb-4 text-3xl font-light">ORIGIN No. 3</h3>
-                <p className="leading-relaxed text-[#9f9588]">
-                  Reserved for a future LIGNORAE instrument with its own
-                  material story and photographic archive.
+                <p className="text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
+                  View instrument →
                 </p>
               </div>
-            </div>
+            </Link>
 
-            <div className="group overflow-hidden rounded-3xl border border-[#4a3522]/70 bg-[#21170f]/70 opacity-80 transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/50">
-              <div className="relative aspect-[16/10] overflow-hidden bg-[#120d09]">
-                <div className="absolute inset-0 bg-[url('/origin.jpg')] bg-cover bg-center opacity-25 transition duration-700 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent" />
+            <Link
+              href="/collections/origin/origin-no-4"
+              className="group overflow-hidden rounded-3xl border border-[#c6a66a]/30 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/70 hover:shadow-[0_0_30px_rgba(198,166,106,0.14)]"
+            >
+              <div className="relative aspect-[16/10] overflow-hidden">
+                <div className="absolute inset-0 bg-[url('/origin-no-4.jpg')] bg-cover bg-center transition duration-700 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
               </div>
               <div className="p-8">
-                <p className="mb-4 text-xs uppercase tracking-[0.25em] text-[#c6a66a]">
-                  Coming later
+                <div className="mb-4 flex flex-wrap gap-3 text-xs uppercase tracking-[0.22em] text-[#c6a66a]">
+                  <span className="rounded-full border border-[#c6a66a]/40 px-3 py-1">
+                    ORIGIN
+                  </span>
+                  <span className="rounded-full border border-[#c6a66a]/40 px-3 py-1">
+                    Prototype archive
+                  </span>
+                </div>
+                <h3 className="mb-4 text-3xl font-light transition duration-300 group-hover:text-[#c6a66a]">
+                  ORIGIN No. 4
+                </h3>
+                <p className="mb-6 leading-relaxed text-[#cfc8bc]">
+                  A lighter ORIGIN study in warmth, clarity, gentle contrast,
+                  and everyday elegance.
                 </p>
-                <h3 className="mb-4 text-3xl font-light">ORIGIN No. 4</h3>
-                <p className="leading-relaxed text-[#9f9588]">
-                  Reserved for a future LIGNORAE instrument with its own
-                  material story and photographic archive.
+                <p className="text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
+                  View instrument →
                 </p>
               </div>
-            </div>
+            </Link>
           </div>
         </section>
       </section>
