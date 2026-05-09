@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Piece {
+  id               String   @id @default(cuid())
+
+  title            String
+  collection       String
+  slug             String   @unique
+
+  status           String
+
+  year             String?
+  material         String?
+  atelier          String?
+
+  shortDescription String
+  story            String?
+
+  image            String
+  detailImage      String?
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model JournalPost {
+  id          String   @id @default(cuid())
+
+  title       String
+  slug        String   @unique
+
+  excerpt     String
+  content     String
+
+  coverImage  String?
+
+  published   Boolean  @default(false)
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
