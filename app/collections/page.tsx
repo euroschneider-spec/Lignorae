@@ -1,10 +1,29 @@
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { getLatestPieces, getStatusLabel } from "@/lib/pieces";
+import { prisma } from "@/lib/prisma";
 
-export default function CollectionsPage() {
-  const latestPieces = getLatestPieces(4);
+export const dynamic = "force-dynamic";
+
+function getStatusLabel(status: string) {
+  const normalizedStatus = status.toLowerCase();
+
+  if (normalizedStatus === "available") return "Available";
+  if (normalizedStatus === "reserved") return "Reserved";
+  if (normalizedStatus === "sold") return "Sold";
+  if (normalizedStatus === "draft") return "Draft";
+  if (normalizedStatus === "prototype-archive") return "Prototype archive";
+
+  return status;
+}
+
+export default async function CollectionsPage() {
+  const latestPieces = await prisma.piece.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+    take: 6,
+  });
   return (
     <main className="flex min-h-screen flex-col bg-[#1a130d] text-[#f5f1e8]">
       <Header />
@@ -90,46 +109,54 @@ export default function CollectionsPage() {
               material notes, photographs, specifications, and availability.
             </p>
           </div>
-          <div className="grid gap-10 md:grid-cols-2">
-            {latestPieces.map((piece) => (
-              <Link
-                key={piece.slug}
-                href={piece.href}
-                className="group overflow-hidden rounded-3xl border border-[#c6a66a]/30 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/70 hover:shadow-[0_0_30px_rgba(198,166,106,0.14)]"
-              >
-                <div className="relative aspect-[16/10] overflow-hidden">
-                  <div
-                    className="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-105"
-                    style={{ backgroundImage: `url(${piece.image})` }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
-                </div>
-
-                <div className="p-8">
-                  <div className="mb-4 flex flex-wrap gap-3 text-xs uppercase tracking-[0.22em] text-[#c6a66a]">
-                    <span className="rounded-full border border-[#c6a66a]/40 px-3 py-1">
-                      {piece.collection.toUpperCase()}
-                    </span>
-                    <span className="rounded-full border border-[#c6a66a]/40 px-3 py-1">
-                      {getStatusLabel(piece.status)}
-                    </span>
+          {latestPieces.length === 0 ? (
+            <div className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-10 text-center">
+              <p className="text-lg leading-relaxed text-[#d0cabf]">
+                No individual instruments have been added to the archive yet.
+              </p>
+            </div>
+          ) : (
+            <div className="grid gap-10 md:grid-cols-2">
+              {latestPieces.map((piece) => (
+                <Link
+                  key={piece.id}
+                  href={`/pieces/${piece.slug}`}
+                  className="group overflow-hidden rounded-3xl border border-[#c6a66a]/30 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/70 hover:shadow-[0_0_30px_rgba(198,166,106,0.14)]"
+                >
+                  <div className="relative aspect-[16/10] overflow-hidden">
+                    <div
+                      className="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-105"
+                      style={{ backgroundImage: `url('${piece.image}')` }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
                   </div>
 
-                  <h3 className="mb-4 text-3xl font-light transition duration-300 group-hover:text-[#c6a66a]">
-                    {piece.title}
-                  </h3>
+                  <div className="p-8">
+                    <div className="mb-4 flex flex-wrap gap-3 text-xs uppercase tracking-[0.22em] text-[#c6a66a]">
+                      <span className="rounded-full border border-[#c6a66a]/40 px-3 py-1">
+                        {piece.collection.toUpperCase()}
+                      </span>
+                      <span className="rounded-full border border-[#c6a66a]/40 px-3 py-1">
+                        {getStatusLabel(piece.status)}
+                      </span>
+                    </div>
 
-                  <p className="mb-6 leading-relaxed text-[#cfc8bc]">
-                    {piece.shortDescription}
-                  </p>
+                    <h3 className="mb-4 text-3xl font-light transition duration-300 group-hover:text-[#c6a66a]">
+                      {piece.title}
+                    </h3>
 
-                  <p className="text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
-                    View instrument →
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
+                    <p className="mb-6 leading-relaxed text-[#cfc8bc]">
+                      {piece.shortDescription}
+                    </p>
+
+                    <p className="text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
+                      View instrument →
+                    </p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </section>
       </section>
 

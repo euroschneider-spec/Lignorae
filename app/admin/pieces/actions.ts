@@ -63,3 +63,52 @@ export async function createPiece(formData: FormData) {
 
   redirect("/admin");
 }
+
+export async function archivePiece(formData: FormData) {
+  const pieceId = String(formData.get("pieceId") || "").trim();
+
+  if (!pieceId) {
+    throw new Error("Missing piece id.");
+  }
+
+  await prisma.piece.update({
+    where: {
+      id: pieceId,
+    },
+    data: {
+      status: "archived",
+    },
+  });
+
+  revalidatePath("/admin");
+  revalidatePath("/");
+  revalidatePath("/collections");
+  revalidatePath("/collections/origin");
+  revalidatePath("/collections/sacra");
+  revalidatePath("/collections/sonora");
+
+  redirect("/admin");
+}
+
+export async function deletePiece(formData: FormData) {
+  const pieceId = String(formData.get("pieceId") || "").trim();
+
+  if (!pieceId) {
+    throw new Error("Missing piece id.");
+  }
+
+  await prisma.piece.delete({
+    where: {
+      id: pieceId,
+    },
+  });
+
+  revalidatePath("/admin");
+  revalidatePath("/");
+  revalidatePath("/collections");
+  revalidatePath("/collections/origin");
+  revalidatePath("/collections/sacra");
+  revalidatePath("/collections/sonora");
+
+  redirect("/admin");
+}

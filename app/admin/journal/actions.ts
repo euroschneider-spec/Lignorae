@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 function createSlug(value: string) {
@@ -43,6 +44,50 @@ export async function createJournalPost(formData: FormData) {
       },
     },
   });
+
+  revalidatePath("/admin");
+  revalidatePath("/journal");
+
+  redirect("/admin");
+}
+
+export async function archiveJournalPost(formData: FormData) {
+  const postId = String(formData.get("postId") || "").trim();
+
+  if (!postId) {
+    throw new Error("Missing journal post id.");
+  }
+
+  await prisma.journalPost.update({
+    where: {
+      id: postId,
+    },
+    data: {
+      published: false,
+    },
+  });
+
+  revalidatePath("/admin");
+  revalidatePath("/journal");
+
+  redirect("/admin");
+}
+
+export async function deleteJournalPost(formData: FormData) {
+  const postId = String(formData.get("postId") || "").trim();
+
+  if (!postId) {
+    throw new Error("Missing journal post id.");
+  }
+
+  await prisma.journalPost.delete({
+    where: {
+      id: postId,
+    },
+  });
+
+  revalidatePath("/admin");
+  revalidatePath("/journal");
 
   redirect("/admin");
 }
