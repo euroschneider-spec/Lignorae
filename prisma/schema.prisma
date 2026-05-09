@@ -7,6 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Locale {
+  EN
+  DE
+  RO
+}
+
 model Piece {
   id               String   @id @default(cuid())
 
@@ -26,23 +32,66 @@ model Piece {
   image            String
   detailImage      String?
 
+  translations     PieceTranslation[]
+
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 }
 
+model PieceTranslation {
+  id               String   @id @default(cuid())
+
+  pieceId          String
+  piece            Piece    @relation(fields: [pieceId], references: [id], onDelete: Cascade)
+
+  locale           Locale
+
+  title            String
+  collection       String
+  shortDescription String
+  story            String?
+  material         String?
+  atelier          String?
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@unique([pieceId, locale])
+}
+
 model JournalPost {
-  id          String   @id @default(cuid())
+  id           String   @id @default(cuid())
 
-  title       String
-  slug        String   @unique
+  title        String
+  slug         String   @unique
 
-  excerpt     String
-  content     String
+  excerpt      String
+  content      String
 
-  coverImage  String?
+  coverImage   String?
 
-  published   Boolean  @default(false)
+  published    Boolean  @default(false)
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  translations JournalPostTranslation[]
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model JournalPostTranslation {
+  id            String      @id @default(cuid())
+
+  journalPostId String
+  journalPost   JournalPost @relation(fields: [journalPostId], references: [id], onDelete: Cascade)
+
+  locale        Locale
+
+  title         String
+  excerpt       String
+  content       String
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([journalPostId, locale])
 }

@@ -43,6 +43,17 @@ export async function createPiece(formData: FormData) {
       story: story || null,
       image,
       detailImage: detailImage || null,
+      translations: {
+        create: {
+          locale: "EN",
+          title,
+          collection,
+          shortDescription,
+          story: story || null,
+          material: material || null,
+          atelier: atelier || null,
+        },
+      },
     },
   });
 

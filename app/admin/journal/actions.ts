@@ -1,5 +1,3 @@
-
-
 "use server";
 
 import { prisma } from "@/lib/prisma";
@@ -35,6 +33,14 @@ export async function createJournalPost(formData: FormData) {
       content,
       coverImage: coverImage || null,
       published,
+      translations: {
+        create: {
+          locale: "EN",
+          title,
+          excerpt,
+          content,
+        },
+      },
     },
   });
 
