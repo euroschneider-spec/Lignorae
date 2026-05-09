@@ -15,7 +15,7 @@ export async function createPiece(formData: FormData) {
   const title = String(formData.get("title") || "").trim();
   const slugInput = String(formData.get("slug") || "").trim();
   const collection = String(formData.get("collection") || "").trim();
-  const status = String(formData.get("status") || "DRAFT").trim();
+  const status = String(formData.get("status") || "prototype-archive").trim();
   const year = String(formData.get("year") || "").trim();
   const material = String(formData.get("material") || "").trim();
   const atelier = String(formData.get("atelier") || "").trim();

@@ -1,5 +1,3 @@
-
-
 import Link from "next/link";
 import { createPiece } from "../actions";
 
@@ -32,16 +30,29 @@ export default function NewPiecePage() {
           <div className="grid gap-5 md:grid-cols-2">
             <label className="space-y-2">
               <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-                Code
+                Title
               </span>
               <input
-                name="code"
+                name="title"
                 required
-                placeholder="SA-0001"
+                placeholder="ORIGIN No. 1"
                 className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
               />
             </label>
 
+            <label className="space-y-2">
+              <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
+                Slug
+              </span>
+              <input
+                name="slug"
+                placeholder="auto-generated if empty"
+                className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+              />
+            </label>
+          </div>
+
+          <div className="grid gap-5 md:grid-cols-2">
             <label className="space-y-2">
               <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
                 Collection
@@ -49,45 +60,7 @@ export default function NewPiecePage() {
               <input
                 name="collection"
                 required
-                placeholder="Sacra / Sonora / Origin"
-                className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
-              />
-            </label>
-          </div>
-
-          <label className="block space-y-2">
-            <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-              Title
-            </span>
-            <input
-              name="title"
-              required
-              placeholder="The name of the piece"
-              className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
-            />
-          </label>
-
-          <label className="block space-y-2">
-            <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-              Short description
-            </span>
-            <textarea
-              name="description"
-              required
-              rows={5}
-              placeholder="Short story, material, provenance, atmosphere."
-              className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
-            />
-          </label>
-
-          <div className="grid gap-5 md:grid-cols-2">
-            <label className="space-y-2">
-              <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-                Image URL
-              </span>
-              <input
-                name="imageUrl"
-                placeholder="/images/pieces/example.jpg"
+                placeholder="Origin / Sacra / Sonora"
                 className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
               />
             </label>
@@ -98,13 +71,106 @@ export default function NewPiecePage() {
               </span>
               <select
                 name="status"
-                defaultValue="DRAFT"
+                defaultValue="prototype-archive"
                 className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition focus:border-[#c6a66a]/70"
               >
-                <option value="DRAFT">Draft</option>
-                <option value="PUBLISHED">Published</option>
+                <option value="prototype-archive">Prototype archive</option>
+                <option value="draft">Draft</option>
+                <option value="available">Available</option>
+                <option value="reserved">Reserved</option>
+                <option value="sold">Sold</option>
               </select>
             </label>
+          </div>
+
+          <div className="grid gap-5 md:grid-cols-3">
+            <label className="space-y-2">
+              <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
+                Year
+              </span>
+              <input
+                name="year"
+                placeholder="2026"
+                className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+              />
+            </label>
+
+            <label className="space-y-2">
+              <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
+                Material
+              </span>
+              <input
+                name="material"
+                placeholder="Bog oak, walnut, ziricote..."
+                className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+              />
+            </label>
+
+            <label className="space-y-2">
+              <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
+                Atelier
+              </span>
+              <input
+                name="atelier"
+                placeholder="Munich atelier"
+                className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+              />
+            </label>
+          </div>
+
+          <label className="block space-y-2">
+            <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
+              Short description
+            </span>
+            <textarea
+              name="shortDescription"
+              required
+              rows={4}
+              placeholder="Short story, material, provenance, atmosphere."
+              className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+            />
+          </label>
+
+          <label className="block space-y-2">
+            <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
+              Story
+            </span>
+            <textarea
+              name="story"
+              rows={7}
+              placeholder="Longer piece story, provenance, making process, character."
+              className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+            />
+          </label>
+
+          <div className="grid gap-5 md:grid-cols-2">
+            <label className="space-y-2">
+              <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
+                Main image path / URL
+              </span>
+              <input
+                name="image"
+                required
+                placeholder="/images/pieces/example.jpg"
+                className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+              />
+            </label>
+
+            <label className="space-y-2">
+              <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
+                Detail image path / URL
+              </span>
+              <input
+                name="detailImage"
+                placeholder="/images/pieces/example-detail.jpg"
+                className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+              />
+            </label>
+          </div>
+
+          <div className="rounded-2xl border border-[#c6a66a]/20 bg-black/30 p-4 text-sm leading-relaxed text-[#d0cabf]">
+            Image upload with Browse will be added next through persistent storage.
+            For now, use an existing public image path or URL.
           </div>
 
           <div className="flex justify-end pt-4">
