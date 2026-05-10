@@ -27,6 +27,7 @@ export default function NewJournalPostPage() {
 
         <form
           action={createJournalPost}
+          encType="multipart/form-data"
           className="space-y-6 rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 shadow-2xl shadow-black/30 md:p-8"
         >
           <div className="grid gap-5 md:grid-cols-2">
@@ -85,11 +86,17 @@ export default function NewJournalPostPage() {
               Cover image
             </span>
             <input
-              name="coverImage"
-              placeholder="/images/journal/example.jpg"
-              className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+              name="coverImageFile"
+              type="file"
+              accept="image/*"
+              className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] file:mr-4 file:rounded-full file:border-0 file:bg-[#c6a66a] file:px-4 file:py-2 file:text-xs file:font-semibold file:uppercase file:tracking-[0.18em] file:text-black hover:file:bg-[#e0c17d]"
             />
           </label>
+
+          <div className="rounded-2xl border border-[#c6a66a]/20 bg-black/30 p-4 text-sm leading-relaxed text-[#d0cabf]">
+            The cover image is uploaded to persistent storage and the generated
+            public URL is saved automatically with the journal entry.
+          </div>
 
           <label className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/30 px-4 py-4 text-sm text-[#f5efe3]">
             <input

@@ -5,7 +5,24 @@ import { archiveJournalPost, deleteJournalPost } from "./journal/actions";
 
 export const dynamic = "force-dynamic";
 
-export default async function AdminPage() {
+function getSuccessMessage(success?: string) {
+  if (success === "piece-created") return "Piece saved successfully.";
+  if (success === "piece-archived") return "Piece archived successfully.";
+  if (success === "piece-deleted") return "Piece deleted successfully.";
+  if (success === "journal-created") return "Journal entry saved successfully.";
+  if (success === "journal-archived") return "Journal entry archived successfully.";
+  if (success === "journal-deleted") return "Journal entry deleted successfully.";
+
+  return null;
+}
+
+export default async function AdminPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ success?: string }>;
+}) {
+  const { success } = await searchParams;
+  const successMessage = getSuccessMessage(success);
   const pieces = await prisma.piece.findMany({
     orderBy: {
       createdAt: "desc",
@@ -41,6 +58,12 @@ export default async function AdminPage() {
             View website
           </Link>
         </div>
+
+        {successMessage && (
+          <div className="mb-10 rounded-2xl border border-[#c6a66a]/40 bg-[#c6a66a]/10 px-6 py-4 text-sm uppercase tracking-[0.2em] text-[#f5f1e8]">
+            {successMessage}
+          </div>
+        )}
 
         <div className="mb-12 grid gap-6 md:grid-cols-3">
           <div className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-8">

@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -12,12 +13,27 @@ function createSlug(value: string) {
     .replace(/^-+|-+$/g, "");
 }
 
+async function uploadJournalImage(file: File | null, slug: string) {
+  if (!file || file.size === 0) {
+    return null;
+  }
+
+  const extension = file.name.split(".").pop() || "jpg";
+  const pathname = `journal/${slug}-cover-${Date.now()}.${extension}`;
+
+  const blob = await put(pathname, file, {
+    access: "public",
+  });
+
+  return blob.url;
+}
+
 export async function createJournalPost(formData: FormData) {
   const title = String(formData.get("title") || "").trim();
   const slugInput = String(formData.get("slug") || "").trim();
   const excerpt = String(formData.get("excerpt") || "").trim();
   const content = String(formData.get("content") || "").trim();
-  const coverImage = String(formData.get("coverImage") || "").trim();
+  const coverImageFile = formData.get("coverImageFile") as File | null;
   const published = formData.get("published") === "on";
 
   const slug = slugInput || createSlug(title);
@@ -25,6 +41,8 @@ export async function createJournalPost(formData: FormData) {
   if (!title || !slug || !excerpt || !content) {
     throw new Error("Missing required journal fields.");
   }
+
+  const coverImage = await uploadJournalImage(coverImageFile, slug);
 
   await prisma.journalPost.create({
     data: {
@@ -47,8 +65,9 @@ export async function createJournalPost(formData: FormData) {
 
   revalidatePath("/admin");
   revalidatePath("/journal");
+  revalidatePath("/");
 
-  redirect("/admin");
+  redirect("/admin?success=journal-created");
 }
 
 export async function archiveJournalPost(formData: FormData) {
@@ -70,7 +89,7 @@ export async function archiveJournalPost(formData: FormData) {
   revalidatePath("/admin");
   revalidatePath("/journal");
 
-  redirect("/admin");
+  redirect("/admin?success=journal-archived");
 }
 
 export async function deleteJournalPost(formData: FormData) {
@@ -89,5 +108,5 @@ export async function deleteJournalPost(formData: FormData) {
   revalidatePath("/admin");
   revalidatePath("/journal");
 
-  redirect("/admin");
+  redirect("/admin?success=journal-deleted");
 }

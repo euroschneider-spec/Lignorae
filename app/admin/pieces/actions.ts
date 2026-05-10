@@ -89,7 +89,7 @@ export async function createPiece(formData: FormData) {
   revalidatePath("/collections/sacra");
   revalidatePath("/collections/sonora");
 
-  redirect("/admin");
+  redirect("/admin?success=piece-created");
 }
 
 export async function archivePiece(formData: FormData) {
@@ -115,7 +115,7 @@ export async function archivePiece(formData: FormData) {
   revalidatePath("/collections/sacra");
   revalidatePath("/collections/sonora");
 
-  redirect("/admin");
+  redirect("/admin?success=piece-archived");
 }
 
 export async function deletePiece(formData: FormData) {
@@ -138,5 +138,5 @@ export async function deletePiece(formData: FormData) {
   revalidatePath("/collections/sacra");
   revalidatePath("/collections/sonora");
 
-  redirect("/admin");
+  redirect("/admin?success=piece-deleted");
 }

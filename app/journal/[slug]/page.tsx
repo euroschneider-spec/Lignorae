@@ -22,10 +22,10 @@ export default async function JournalPostPage({
   }
 
   return (
-    <main className="min-h-screen bg-[#1a130d] text-[#f5f1e8]">
+    <main className="flex min-h-screen flex-col bg-[#1a130d] text-[#f5f1e8]">
       <Header />
 
-      <article className="px-6 pb-24 pt-36">
+      <article className="flex-1 px-6 pb-24 pt-36">
         <div className="mx-auto max-w-4xl">
           <Link
             href="/journal"
