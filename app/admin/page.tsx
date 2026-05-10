@@ -8,6 +8,7 @@ import {
 import {
   archiveJournalPost,
   deleteJournalPost,
+  generateMissingJournalTranslations,
   publishJournalPost,
 } from "./journal/actions";
 
@@ -19,19 +20,43 @@ function getSuccessMessage(input: {
   expected?: string;
 }) {
   const { success, translations, expected } = input;
+  const savedTranslationCount = Number(translations || 0);
 
-  if (success === "piece-created") return "Piece saved successfully.";
-  if (success === "piece-updated") return "Piece updated successfully.";
+  if (success === "piece-created") {
+    if (savedTranslationCount < 1) return null;
+
+    return "Piece saved successfully.";
+  }
+  if (success === "piece-updated") {
+    if (savedTranslationCount < 1) return null;
+
+    return "Piece updated successfully.";
+  }
   if (success === "piece-archived") return "Piece archived successfully.";
   if (success === "piece-deleted") return "Piece deleted successfully.";
   if (success === "piece-translations-generated") {
+    if (savedTranslationCount < 1) return null;
+
     return `Piece translations saved: ${translations || "0"} / ${expected || "0"}.`;
   }
-  if (success === "journal-created") return "Journal entry saved successfully.";
-  if (success === "journal-updated") return "Journal entry updated successfully.";
+  if (success === "journal-created") {
+    if (savedTranslationCount < 1) return null;
+
+    return "Journal entry saved successfully.";
+  }
+  if (success === "journal-updated") {
+    if (savedTranslationCount < 1) return null;
+
+    return "Journal entry updated successfully.";
+  }
   if (success === "journal-published") return "Journal entry published successfully.";
   if (success === "journal-archived") return "Journal entry archived successfully.";
   if (success === "journal-deleted") return "Journal entry deleted successfully.";
+  if (success === "journal-translations-generated") {
+    if (savedTranslationCount < 1) return null;
+
+    return `Journal translations saved: ${translations || "0"} / ${expected || "0"}.`;
+  }
 
   return null;
 }
@@ -65,10 +90,34 @@ export default async function AdminPage({
   });
 
   const journalPosts = await prisma.journalPost.findMany({
+    include: {
+      translations: {
+        select: {
+          locale: true,
+        },
+      },
+    },
     orderBy: {
       createdAt: "desc",
     },
   });
+
+  const pieceTranslationCount = pieces.reduce(
+    (count, piece) =>
+      count +
+      piece.translations.filter(
+        (translation) => translation.locale === "DE" || translation.locale === "RO"
+      ).length,
+    0
+  );
+  const journalTranslationCount = journalPosts.reduce(
+    (count, post) =>
+      count +
+      post.translations.filter(
+        (translation) => translation.locale === "DE" || translation.locale === "RO"
+      ).length,
+    0
+  );
 
   return (
     <main className="min-h-screen bg-[#120d09] px-6 py-16 text-[#f5f1e8]">
@@ -123,11 +172,11 @@ export default async function AdminPage({
 
           <div className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-8">
             <p className="mb-3 text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
-              Collections
+              DE / RO translations
             </p>
 
             <p className="text-5xl font-light">
-              3
+              {pieceTranslationCount + journalTranslationCount}
             </p>
           </div>
         </div>
@@ -272,12 +321,23 @@ export default async function AdminPage({
               </h2>
             </div>
 
-            <Link
-              href="/admin/journal/new"
-              className="rounded-full border border-[#c6a66a]/50 px-5 py-2 text-sm uppercase tracking-[0.2em] text-[#c6a66a] transition hover:border-[#c6a66a] hover:bg-[#c6a66a] hover:text-black"
-            >
-              Add journal entry
-            </Link>
+            <div className="flex flex-wrap justify-end gap-3">
+              <form action={generateMissingJournalTranslations}>
+                <button
+                  type="submit"
+                  className="rounded-full border border-[#c6a66a]/50 px-5 py-2 text-sm uppercase tracking-[0.2em] text-[#c6a66a] transition hover:border-[#c6a66a] hover:bg-[#c6a66a] hover:text-black"
+                >
+                  Regenerate translations
+                </button>
+              </form>
+
+              <Link
+                href="/admin/journal/new"
+                className="rounded-full border border-[#c6a66a]/50 px-5 py-2 text-sm uppercase tracking-[0.2em] text-[#c6a66a] transition hover:border-[#c6a66a] hover:bg-[#c6a66a] hover:text-black"
+              >
+                Add journal entry
+              </Link>
+            </div>
           </div>
 
           <div className="overflow-visible rounded-2xl border border-[#4a3522]/70">
@@ -287,6 +347,7 @@ export default async function AdminPage({
                   <th className="px-6 py-4">Title</th>
                   <th className="px-6 py-4">Published</th>
                   <th className="px-6 py-4">Created</th>
+                  <th className="px-6 py-4">Translations</th>
                   <th className="px-6 py-4 text-right">Actions</th>
                 </tr>
               </thead>
@@ -294,7 +355,7 @@ export default async function AdminPage({
               <tbody>
                 {journalPosts.length === 0 ? (
                   <tr>
-                    <td className="px-6 py-5 text-[#d0cabf]" colSpan={4}>
+                    <td className="px-6 py-5 text-[#d0cabf]" colSpan={5}>
                       No journal posts yet.
                     </td>
                   </tr>
@@ -334,6 +395,15 @@ export default async function AdminPage({
 
                       <td className="px-6 py-5 text-[#d0cabf]">
                         {post.createdAt.toLocaleDateString("en-GB")}
+                      </td>
+
+                      <td className="px-6 py-5 text-xs uppercase tracking-[0.18em] text-[#c6a66a]">
+                        {post.translations.length > 0
+                          ? post.translations
+                              .map((translation) => translation.locale)
+                              .sort()
+                              .join(", ")
+                          : "None"}
                       </td>
 
                       <td className="px-6 py-5">

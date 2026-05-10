@@ -4,6 +4,8 @@ import Footer from "@/components/Footer";
 import FadeIn from "@/components/FadeIn";
 import { prisma } from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const pieces = await prisma.piece.findMany({
     orderBy: {
