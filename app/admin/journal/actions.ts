@@ -35,49 +35,41 @@ async function generateJournalTranslations(input: {
   excerpt: string;
   content: string;
 }) {
-  const [de, ro] = await Promise.all([
-    translateJournalContent("DE", {
-      title: input.title,
-      excerpt: input.excerpt,
-      content: input.content,
-    }),
-    translateJournalContent("RO", {
-      title: input.title,
-      excerpt: input.excerpt,
-      content: input.content,
-    }),
-  ]);
+  let savedTranslations = 0;
 
-  await Promise.all([
-    prisma.journalPostTranslation.upsert({
-      where: {
-        journalPostId_locale: {
-          journalPostId: input.journalPostId,
-          locale: "DE",
+  for (const locale of ["DE", "RO"] as const) {
+    try {
+      const translation = await translateJournalContent(locale, {
+        title: input.title,
+        excerpt: input.excerpt,
+        content: input.content,
+      });
+
+      await prisma.journalPostTranslation.upsert({
+        where: {
+          journalPostId_locale: {
+            journalPostId: input.journalPostId,
+            locale,
+          },
         },
-      },
-      update: de,
-      create: {
-        journalPostId: input.journalPostId,
-        locale: "DE",
-        ...de,
-      },
-    }),
-    prisma.journalPostTranslation.upsert({
-      where: {
-        journalPostId_locale: {
+        update: translation,
+        create: {
           journalPostId: input.journalPostId,
-          locale: "RO",
+          locale,
+          ...translation,
         },
-      },
-      update: ro,
-      create: {
-        journalPostId: input.journalPostId,
-        locale: "RO",
-        ...ro,
-      },
-    }),
-  ]);
+      });
+
+      savedTranslations += 1;
+    } catch (error) {
+      console.error(
+        `Journal translation generation failed for ${input.journalPostId} (${locale}):`,
+        error
+      );
+    }
+  }
+
+  return savedTranslations;
 }
 
 export async function createJournalPost(formData: FormData) {
@@ -115,7 +107,7 @@ export async function createJournalPost(formData: FormData) {
     },
   });
 
-  await generateJournalTranslations({
+  const savedTranslations = await generateJournalTranslations({
     journalPostId: post.id,
     title,
     excerpt,
@@ -126,7 +118,11 @@ export async function createJournalPost(formData: FormData) {
   revalidatePath("/journal");
   revalidatePath("/");
 
-  redirect("/admin?success=journal-created");
+  redirect(
+    savedTranslations > 0
+      ? `/admin?success=journal-created&translations=${savedTranslations}`
+      : "/admin"
+  );
 }
 
 export async function updateJournalPost(formData: FormData) {
@@ -190,7 +186,7 @@ export async function updateJournalPost(formData: FormData) {
     },
   });
 
-  await generateJournalTranslations({
+  const savedTranslations = await generateJournalTranslations({
     journalPostId: postId,
     title,
     excerpt,
@@ -202,7 +198,11 @@ export async function updateJournalPost(formData: FormData) {
   revalidatePath(`/journal/${slug}`);
   revalidatePath("/");
 
-  redirect("/admin?success=journal-updated");
+  redirect(
+    savedTranslations > 0
+      ? `/admin?success=journal-updated&translations=${savedTranslations}`
+      : "/admin"
+  );
 }
 
 export async function archiveJournalPost(formData: FormData) {
@@ -270,4 +270,43 @@ export async function deleteJournalPost(formData: FormData) {
   revalidatePath("/");
 
   redirect("/admin?success=journal-deleted");
+}
+
+export async function generateMissingJournalTranslations() {
+  const posts = await prisma.journalPost.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  let savedTranslations = 0;
+  const expectedTranslations = posts.length * 2;
+
+  for (const post of posts) {
+    savedTranslations += await generateJournalTranslations({
+      journalPostId: post.id,
+      title: post.title,
+      excerpt: post.excerpt,
+      content: post.content,
+    });
+  }
+
+  revalidatePath("/admin");
+  revalidatePath("/journal");
+  revalidatePath("/de/journal");
+  revalidatePath("/ro/journal");
+  revalidatePath("/");
+
+  for (const post of posts) {
+    revalidatePath(`/journal/${post.slug}`);
+    revalidatePath(`/de/journal/${post.slug}`);
+    revalidatePath(`/ro/journal/${post.slug}`);
+  }
+
+  const params =
+    savedTranslations > 0
+      ? `success=journal-translations-generated&translations=${savedTranslations}&expected=${expectedTranslations}`
+      : "translations=0";
+
+  redirect(`/admin?${params}`);
 }

@@ -23,56 +23,44 @@ async function generatePieceTranslations(input: {
   material: string | null;
   atelier: string | null;
 }) {
-  const [de, ro] = await Promise.all([
-    translatePieceContent("DE", {
-      title: input.title,
-      collection: input.collection,
-      shortDescription: input.shortDescription,
-      story: input.story,
-      material: input.material,
-      atelier: input.atelier,
-    }),
-    translatePieceContent("RO", {
-      title: input.title,
-      collection: input.collection,
-      shortDescription: input.shortDescription,
-      story: input.story,
-      material: input.material,
-      atelier: input.atelier,
-    }),
-  ]);
+  let savedTranslations = 0;
 
-  await Promise.all([
-    prisma.pieceTranslation.upsert({
-      where: {
-        pieceId_locale: {
-          pieceId: input.pieceId,
-          locale: "DE",
-        },
-      },
-      update: de,
-      create: {
-        pieceId: input.pieceId,
-        locale: "DE",
-        ...de,
-      },
-    }),
-    prisma.pieceTranslation.upsert({
-      where: {
-        pieceId_locale: {
-          pieceId: input.pieceId,
-          locale: "RO",
-        },
-      },
-      update: ro,
-      create: {
-        pieceId: input.pieceId,
-        locale: "RO",
-        ...ro,
-      },
-    }),
-  ]);
+  for (const locale of ["DE", "RO"] as const) {
+    try {
+      const translation = await translatePieceContent(locale, {
+        title: input.title,
+        collection: input.collection,
+        shortDescription: input.shortDescription,
+        story: input.story,
+        material: input.material,
+        atelier: input.atelier,
+      });
 
+      await prisma.pieceTranslation.upsert({
+        where: {
+          pieceId_locale: {
+            pieceId: input.pieceId,
+            locale,
+          },
+        },
+        update: translation,
+        create: {
+          pieceId: input.pieceId,
+          locale,
+          ...translation,
+        },
+      });
+
+      savedTranslations += 1;
+    } catch (error) {
+      console.error(
+        `Piece translation generation failed for ${input.pieceId} (${locale}):`,
+        error
+      );
+    }
+  }
+
+  return savedTranslations;
 }
 
 function revalidatePiecePublicPaths(slug: string) {
@@ -148,23 +136,24 @@ export async function createPiece(formData: FormData) {
     },
   });
 
-  try {
-    await generatePieceTranslations({
-      pieceId: piece.id,
-      title,
-      collection,
-      shortDescription,
-      story: story || null,
-      material: material || null,
-      atelier: atelier || null,
-    });
-  } catch (error) {
-    console.error("Piece translation generation failed:", error);
-  }
+  const savedTranslations = await generatePieceTranslations({
+    pieceId: piece.id,
+    title,
+    collection,
+    shortDescription,
+    story: story || null,
+    material: material || null,
+    atelier: atelier || null,
+  });
+
   revalidatePieceCollections();
   revalidatePiecePublicPaths(slug);
 
-  redirect("/admin?success=piece-created");
+  redirect(
+    savedTranslations > 0
+      ? `/admin?success=piece-created&translations=${savedTranslations}`
+      : "/admin"
+  );
 }
 
 export async function updatePiece(formData: FormData) {
@@ -243,23 +232,24 @@ export async function updatePiece(formData: FormData) {
     },
   });
 
-  try {
-    await generatePieceTranslations({
-      pieceId,
-      title,
-      collection,
-      shortDescription,
-      story: story || null,
-      material: material || null,
-      atelier: atelier || null,
-    });
-  } catch (error) {
-    console.error("Piece translation generation failed:", error);
-  }
+  const savedTranslations = await generatePieceTranslations({
+    pieceId,
+    title,
+    collection,
+    shortDescription,
+    story: story || null,
+    material: material || null,
+    atelier: atelier || null,
+  });
+
   revalidatePieceCollections();
   revalidatePiecePublicPaths(slug);
 
-  redirect("/admin?success=piece-updated");
+  redirect(
+    savedTranslations > 0
+      ? `/admin?success=piece-updated&translations=${savedTranslations}`
+      : "/admin"
+  );
 }
 
 export async function generateMissingPieceTranslations() {
@@ -273,7 +263,7 @@ export async function generateMissingPieceTranslations() {
   const expectedTranslations = pieces.length * 2;
 
   for (const piece of pieces) {
-    await generatePieceTranslations({
+    savedTranslations += await generatePieceTranslations({
       pieceId: piece.id,
       title: piece.title,
       collection: piece.collection,
@@ -284,32 +274,18 @@ export async function generateMissingPieceTranslations() {
     });
   }
 
-  const translatedRows = await prisma.pieceTranslation.findMany({
-    where: {
-      locale: {
-        in: ["DE", "RO"],
-      },
-      pieceId: {
-        in: pieces.map((piece) => piece.id),
-      },
-    },
-    select: {
-      pieceId: true,
-      locale: true,
-    },
-  });
-
-  savedTranslations = translatedRows.length;
-
   revalidatePieceCollections();
 
   for (const piece of pieces) {
     revalidatePiecePublicPaths(piece.slug);
   }
 
-  redirect(
-    `/admin?success=piece-translations-generated&translations=${savedTranslations}&expected=${expectedTranslations}`
-  );
+  const params =
+    savedTranslations > 0
+      ? `success=piece-translations-generated&translations=${savedTranslations}&expected=${expectedTranslations}`
+      : "translations=0";
+
+  redirect(`/admin?${params}`);
 }
 
 export async function archivePiece(formData: FormData) {
