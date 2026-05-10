@@ -5,9 +5,6 @@ import { prisma } from "@/lib/prisma";
 
 export default async function CollectionsPage() {
   const latestPieces = await prisma.piece.findMany({
-    where: {
-      published: true,
-    },
     include: {
       translations: true,
     },
