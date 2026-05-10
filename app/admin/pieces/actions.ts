@@ -86,6 +86,11 @@ function revalidatePieceCollections() {
   revalidatePath("/ro/collections/sonora");
 }
 
+function getOptionalFormValue(formData: FormData, key: string) {
+  const value = String(formData.get(key) || "").trim();
+  return value || null;
+}
+
 export async function createPiece(formData: FormData) {
   const title = String(formData.get("title") || "").trim();
   const slugInput = String(formData.get("slug") || "").trim();
@@ -170,6 +175,20 @@ export async function updatePiece(formData: FormData) {
   const image = String(formData.get("image") || "").trim();
   const detailImage = String(formData.get("detailImage") || "").trim();
 
+  const deTitle = getOptionalFormValue(formData, "deTitle");
+  const deCollection = getOptionalFormValue(formData, "deCollection");
+  const deShortDescription = getOptionalFormValue(formData, "deShortDescription");
+  const deStory = getOptionalFormValue(formData, "deStory");
+  const deMaterial = getOptionalFormValue(formData, "deMaterial");
+  const deAtelier = getOptionalFormValue(formData, "deAtelier");
+
+  const roTitle = getOptionalFormValue(formData, "roTitle");
+  const roCollection = getOptionalFormValue(formData, "roCollection");
+  const roShortDescription = getOptionalFormValue(formData, "roShortDescription");
+  const roStory = getOptionalFormValue(formData, "roStory");
+  const roMaterial = getOptionalFormValue(formData, "roMaterial");
+  const roAtelier = getOptionalFormValue(formData, "roAtelier");
+
   if (!pieceId || !title || !collection || !status || !shortDescription) {
     throw new Error("Missing required piece fields.");
   }
@@ -232,24 +251,68 @@ export async function updatePiece(formData: FormData) {
     },
   });
 
-  const savedTranslations = await generatePieceTranslations({
-    pieceId,
-    title,
-    collection,
-    shortDescription,
-    story: story || null,
-    material: material || null,
-    atelier: atelier || null,
-  });
+  if (deTitle || deCollection || deShortDescription || deStory || deMaterial || deAtelier) {
+    await prisma.pieceTranslation.upsert({
+      where: {
+        pieceId_locale: {
+          pieceId,
+          locale: "DE",
+        },
+      },
+      update: {
+        title: deTitle || title,
+        collection: deCollection || collection,
+        shortDescription: deShortDescription || shortDescription,
+        story: deStory,
+        material: deMaterial,
+        atelier: deAtelier,
+      },
+      create: {
+        pieceId,
+        locale: "DE",
+        title: deTitle || title,
+        collection: deCollection || collection,
+        shortDescription: deShortDescription || shortDescription,
+        story: deStory,
+        material: deMaterial,
+        atelier: deAtelier,
+      },
+    });
+  }
+
+  if (roTitle || roCollection || roShortDescription || roStory || roMaterial || roAtelier) {
+    await prisma.pieceTranslation.upsert({
+      where: {
+        pieceId_locale: {
+          pieceId,
+          locale: "RO",
+        },
+      },
+      update: {
+        title: roTitle || title,
+        collection: roCollection || collection,
+        shortDescription: roShortDescription || shortDescription,
+        story: roStory,
+        material: roMaterial,
+        atelier: roAtelier,
+      },
+      create: {
+        pieceId,
+        locale: "RO",
+        title: roTitle || title,
+        collection: roCollection || collection,
+        shortDescription: roShortDescription || shortDescription,
+        story: roStory,
+        material: roMaterial,
+        atelier: roAtelier,
+      },
+    });
+  }
 
   revalidatePieceCollections();
   revalidatePiecePublicPaths(slug);
 
-  redirect(
-    savedTranslations > 0
-      ? `/admin?success=piece-updated&translations=${savedTranslations}`
-      : "/admin"
-  );
+  redirect("/admin?success=piece-updated");
 }
 
 export async function generateMissingPieceTranslations() {
