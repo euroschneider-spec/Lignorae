@@ -95,7 +95,7 @@ export default async function CollectionsPage() {
           </Link>
         </div>
         <section className="mt-28">
-          <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div className="mb-14 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div>
               <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
                 Einzelstücke
