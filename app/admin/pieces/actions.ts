@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { translatePieceContent } from "@/lib/translations";
 import { put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -29,6 +30,66 @@ async function uploadPieceImage(file: File | null, slug: string, suffix: string)
   return blob.url;
 }
 
+async function generatePieceTranslations(input: {
+  pieceId: string;
+  title: string;
+  collection: string;
+  shortDescription: string;
+  story: string | null;
+  material: string | null;
+  atelier: string | null;
+}) {
+  const [de, ro] = await Promise.all([
+    translatePieceContent("DE", {
+      title: input.title,
+      collection: input.collection,
+      shortDescription: input.shortDescription,
+      story: input.story,
+      material: input.material,
+      atelier: input.atelier,
+    }),
+    translatePieceContent("RO", {
+      title: input.title,
+      collection: input.collection,
+      shortDescription: input.shortDescription,
+      story: input.story,
+      material: input.material,
+      atelier: input.atelier,
+    }),
+  ]);
+
+  await Promise.all([
+    prisma.pieceTranslation.upsert({
+      where: {
+        pieceId_locale: {
+          pieceId: input.pieceId,
+          locale: "DE",
+        },
+      },
+      update: de,
+      create: {
+        pieceId: input.pieceId,
+        locale: "DE",
+        ...de,
+      },
+    }),
+    prisma.pieceTranslation.upsert({
+      where: {
+        pieceId_locale: {
+          pieceId: input.pieceId,
+          locale: "RO",
+        },
+      },
+      update: ro,
+      create: {
+        pieceId: input.pieceId,
+        locale: "RO",
+        ...ro,
+      },
+    }),
+  ]);
+}
+
 export async function createPiece(formData: FormData) {
   const title = String(formData.get("title") || "").trim();
   const slugInput = String(formData.get("slug") || "").trim();
@@ -55,7 +116,7 @@ export async function createPiece(formData: FormData) {
     throw new Error("Missing required main image.");
   }
 
-  await prisma.piece.create({
+  const piece = await prisma.piece.create({
     data: {
       title,
       slug,
@@ -80,6 +141,16 @@ export async function createPiece(formData: FormData) {
         },
       },
     },
+  });
+
+  await generatePieceTranslations({
+    pieceId: piece.id,
+    title,
+    collection,
+    shortDescription,
+    story: story || null,
+    material: material || null,
+    atelier: atelier || null,
   });
 
   revalidatePath("/admin");
@@ -168,6 +239,16 @@ export async function updatePiece(formData: FormData) {
         },
       },
     },
+  });
+
+  await generatePieceTranslations({
+    pieceId,
+    title,
+    collection,
+    shortDescription,
+    story: story || null,
+    material: material || null,
+    atelier: atelier || null,
   });
 
   revalidatePath("/admin");

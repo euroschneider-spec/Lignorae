@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { translateJournalContent } from "@/lib/translations";
 import { put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -28,6 +29,57 @@ async function uploadJournalImage(file: File | null, slug: string) {
   return blob.url;
 }
 
+async function generateJournalTranslations(input: {
+  journalPostId: string;
+  title: string;
+  excerpt: string;
+  content: string;
+}) {
+  const [de, ro] = await Promise.all([
+    translateJournalContent("DE", {
+      title: input.title,
+      excerpt: input.excerpt,
+      content: input.content,
+    }),
+    translateJournalContent("RO", {
+      title: input.title,
+      excerpt: input.excerpt,
+      content: input.content,
+    }),
+  ]);
+
+  await Promise.all([
+    prisma.journalPostTranslation.upsert({
+      where: {
+        journalPostId_locale: {
+          journalPostId: input.journalPostId,
+          locale: "DE",
+        },
+      },
+      update: de,
+      create: {
+        journalPostId: input.journalPostId,
+        locale: "DE",
+        ...de,
+      },
+    }),
+    prisma.journalPostTranslation.upsert({
+      where: {
+        journalPostId_locale: {
+          journalPostId: input.journalPostId,
+          locale: "RO",
+        },
+      },
+      update: ro,
+      create: {
+        journalPostId: input.journalPostId,
+        locale: "RO",
+        ...ro,
+      },
+    }),
+  ]);
+}
+
 export async function createJournalPost(formData: FormData) {
   const title = String(formData.get("title") || "").trim();
   const slugInput = String(formData.get("slug") || "").trim();
@@ -44,7 +96,7 @@ export async function createJournalPost(formData: FormData) {
 
   const coverImage = await uploadJournalImage(coverImageFile, slug);
 
-  await prisma.journalPost.create({
+  const post = await prisma.journalPost.create({
     data: {
       title,
       slug,
@@ -61,6 +113,13 @@ export async function createJournalPost(formData: FormData) {
         },
       },
     },
+  });
+
+  await generateJournalTranslations({
+    journalPostId: post.id,
+    title,
+    excerpt,
+    content,
   });
 
   revalidatePath("/admin");
@@ -129,6 +188,13 @@ export async function updateJournalPost(formData: FormData) {
         },
       },
     },
+  });
+
+  await generateJournalTranslations({
+    journalPostId: postId,
+    title,
+    excerpt,
+    content,
   });
 
   revalidatePath("/admin");

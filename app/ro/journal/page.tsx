@@ -1,7 +1,27 @@
+import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { prisma } from "@/lib/prisma";
 
-export default function JournalPage() {
+export const dynamic = "force-dynamic";
+
+export default async function RomanianJournalPage() {
+  const posts = await prisma.journalPost.findMany({
+    where: {
+      published: true,
+    },
+    include: {
+      translations: {
+        where: {
+          locale: "RO",
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
   return (
     <main className="flex min-h-screen flex-col bg-[#1a130d] text-[#f5f1e8]">
       <Header />
@@ -16,60 +36,60 @@ export default function JournalPage() {
         </h1>
 
         <p className="mb-20 max-w-5xl text-xl leading-relaxed text-[#d0cabf]">
-          Experimente & experiențe, materiale, greșeli, descoperiri, lemn recuperat,
-          rafinarea suprafețelor și construcția lentă a LIGNORAE.
+          Experimente și experiențe, materiale, greșeli, descoperiri, lemn
+          recuperat, rafinarea suprafețelor și construcția lentă a LIGNORAE.
         </p>
 
-        <div className="space-y-12">
-          <article className="group overflow-hidden rounded-3xl border border-[#4a3522]/70 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/60">
-            <div className="relative aspect-[16/9] overflow-hidden">
-  <div className="absolute inset-0 bg-[url('/atelier.jpg')] bg-cover bg-[position:center_35%] transition duration-700 group-hover:scale-105" />
-  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-</div>
+        {posts.length === 0 ? (
+          <div className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-10 text-center">
+            <p className="text-lg leading-relaxed text-[#d0cabf]">
+              Nu există încă articole publicate în jurnal.
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-12">
+            {posts.map((post) => {
+              const translation = post.translations[0];
+              const title = translation?.title || post.title;
+              const excerpt = translation?.excerpt || post.excerpt;
 
-            <div className="p-8">
-              <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
-                April 2026
-              </p>
+              return (
+                <Link
+                  key={post.id}
+                  href={`/ro/journal/${post.slug}`}
+                  className="group block overflow-hidden rounded-3xl border border-[#c6a66a]/35 bg-[#21170f] shadow-[0_0_35px_rgba(198,166,106,0.08)] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/70 hover:shadow-[0_0_45px_rgba(198,166,106,0.16)]"
+                >
+                  {post.coverImage && (
+                    <div className="relative aspect-[16/9] overflow-hidden">
+                      <div
+                        className="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-105"
+                        style={{ backgroundImage: `url('${post.coverImage}')` }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                    </div>
+                  )}
 
-              <h2 className="mb-5 text-3xl font-light transition duration-300 group-hover:text-[#c6a66a]">
-                Învățarea meșteșugului
-              </h2>
+                  <div className="p-8">
+                    <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
+                      {post.createdAt.toLocaleDateString("ro-RO", {
+                        month: "long",
+                        year: "numeric",
+                      })}
+                    </p>
 
-              <p className="leading-relaxed text-[#d0cabf]">
-                Primele luni LIGNORAE sunt mai puțin despre perfecțiune și mai
-                mult despre disciplină: șlefuire, lustruire, corectarea
-                greșelilor, înțelegerea direcției fibrei și felul în care
-                diferite esențe reacționează la presiune, căldură și compuși de
-                lustruire.
-              </p>
-            </div>
-          </article>
+                    <h2 className="mb-5 text-3xl font-light transition duration-300 group-hover:text-[#c6a66a]">
+                      {title}
+                    </h2>
 
-          <article className="group overflow-hidden rounded-3xl border border-[#4a3522]/70 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/60">
-            <div className="relative aspect-[16/9] overflow-hidden">
-  <div className="absolute inset-0 bg-[url('/sonora.jpg')] bg-cover bg-center transition duration-700 group-hover:scale-105" />
-  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-</div>
-
-            <div className="p-8">
-              <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
-                Cercetarea materialelor
-              </p>
-
-              <h2 className="mb-5 text-3xl font-light transition duration-300 group-hover:text-[#c6a66a]">
-                De ce contează lemnul recuperat?
-              </h2>
-
-              <p className="leading-relaxed text-[#d0cabf]">
-                Unele materiale poartă deja decenii sau secole, uneori chiar
-                milenii de istorie. Instrumentele muzicale, fragmentele
-                arhitecturale și esențele vechi oferă texturi și povești care
-                nu pot fi reproduse artificial.
-              </p>
-            </div>
-          </article>
-        </div>
+                    <p className="leading-relaxed text-[#d0cabf]">
+                      {excerpt}
+                    </p>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        )}
       </section>
 
       <Footer />
