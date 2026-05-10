@@ -5,9 +5,6 @@ import { prisma } from "@/lib/prisma";
 
 export default async function CollectionsPage() {
   const latestPieces = await prisma.piece.findMany({
-    where: {
-      published: true,
-    },
     include: {
       translations: true,
     },
@@ -133,7 +130,7 @@ export default async function CollectionsPage() {
                 >
                   <div className="relative aspect-[4/3] overflow-hidden bg-black">
                     <img
-                      src={piece.coverImage}
+                      src={piece.imageUrl}
                       alt={title}
                       className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
                     />
