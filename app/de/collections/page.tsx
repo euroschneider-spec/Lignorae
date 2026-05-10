@@ -11,7 +11,7 @@ export default async function CollectionsPage() {
     orderBy: {
       createdAt: "desc",
     },
-    take: 3,
+    take: 4,
   });
   return (
     <main className="flex min-h-screen flex-col bg-[#1a130d] text-[#f5f1e8]">
