@@ -36,6 +36,13 @@ export default async function AdminPage({
   const { success } = await searchParams;
   const successMessage = getSuccessMessage(success);
   const pieces = await prisma.piece.findMany({
+    include: {
+      translations: {
+        select: {
+          locale: true,
+        },
+      },
+    },
     orderBy: {
       createdAt: "desc",
     },
@@ -147,6 +154,7 @@ export default async function AdminPage({
                   <th className="px-6 py-4">Title</th>
                   <th className="px-6 py-4">Published</th>
                   <th className="px-6 py-4">Created</th>
+                  <th className="px-6 py-4">Translations</th>
                   <th className="px-6 py-4 text-right">Actions</th>
                 </tr>
               </thead>
@@ -174,6 +182,15 @@ export default async function AdminPage({
 
                     <td className="px-6 py-5 text-[#d0cabf]">
                       {piece.createdAt.toLocaleDateString("en-GB")}
+                    </td>
+
+                    <td className="px-6 py-5 text-xs uppercase tracking-[0.18em] text-[#c6a66a]">
+                      {piece.translations.length > 0
+                        ? piece.translations
+                            .map((translation) => translation.locale)
+                            .sort()
+                            .join(", ")
+                        : "None"}
                     </td>
 
                     <td className="px-6 py-5">
