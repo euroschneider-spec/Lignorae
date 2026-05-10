@@ -2,7 +2,6 @@
 
 import { prisma } from "@/lib/prisma";
 import { translatePieceContent } from "@/lib/translations";
-import { put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -14,21 +13,6 @@ function createSlug(value: string) {
     .replace(/^-+|-+$/g, "");
 }
 
-async function uploadPieceImage(file: File | null, slug: string, suffix: string) {
-  if (!file || file.size === 0) {
-    return null;
-  }
-
-  const extension = file.name.split(".").pop() || "jpg";
-  const safeSuffix = suffix.replace(/[^a-z0-9-]/gi, "-").toLowerCase();
-  const pathname = `pieces/${slug}-${safeSuffix}-${Date.now()}.${extension}`;
-
-  const blob = await put(pathname, file, {
-    access: "public",
-  });
-
-  return blob.url;
-}
 
 async function generatePieceTranslations(input: {
   pieceId: string;
@@ -100,17 +84,14 @@ export async function createPiece(formData: FormData) {
   const atelier = String(formData.get("atelier") || "").trim();
   const shortDescription = String(formData.get("shortDescription") || "").trim();
   const story = String(formData.get("story") || "").trim();
-  const imageFile = formData.get("imageFile") as File | null;
-  const detailImageFile = formData.get("detailImageFile") as File | null;
+  const image = String(formData.get("image") || "").trim();
+  const detailImage = String(formData.get("detailImage") || "").trim();
 
   const slug = slugInput || createSlug(title);
 
   if (!title || !slug || !collection || !status || !shortDescription) {
     throw new Error("Missing required piece fields.");
   }
-
-  const image = await uploadPieceImage(imageFile, slug, "main");
-  const detailImage = await uploadPieceImage(detailImageFile, slug, "detail");
 
   if (!image) {
     throw new Error("Missing required main image.");
@@ -174,8 +155,8 @@ export async function updatePiece(formData: FormData) {
   const atelier = String(formData.get("atelier") || "").trim();
   const shortDescription = String(formData.get("shortDescription") || "").trim();
   const story = String(formData.get("story") || "").trim();
-  const imageFile = formData.get("imageFile") as File | null;
-  const detailImageFile = formData.get("detailImageFile") as File | null;
+  const image = String(formData.get("image") || "").trim();
+  const detailImage = String(formData.get("detailImage") || "").trim();
 
   if (!pieceId || !title || !collection || !status || !shortDescription) {
     throw new Error("Missing required piece fields.");
@@ -192,8 +173,6 @@ export async function updatePiece(formData: FormData) {
   }
 
   const slug = slugInput || existingPiece.slug || createSlug(title);
-  const image = await uploadPieceImage(imageFile, slug, "main");
-  const detailImage = await uploadPieceImage(detailImageFile, slug, "detail");
 
   await prisma.piece.update({
     where: {
