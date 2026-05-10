@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import {
@@ -21,41 +20,48 @@ function getSuccessMessage(input: {
   expected?: string;
 }) {
   const { success, translations, expected } = input;
-  const savedTranslationCount = Number(translations || 0);
 
   if (success === "piece-created") {
-    if (savedTranslationCount < 1) return null;
-
     return "Piece saved successfully.";
   }
-  if (success === "piece-updated") {
-    if (savedTranslationCount < 1) return null;
 
+  if (success === "piece-updated") {
     return "Piece updated successfully.";
   }
-  if (success === "piece-archived") return "Piece archived successfully.";
-  if (success === "piece-deleted") return "Piece deleted successfully.";
-  if (success === "piece-translations-generated") {
-    if (savedTranslationCount < 1) return null;
 
+  if (success === "piece-archived") {
+    return "Piece archived successfully.";
+  }
+
+  if (success === "piece-deleted") {
+    return "Piece deleted successfully.";
+  }
+
+  if (success === "piece-translations-generated") {
     return `Piece translations saved: ${translations || "0"} / ${expected || "0"}.`;
   }
-  if (success === "journal-created") {
-    if (savedTranslationCount < 1) return null;
 
+  if (success === "journal-created") {
     return "Journal entry saved successfully.";
   }
-  if (success === "journal-updated") {
-    if (savedTranslationCount < 1) return null;
 
+  if (success === "journal-updated") {
     return "Journal entry updated successfully.";
   }
-  if (success === "journal-published") return "Journal entry published successfully.";
-  if (success === "journal-archived") return "Journal entry archived successfully.";
-  if (success === "journal-deleted") return "Journal entry deleted successfully.";
-  if (success === "journal-translations-generated") {
-    if (savedTranslationCount < 1) return null;
 
+  if (success === "journal-published") {
+    return "Journal entry published successfully.";
+  }
+
+  if (success === "journal-archived") {
+    return "Journal entry archived successfully.";
+  }
+
+  if (success === "journal-deleted") {
+    return "Journal entry deleted successfully.";
+  }
+
+  if (success === "journal-translations-generated") {
     return `Journal translations saved: ${translations || "0"} / ${expected || "0"}.`;
   }
 
