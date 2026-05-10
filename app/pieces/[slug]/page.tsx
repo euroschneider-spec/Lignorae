@@ -52,7 +52,7 @@ export default async function PieceDetailPage({
               {piece.collection}
             </p>
 
-            <h1 className="mb-8 text-5xl font-light leading-tight md:text-6xl">
+            <h1 className="mb-8 font-serif text-5xl font-light leading-tight md:text-6xl">
               {piece.title}
             </h1>
 
