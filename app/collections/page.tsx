@@ -116,7 +116,7 @@ export default async function CollectionsPage() {
               </p>
             </div>
           ) : (
-            <div className="grid gap-10 md:grid-cols-2">
+            <div className="mx-auto grid max-w-4xl gap-10 md:grid-cols-2">
               {latestPieces.map((piece) => (
                 <Link
                   key={piece.id}
