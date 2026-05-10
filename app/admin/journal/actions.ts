@@ -70,6 +70,75 @@ export async function createJournalPost(formData: FormData) {
   redirect("/admin?success=journal-created");
 }
 
+export async function updateJournalPost(formData: FormData) {
+  const postId = String(formData.get("postId") || "").trim();
+  const title = String(formData.get("title") || "").trim();
+  const slugInput = String(formData.get("slug") || "").trim();
+  const excerpt = String(formData.get("excerpt") || "").trim();
+  const content = String(formData.get("content") || "").trim();
+  const coverImageFile = formData.get("coverImageFile") as File | null;
+  const published = formData.get("published") === "on";
+
+  if (!postId || !title || !excerpt || !content) {
+    throw new Error("Missing required journal fields.");
+  }
+
+  const existingPost = await prisma.journalPost.findUnique({
+    where: {
+      id: postId,
+    },
+  });
+
+  if (!existingPost) {
+    throw new Error("Journal post not found.");
+  }
+
+  const slug = slugInput || existingPost.slug || createSlug(title);
+  const coverImage = await uploadJournalImage(coverImageFile, slug);
+
+  await prisma.journalPost.update({
+    where: {
+      id: postId,
+    },
+    data: {
+      title,
+      slug,
+      excerpt,
+      content,
+      coverImage: coverImage || existingPost.coverImage,
+      published,
+      translations: {
+        upsert: {
+          where: {
+            journalPostId_locale: {
+              journalPostId: postId,
+              locale: "EN",
+            },
+          },
+          update: {
+            title,
+            excerpt,
+            content,
+          },
+          create: {
+            locale: "EN",
+            title,
+            excerpt,
+            content,
+          },
+        },
+      },
+    },
+  });
+
+  revalidatePath("/admin");
+  revalidatePath("/journal");
+  revalidatePath(`/journal/${slug}`);
+  revalidatePath("/");
+
+  redirect("/admin?success=journal-updated");
+}
+
 export async function archiveJournalPost(formData: FormData) {
   const postId = String(formData.get("postId") || "").trim();
 
@@ -88,8 +157,33 @@ export async function archiveJournalPost(formData: FormData) {
 
   revalidatePath("/admin");
   revalidatePath("/journal");
+  revalidatePath("/");
 
   redirect("/admin?success=journal-archived");
+}
+
+export async function publishJournalPost(formData: FormData) {
+  const postId = String(formData.get("postId") || "").trim();
+
+  if (!postId) {
+    throw new Error("Missing journal post id.");
+  }
+
+  const post = await prisma.journalPost.update({
+    where: {
+      id: postId,
+    },
+    data: {
+      published: true,
+    },
+  });
+
+  revalidatePath("/admin");
+  revalidatePath("/journal");
+  revalidatePath(`/journal/${post.slug}`);
+  revalidatePath("/");
+
+  redirect("/admin?success=journal-published");
 }
 
 export async function deleteJournalPost(formData: FormData) {
@@ -107,6 +201,7 @@ export async function deleteJournalPost(formData: FormData) {
 
   revalidatePath("/admin");
   revalidatePath("/journal");
+  revalidatePath("/");
 
   redirect("/admin?success=journal-deleted");
 }

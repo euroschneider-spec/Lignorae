@@ -1,7 +1,11 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { archivePiece, deletePiece } from "./pieces/actions";
-import { archiveJournalPost, deleteJournalPost } from "./journal/actions";
+import {
+  archiveJournalPost,
+  deleteJournalPost,
+  publishJournalPost,
+} from "./journal/actions";
 
 export const dynamic = "force-dynamic";
 
@@ -10,6 +14,8 @@ function getSuccessMessage(success?: string) {
   if (success === "piece-archived") return "Piece archived successfully.";
   if (success === "piece-deleted") return "Piece deleted successfully.";
   if (success === "journal-created") return "Journal entry saved successfully.";
+  if (success === "journal-updated") return "Journal entry updated successfully.";
+  if (success === "journal-published") return "Journal entry published successfully.";
   if (success === "journal-archived") return "Journal entry archived successfully.";
   if (success === "journal-deleted") return "Journal entry deleted successfully.";
 
@@ -247,14 +253,25 @@ export default async function AdminPage({
                       className="border-t border-[#4a3522]/60"
                     >
                       <td className="px-6 py-5 text-lg">
-                        <Link
-                          href={`/journal/${post.slug}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="transition hover:text-[#c6a66a]"
-                        >
-                          {post.title}
-                        </Link>
+                        <div className="flex flex-col gap-2">
+                          <Link
+                            href={`/admin/journal/${post.id}/edit`}
+                            className="transition hover:text-[#c6a66a]"
+                          >
+                            {post.title}
+                          </Link>
+
+                          {post.published && (
+                            <Link
+                              href={`/journal/${post.slug}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs uppercase tracking-[0.18em] text-[#c6a66a] transition hover:text-[#f5f1e8]"
+                            >
+                              View public page
+                            </Link>
+                          )}
+                        </div>
                       </td>
 
                       <td className="px-6 py-5">
@@ -267,7 +284,14 @@ export default async function AdminPage({
 
                       <td className="px-6 py-5">
                         <div className="flex justify-end gap-3">
-                          {post.published && (
+                          <Link
+                            href={`/admin/journal/${post.id}/edit`}
+                            className="rounded-full border border-[#c6a66a]/40 px-4 py-2 text-xs uppercase tracking-[0.18em] text-[#c6a66a] transition hover:border-[#c6a66a] hover:bg-[#c6a66a] hover:text-black"
+                          >
+                            Edit
+                          </Link>
+
+                          {post.published ? (
                             <form action={archiveJournalPost}>
                               <input type="hidden" name="postId" value={post.id} />
                               <button
@@ -275,6 +299,16 @@ export default async function AdminPage({
                                 className="rounded-full border border-[#c6a66a]/40 px-4 py-2 text-xs uppercase tracking-[0.18em] text-[#c6a66a] transition hover:border-[#c6a66a] hover:bg-[#c6a66a] hover:text-black"
                               >
                                 Archive
+                              </button>
+                            </form>
+                          ) : (
+                            <form action={publishJournalPost}>
+                              <input type="hidden" name="postId" value={post.id} />
+                              <button
+                                type="submit"
+                                className="rounded-full border border-[#c6a66a]/40 px-4 py-2 text-xs uppercase tracking-[0.18em] text-[#c6a66a] transition hover:border-[#c6a66a] hover:bg-[#c6a66a] hover:text-black"
+                              >
+                                Publish
                               </button>
                             </form>
                           )}
