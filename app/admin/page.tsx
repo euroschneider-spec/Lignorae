@@ -68,21 +68,39 @@ function getSuccessMessage(input: {
   return null;
 }
 
+function getErrorMessage(error?: string) {
+  if (error === "piece-translation-failed") {
+    return "Piece translation generation failed. Check the Vercel function logs or OpenAI response.";
+  }
+
+  if (error === "journal-translation-failed") {
+    return "Journal translation generation failed. Check the Vercel function logs or OpenAI response.";
+  }
+
+  if (error === "translation-failed") {
+    return "Translation generation failed. Check the Vercel function logs or OpenAI response.";
+  }
+
+  return null;
+}
+
 export default async function AdminPage({
   searchParams,
 }: {
   searchParams: Promise<{
     success?: string;
+    error?: string;
     translations?: string;
     expected?: string;
   }>;
 }) {
-  const { success, translations, expected } = await searchParams;
+  const { success, error, translations, expected } = await searchParams;
   const successMessage = getSuccessMessage({
     success,
     translations,
     expected,
   });
+  const errorMessage = getErrorMessage(error);
   const pieces = await prisma.piece.findMany({
     include: {
       translations: {
@@ -153,6 +171,11 @@ export default async function AdminPage({
         {successMessage && (
           <div className="mb-10 rounded-2xl border border-[#c6a66a]/40 bg-[#c6a66a]/10 px-6 py-4 text-sm uppercase tracking-[0.2em] text-[#f5f1e8]">
             {successMessage}
+          </div>
+        )}
+        {errorMessage && (
+          <div className="mb-10 rounded-2xl border border-red-500/40 bg-red-500/10 px-6 py-4 text-sm uppercase tracking-[0.2em] text-red-200">
+            {errorMessage}
           </div>
         )}
 

@@ -38,35 +38,34 @@ async function generateJournalTranslations(input: {
   let savedTranslations = 0;
 
   for (const locale of ["DE", "RO"] as const) {
-    try {
-      const translation = await translateJournalContent(locale, {
-        title: input.title,
-        excerpt: input.excerpt,
-        content: input.content,
-      });
-
-      await prisma.journalPostTranslation.upsert({
-        where: {
-          journalPostId_locale: {
-            journalPostId: input.journalPostId,
-            locale,
-          },
-        },
-        update: translation,
-        create: {
+    const existingTranslation = await prisma.journalPostTranslation.findUnique({
+      where: {
+        journalPostId_locale: {
           journalPostId: input.journalPostId,
           locale,
-          ...translation,
         },
-      });
+      },
+    });
 
-      savedTranslations += 1;
-    } catch (error) {
-      console.error(
-        `Journal translation generation failed for ${input.journalPostId} (${locale}):`,
-        error
-      );
+    if (existingTranslation) {
+      continue;
     }
+
+    const translation = await translateJournalContent(locale, {
+      title: input.title,
+      excerpt: input.excerpt,
+      content: input.content,
+    });
+
+    await prisma.journalPostTranslation.create({
+      data: {
+        journalPostId: input.journalPostId,
+        locale,
+        ...translation,
+      },
+    });
+
+    savedTranslations += 1;
   }
 
   return savedTranslations;
@@ -107,12 +106,19 @@ export async function createJournalPost(formData: FormData) {
     },
   });
 
-  const savedTranslations = await generateJournalTranslations({
-    journalPostId: post.id,
-    title,
-    excerpt,
-    content,
-  });
+  let savedTranslations = 0;
+
+  try {
+    savedTranslations = await generateJournalTranslations({
+      journalPostId: post.id,
+      title,
+      excerpt,
+      content,
+    });
+  } catch (error) {
+    console.error("Journal translation generation failed:", error);
+    redirect("/admin?error=journal-translation-failed");
+  }
 
   revalidatePath("/admin");
   revalidatePath("/journal");
@@ -186,12 +192,19 @@ export async function updateJournalPost(formData: FormData) {
     },
   });
 
-  const savedTranslations = await generateJournalTranslations({
-    journalPostId: postId,
-    title,
-    excerpt,
-    content,
-  });
+  let savedTranslations = 0;
+
+  try {
+    savedTranslations = await generateJournalTranslations({
+      journalPostId: postId,
+      title,
+      excerpt,
+      content,
+    });
+  } catch (error) {
+    console.error("Journal translation generation failed:", error);
+    redirect("/admin?error=journal-translation-failed");
+  }
 
   revalidatePath("/admin");
   revalidatePath("/journal");
@@ -282,13 +295,18 @@ export async function generateMissingJournalTranslations() {
   let savedTranslations = 0;
   const expectedTranslations = posts.length * 2;
 
-  for (const post of posts) {
-    savedTranslations += await generateJournalTranslations({
-      journalPostId: post.id,
-      title: post.title,
-      excerpt: post.excerpt,
-      content: post.content,
-    });
+  try {
+    for (const post of posts) {
+      savedTranslations += await generateJournalTranslations({
+        journalPostId: post.id,
+        title: post.title,
+        excerpt: post.excerpt,
+        content: post.content,
+      });
+    }
+  } catch (error) {
+    console.error("Missing journal translation generation failed:", error);
+    redirect("/admin?error=journal-translation-failed");
   }
 
   revalidatePath("/admin");
