@@ -2,8 +2,30 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FadeIn from "@/components/FadeIn";
+import { prisma } from "@/lib/prisma";
 
-export default function HomePage() {
+export const dynamic = "force-dynamic";
+
+export default async function HomePage() {
+  const recentPieces = await prisma.piece.findMany({
+    where: {
+      status: {
+        notIn: ["draft", "archived"],
+      },
+    },
+    include: {
+      translations: {
+        where: {
+          locale: "RO",
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+    take: 3,
+  });
+
   return (
     <main className="min-h-screen bg-[#1a130d] text-[#f5f1e8]">
       <Header />
@@ -127,6 +149,69 @@ export default function HomePage() {
             Solicită informații despre disponibilitate
           </Link>
         </div>
+
+        {recentPieces.length > 0 && (
+          <section className="mt-28">
+            <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
+                  Arhiva curentă
+                </p>
+
+                <h2 className="text-4xl font-light md:text-5xl">
+                  Piese adăugate recent
+                </h2>
+              </div>
+
+              <Link
+                href="/ro/collections"
+                className="text-sm uppercase tracking-[0.25em] text-[#c6a66a] transition hover:text-[#f5f1e8]"
+              >
+                Vezi toate piesele
+              </Link>
+            </div>
+
+            <div className="grid gap-10 md:grid-cols-3">
+              {recentPieces.map((piece) => {
+                const translation = piece.translations[0];
+                const title = translation?.title || piece.title;
+                const collection = translation?.collection || piece.collection;
+                const shortDescription =
+                  translation?.shortDescription || piece.shortDescription;
+
+                return (
+                  <Link
+                    key={piece.id}
+                    href={`/ro/pieces/${piece.slug}`}
+                    className="group overflow-hidden rounded-3xl border border-[#c6a66a]/30 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/70 hover:shadow-[0_0_30px_rgba(198,166,106,0.14)]"
+                  >
+                    <div className="relative aspect-[16/10] overflow-hidden">
+                      <div
+                        className="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-105"
+                        style={{ backgroundImage: `url('${piece.image}')` }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
+                    </div>
+
+                    <div className="p-8">
+                      <p className="mb-4 text-xs uppercase tracking-[0.28em] text-[#c6a66a]">
+                        {collection}
+                      </p>
+
+                      <h3 className="mb-4 text-2xl font-light transition duration-300 group-hover:text-[#c6a66a]">
+                        {title}
+                      </h3>
+
+                      <p className="leading-relaxed text-[#cfc8bc]">
+                        {shortDescription}
+                      </p>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+        )}
       </section>
     </FadeIn>
 
