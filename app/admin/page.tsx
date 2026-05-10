@@ -18,7 +18,7 @@ function getSuccessMessage(success?: string) {
   if (success === "piece-updated") return "Piece updated successfully.";
   if (success === "piece-archived") return "Piece archived successfully.";
   if (success === "piece-deleted") return "Piece deleted successfully.";
-  if (success === "piece-translations-generated") return "Missing piece translations generated.";
+  if (success === "piece-translations-generated") return "Piece translations generated.";
   if (success === "journal-created") return "Journal entry saved successfully.";
   if (success === "journal-updated") return "Journal entry updated successfully.";
   if (success === "journal-published") return "Journal entry published successfully.";
@@ -127,7 +127,7 @@ export default async function AdminPage({
                   type="submit"
                   className="rounded-full border border-[#c6a66a]/50 px-5 py-2 text-sm uppercase tracking-[0.2em] text-[#c6a66a] transition hover:border-[#c6a66a] hover:bg-[#c6a66a] hover:text-black"
                 >
-                  Generate missing translations
+                  Regenerate translations
                 </button>
               </form>
 
@@ -274,7 +274,9 @@ export default async function AdminPage({
                       <td className="px-6 py-5 text-lg">
                         <div className="flex flex-col gap-2">
                           <Link
-                            href={`/admin/journal/${post.id}/edit`}
+                            href={`/journal/${post.slug}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="transition hover:text-[#c6a66a]"
                           >
                             {post.title}
