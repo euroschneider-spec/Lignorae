@@ -321,10 +321,7 @@ export async function generateMissingJournalTranslations() {
     revalidatePath(`/ro/journal/${post.slug}`);
   }
 
-  const params =
-    savedTranslations > 0
-      ? `success=journal-translations-generated&translations=${savedTranslations}&expected=${expectedTranslations}`
-      : "translations=0";
-
-  redirect(`/admin?${params}`);
+  redirect(
+    `/admin?success=journal-translations-generated&translations=${savedTranslations}&expected=${expectedTranslations}`
+  );
 }

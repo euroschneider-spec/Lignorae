@@ -126,7 +126,7 @@ async function createMissingTranslationsForPiece(pieceId: string) {
     include: { translations: true },
   });
 
-  if (!piece) return;
+  if (!piece) return 0;
 
   const existingLocales = new Set(
     piece.translations.map((translation) => translation.locale)
@@ -136,7 +136,9 @@ async function createMissingTranslationsForPiece(pieceId: string) {
     (locale) => !existingLocales.has(locale)
   );
 
-  if (missingLocales.length === 0) return;
+  if (missingLocales.length === 0) return 0;
+
+  let savedTranslations = 0;
 
   for (const locale of missingLocales) {
     const translatedPiece = await translatePieceWithOpenAI(piece, locale);
@@ -153,7 +155,11 @@ async function createMissingTranslationsForPiece(pieceId: string) {
         atelier: translatedPiece.atelier,
       },
     });
+
+    savedTranslations += 1;
   }
+
+  return savedTranslations;
 }
 
 export async function createPiece(formData: FormData) {
@@ -163,10 +169,16 @@ export async function createPiece(formData: FormData) {
     data,
   });
 
-  await createMissingTranslationsForPiece(piece.id);
+  try {
+    await createMissingTranslationsForPiece(piece.id);
+  } catch (error) {
+    console.error("Piece translation generation failed:", error);
+    refreshPieces();
+    redirect("/admin?error=piece-translation-failed");
+  }
 
   refreshPieces();
-  redirect("/admin");
+  redirect("/admin?success=piece-created");
 }
 
 export async function updatePiece(formData: FormData) {
@@ -221,9 +233,21 @@ export async function generateMissingPieceTranslations() {
     select: { id: true },
   });
 
-  for (const piece of pieces) {
-    await createMissingTranslationsForPiece(piece.id);
+  const expectedTranslations = pieces.length * 2;
+  let savedTranslations = 0;
+
+  try {
+    for (const piece of pieces) {
+      savedTranslations += await createMissingTranslationsForPiece(piece.id);
+    }
+  } catch (error) {
+    console.error("Missing piece translation generation failed:", error);
+    refreshPieces();
+    redirect("/admin?error=piece-translation-failed");
   }
 
   refreshPieces();
+  redirect(
+    `/admin?success=piece-translations-generated&translations=${savedTranslations}&expected=${expectedTranslations}`
+  );
 }
