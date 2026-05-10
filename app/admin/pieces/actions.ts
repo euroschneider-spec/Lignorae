@@ -124,15 +124,19 @@ export async function createPiece(formData: FormData) {
     },
   });
 
-  await generatePieceTranslations({
-    pieceId: piece.id,
-    title,
-    collection,
-    shortDescription,
-    story: story || null,
-    material: material || null,
-    atelier: atelier || null,
-  });
+  try {
+    await generatePieceTranslations({
+      pieceId: piece.id,
+      title,
+      collection,
+      shortDescription,
+      story: story || null,
+      material: material || null,
+      atelier: atelier || null,
+    });
+  } catch (error) {
+    console.error("Piece translation generation failed:", error);
+  }
 
   revalidatePath("/admin");
   revalidatePath("/");
@@ -220,15 +224,19 @@ export async function updatePiece(formData: FormData) {
     },
   });
 
-  await generatePieceTranslations({
-    pieceId,
-    title,
-    collection,
-    shortDescription,
-    story: story || null,
-    material: material || null,
-    atelier: atelier || null,
-  });
+  try {
+    await generatePieceTranslations({
+      pieceId,
+      title,
+      collection,
+      shortDescription,
+      story: story || null,
+      material: material || null,
+      atelier: atelier || null,
+    });
+  } catch (error) {
+    console.error("Piece translation generation failed:", error);
+  }
 
   revalidatePath("/admin");
   revalidatePath("/");
