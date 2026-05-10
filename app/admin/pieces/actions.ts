@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { generateOpenAIText, parseJsonResponse } from "@/lib/openai";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -65,42 +66,57 @@ function getId(formData: FormData) {
   return asString(formData.get("id"));
 }
 
-function translateDraftText(text: string | null, locale: "DE" | "RO") {
-  if (!text) return null;
+type PieceTranslationPayload = {
+  title: string;
+  collection: string;
+  shortDescription: string;
+  story: string | null;
+  material: string | null;
+  atelier: string | null;
+};
 
-  if (locale === "DE") {
-    return text;
-  }
+type PieceForTranslation = {
+  id: string;
+  title: string;
+  collection: string;
+  shortDescription: string;
+  story: string | null;
+  material: string | null;
+  atelier: string | null;
+};
 
-  if (locale === "RO") {
-    return text;
-  }
-
-  return text;
+function getLocaleName(locale: "DE" | "RO") {
+  if (locale === "DE") return "German";
+  return "Romanian";
 }
 
-function createDraftTranslationData(
-  piece: {
-    id: string;
-    title: string;
-    collection: string;
-    shortDescription: string;
-    story: string | null;
-    material: string | null;
-    atelier: string | null;
-  },
+async function translatePieceWithOpenAI(
+  piece: PieceForTranslation,
   locale: "DE" | "RO"
-) {
+): Promise<PieceTranslationPayload> {
+  const localeName = getLocaleName(locale);
+
+  const response = await generateOpenAIText({
+    system: `You are a premium luxury brand copy translator for LIGNORAE, a Munich atelier creating handcrafted fountain pens. Translate from English into ${localeName}. Preserve a warm, refined, editorial tone. Do not add facts. Return only valid JSON with these keys: title, collection, shortDescription, story, material, atelier. Values may be null only when the original value is null.`,
+    user: JSON.stringify({
+      title: piece.title,
+      collection: piece.collection,
+      shortDescription: piece.shortDescription,
+      story: piece.story,
+      material: piece.material,
+      atelier: piece.atelier,
+    }),
+  });
+
+  const parsed = parseJsonResponse<PieceTranslationPayload>(response);
+
   return {
-    pieceId: piece.id,
-    locale,
-    title: translateDraftText(piece.title, locale) ?? piece.title,
-    collection: piece.collection,
-    shortDescription:
-      translateDraftText(piece.shortDescription, locale) ?? piece.shortDescription,
-    story: translateDraftText(piece.story, locale),
-    material: translateDraftText(piece.material, locale),
-    atelier: translateDraftText(piece.atelier, locale),
+    title: parsed.title || piece.title,
+    collection: parsed.collection || piece.collection,
+    shortDescription: parsed.shortDescription || piece.shortDescription,
+    story: parsed.story ?? null,
+    material: parsed.material ?? null,
+    atelier: parsed.atelier ?? null,
   };
 }
 
@@ -122,12 +138,22 @@ async function createMissingTranslationsForPiece(pieceId: string) {
 
   if (missingLocales.length === 0) return;
 
-  await prisma.pieceTranslation.createMany({
-    data: missingLocales.map((locale) =>
-      createDraftTranslationData(piece, locale)
-    ),
-    skipDuplicates: true,
-  });
+  for (const locale of missingLocales) {
+    const translatedPiece = await translatePieceWithOpenAI(piece, locale);
+
+    await prisma.pieceTranslation.create({
+      data: {
+        pieceId: piece.id,
+        locale,
+        title: translatedPiece.title,
+        collection: translatedPiece.collection,
+        shortDescription: translatedPiece.shortDescription,
+        story: translatedPiece.story,
+        material: translatedPiece.material,
+        atelier: translatedPiece.atelier,
+      },
+    });
+  }
 }
 
 export async function createPiece(formData: FormData) {

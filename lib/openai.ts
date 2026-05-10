@@ -17,7 +17,7 @@ function extractTextFromResponse(value: unknown): string {
     }
 
     if (typeof record.text === "string") {
-      return record.text;
+      return record.text;	
     }
 
     if (typeof record.content === "string") {
