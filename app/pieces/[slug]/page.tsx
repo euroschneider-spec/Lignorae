@@ -17,6 +17,17 @@ function getStatusLabel(status: string) {
   return status;
 }
 
+function getCollectionSlug(collection: string) {
+  const normalizedCollection = collection.toLowerCase().trim();
+
+  if (normalizedCollection === "origins") return "origin";
+  if (normalizedCollection === "origin") return "origin";
+  if (normalizedCollection === "sacra") return "sacra";
+  if (normalizedCollection === "sonora") return "sonora";
+
+  return normalizedCollection;
+}
+
 export default async function PieceDetailPage({
   params,
 }: {
@@ -42,7 +53,7 @@ export default async function PieceDetailPage({
         <div className="mx-auto grid max-w-6xl gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
           <div>
             <Link
-              href={`/collections/${piece.collection.toLowerCase()}`}
+              href={`/collections/${getCollectionSlug(piece.collection)}`}
               className="mb-10 inline-block text-sm uppercase tracking-[0.25em] text-[#c6a66a] transition hover:text-[#f5f1e8]"
             >
               ← Back to collection

@@ -1,5 +1,3 @@
-
-
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
@@ -17,6 +15,17 @@ function getStatusLabel(status: string) {
   if (normalizedStatus === "prototype-archive") return "Arhivă prototip";
 
   return status;
+}
+
+function getCollectionSlug(collection: string) {
+  const normalizedCollection = collection.toLowerCase().trim();
+
+  if (normalizedCollection === "origins") return "origin";
+  if (normalizedCollection === "origin") return "origin";
+  if (normalizedCollection === "sacra") return "sacra";
+  if (normalizedCollection === "sonora") return "sonora";
+
+  return normalizedCollection;
 }
 
 export default async function RomanianPiecePage({
@@ -59,7 +68,7 @@ export default async function RomanianPiecePage({
         <div className="mx-auto grid max-w-6xl gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
           <div>
             <Link
-              href={`/ro/collections/${piece.collection.toLowerCase()}`}
+              href={`/ro/collections/${getCollectionSlug(piece.collection)}`}
               className="mb-10 inline-block text-sm uppercase tracking-[0.25em] text-[#c6a66a] transition hover:text-[#f5f1e8]"
             >
               ← Înapoi la colecție
