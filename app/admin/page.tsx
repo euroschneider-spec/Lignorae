@@ -13,12 +13,20 @@ import {
 
 export const dynamic = "force-dynamic";
 
-function getSuccessMessage(success?: string) {
+function getSuccessMessage(input: {
+  success?: string;
+  translations?: string;
+  expected?: string;
+}) {
+  const { success, translations, expected } = input;
+
   if (success === "piece-created") return "Piece saved successfully.";
   if (success === "piece-updated") return "Piece updated successfully.";
   if (success === "piece-archived") return "Piece archived successfully.";
   if (success === "piece-deleted") return "Piece deleted successfully.";
-  if (success === "piece-translations-generated") return "Piece translations generated.";
+  if (success === "piece-translations-generated") {
+    return `Piece translations saved: ${translations || "0"} / ${expected || "0"}.`;
+  }
   if (success === "journal-created") return "Journal entry saved successfully.";
   if (success === "journal-updated") return "Journal entry updated successfully.";
   if (success === "journal-published") return "Journal entry published successfully.";
@@ -31,10 +39,18 @@ function getSuccessMessage(success?: string) {
 export default async function AdminPage({
   searchParams,
 }: {
-  searchParams: Promise<{ success?: string }>;
+  searchParams: Promise<{
+    success?: string;
+    translations?: string;
+    expected?: string;
+  }>;
 }) {
-  const { success } = await searchParams;
-  const successMessage = getSuccessMessage(success);
+  const { success, translations, expected } = await searchParams;
+  const successMessage = getSuccessMessage({
+    success,
+    translations,
+    expected,
+  });
   const pieces = await prisma.piece.findMany({
     include: {
       translations: {
@@ -97,21 +113,21 @@ export default async function AdminPage({
 
           <div className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-8">
             <p className="mb-3 text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
-              Collections
-            </p>
-
-            <p className="text-5xl font-light">
-              3
-            </p>
-          </div>
-
-          <div className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-8">
-            <p className="mb-3 text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
               Journal posts
             </p>
 
             <p className="text-5xl font-light">
               {journalPosts.length}
+            </p>
+          </div>
+
+          <div className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-8">
+            <p className="mb-3 text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
+              Collections
+            </p>
+
+            <p className="text-5xl font-light">
+              3
             </p>
           </div>
         </div>

@@ -72,6 +72,30 @@ async function generatePieceTranslations(input: {
       },
     }),
   ]);
+
+}
+
+function revalidatePiecePublicPaths(slug: string) {
+  revalidatePath(`/pieces/${slug}`);
+  revalidatePath(`/de/pieces/${slug}`);
+  revalidatePath(`/ro/pieces/${slug}`);
+}
+
+function revalidatePieceCollections() {
+  revalidatePath("/admin");
+  revalidatePath("/");
+  revalidatePath("/de");
+  revalidatePath("/ro");
+  revalidatePath("/collections");
+  revalidatePath("/collections/origin");
+  revalidatePath("/collections/sacra");
+  revalidatePath("/collections/sonora");
+  revalidatePath("/de/collections/origin");
+  revalidatePath("/de/collections/sacra");
+  revalidatePath("/de/collections/sonora");
+  revalidatePath("/ro/collections/origin");
+  revalidatePath("/ro/collections/sacra");
+  revalidatePath("/ro/collections/sonora");
 }
 
 export async function createPiece(formData: FormData) {
@@ -137,13 +161,8 @@ export async function createPiece(formData: FormData) {
   } catch (error) {
     console.error("Piece translation generation failed:", error);
   }
-
-  revalidatePath("/admin");
-  revalidatePath("/");
-  revalidatePath("/collections");
-  revalidatePath("/collections/origin");
-  revalidatePath("/collections/sacra");
-  revalidatePath("/collections/sonora");
+  revalidatePieceCollections();
+  revalidatePiecePublicPaths(slug);
 
   redirect("/admin?success=piece-created");
 }
@@ -237,68 +256,60 @@ export async function updatePiece(formData: FormData) {
   } catch (error) {
     console.error("Piece translation generation failed:", error);
   }
-
-  revalidatePath("/admin");
-  revalidatePath("/");
-  revalidatePath("/collections");
-  revalidatePath("/collections/origin");
-  revalidatePath("/collections/sacra");
-  revalidatePath("/collections/sonora");
-  revalidatePath(`/pieces/${slug}`);
+  revalidatePieceCollections();
+  revalidatePiecePublicPaths(slug);
 
   redirect("/admin?success=piece-updated");
 }
 
 export async function generateMissingPieceTranslations() {
   const pieces = await prisma.piece.findMany({
-    include: {
-      translations: true,
-    },
     orderBy: {
       createdAt: "desc",
     },
   });
 
+  let savedTranslations = 0;
+  const expectedTranslations = pieces.length * 2;
+
   for (const piece of pieces) {
-    const existingLocales = new Set(
-      piece.translations.map((translation) => translation.locale)
-    );
-
-    if (existingLocales.has("DE") && existingLocales.has("RO")) {
-      continue;
-    }
-
-    try {
-      await generatePieceTranslations({
-        pieceId: piece.id,
-        title: piece.title,
-        collection: piece.collection,
-        shortDescription: piece.shortDescription,
-        story: piece.story,
-        material: piece.material,
-        atelier: piece.atelier,
-      });
-    } catch (error) {
-      console.error(`Missing translation generation failed for piece ${piece.id}:`, error);
-    }
+    await generatePieceTranslations({
+      pieceId: piece.id,
+      title: piece.title,
+      collection: piece.collection,
+      shortDescription: piece.shortDescription,
+      story: piece.story,
+      material: piece.material,
+      atelier: piece.atelier,
+    });
   }
 
-  revalidatePath("/admin");
-  revalidatePath("/");
-  revalidatePath("/de");
-  revalidatePath("/ro");
-  revalidatePath("/collections");
-  revalidatePath("/collections/origin");
-  revalidatePath("/collections/sacra");
-  revalidatePath("/collections/sonora");
-  revalidatePath("/de/collections/origin");
-  revalidatePath("/de/collections/sacra");
-  revalidatePath("/de/collections/sonora");
-  revalidatePath("/ro/collections/origin");
-  revalidatePath("/ro/collections/sacra");
-  revalidatePath("/ro/collections/sonora");
+  const translatedRows = await prisma.pieceTranslation.findMany({
+    where: {
+      locale: {
+        in: ["DE", "RO"],
+      },
+      pieceId: {
+        in: pieces.map((piece) => piece.id),
+      },
+    },
+    select: {
+      pieceId: true,
+      locale: true,
+    },
+  });
 
-  redirect("/admin?success=piece-translations-generated");
+  savedTranslations = translatedRows.length;
+
+  revalidatePieceCollections();
+
+  for (const piece of pieces) {
+    revalidatePiecePublicPaths(piece.slug);
+  }
+
+  redirect(
+    `/admin?success=piece-translations-generated&translations=${savedTranslations}&expected=${expectedTranslations}`
+  );
 }
 
 export async function archivePiece(formData: FormData) {
@@ -317,12 +328,7 @@ export async function archivePiece(formData: FormData) {
     },
   });
 
-  revalidatePath("/admin");
-  revalidatePath("/");
-  revalidatePath("/collections");
-  revalidatePath("/collections/origin");
-  revalidatePath("/collections/sacra");
-  revalidatePath("/collections/sonora");
+  revalidatePieceCollections();
 
   redirect("/admin?success=piece-archived");
 }
@@ -340,12 +346,7 @@ export async function deletePiece(formData: FormData) {
     },
   });
 
-  revalidatePath("/admin");
-  revalidatePath("/");
-  revalidatePath("/collections");
-  revalidatePath("/collections/origin");
-  revalidatePath("/collections/sacra");
-  revalidatePath("/collections/sonora");
+  revalidatePieceCollections();
 
   redirect("/admin?success=piece-deleted");
 }
