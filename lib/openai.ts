@@ -17,7 +17,7 @@ export async function generateOpenAIText(input: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      model: "gpt-5.1-mini",
+      model: "gpt-4.1-mini",
       input: [
         {
           role: "system",

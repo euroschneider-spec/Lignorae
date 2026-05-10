@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
-import { archivePiece, deletePiece } from "./pieces/actions";
+import {
+  archivePiece,
+  deletePiece,
+  generateMissingPieceTranslations,
+} from "./pieces/actions";
 import {
   archiveJournalPost,
   deleteJournalPost,
@@ -14,6 +18,7 @@ function getSuccessMessage(success?: string) {
   if (success === "piece-updated") return "Piece updated successfully.";
   if (success === "piece-archived") return "Piece archived successfully.";
   if (success === "piece-deleted") return "Piece deleted successfully.";
+  if (success === "piece-translations-generated") return "Missing piece translations generated.";
   if (success === "journal-created") return "Journal entry saved successfully.";
   if (success === "journal-updated") return "Journal entry updated successfully.";
   if (success === "journal-published") return "Journal entry published successfully.";
@@ -116,12 +121,23 @@ export default async function AdminPage({
               </h2>
             </div>
 
-            <Link
-              href="/admin/pieces/new"
-              className="rounded-full border border-[#c6a66a]/50 px-5 py-2 text-sm uppercase tracking-[0.2em] text-[#c6a66a] transition hover:border-[#c6a66a] hover:bg-[#c6a66a] hover:text-black"
-            >
-              Add piece
-            </Link>
+            <div className="flex flex-wrap justify-end gap-3">
+              <form action={generateMissingPieceTranslations}>
+                <button
+                  type="submit"
+                  className="rounded-full border border-[#c6a66a]/50 px-5 py-2 text-sm uppercase tracking-[0.2em] text-[#c6a66a] transition hover:border-[#c6a66a] hover:bg-[#c6a66a] hover:text-black"
+                >
+                  Generate missing translations
+                </button>
+              </form>
+
+              <Link
+                href="/admin/pieces/new"
+                className="rounded-full border border-[#c6a66a]/50 px-5 py-2 text-sm uppercase tracking-[0.2em] text-[#c6a66a] transition hover:border-[#c6a66a] hover:bg-[#c6a66a] hover:text-black"
+              >
+                Add piece
+              </Link>
+            </div>
           </div>
 
           <div className="overflow-visible rounded-2xl border border-[#4a3522]/70">
@@ -129,9 +145,8 @@ export default async function AdminPage({
               <thead className="bg-[#18110b] text-left text-xs uppercase tracking-[0.22em] text-[#c6a66a]">
                 <tr>
                   <th className="px-6 py-4">Title</th>
-                  <th className="px-6 py-4">Collection</th>
-                  <th className="px-6 py-4">Status</th>
-                  <th className="px-6 py-4">Year</th>
+                  <th className="px-6 py-4">Published</th>
+                  <th className="px-6 py-4">Created</th>
                   <th className="px-6 py-4 text-right">Actions</th>
                 </tr>
               </thead>
@@ -153,16 +168,12 @@ export default async function AdminPage({
                       </Link>
                     </td>
 
-                    <td className="px-6 py-5 uppercase text-[#c6a66a]">
-                      {piece.collection}
+                    <td className="px-6 py-5">
+                      {piece.status === "draft" || piece.status === "archived" ? "No" : "Yes"}
                     </td>
 
-                    <td className="px-6 py-5">
-                      {piece.status}
-                    </td>
-
-                    <td className="px-6 py-5">
-                      {piece.year}
+                    <td className="px-6 py-5 text-[#d0cabf]">
+                      {piece.createdAt.toLocaleDateString("en-GB")}
                     </td>
 
                     <td className="px-6 py-5">

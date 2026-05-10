@@ -249,6 +249,58 @@ export async function updatePiece(formData: FormData) {
   redirect("/admin?success=piece-updated");
 }
 
+export async function generateMissingPieceTranslations() {
+  const pieces = await prisma.piece.findMany({
+    include: {
+      translations: true,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  for (const piece of pieces) {
+    const existingLocales = new Set(
+      piece.translations.map((translation) => translation.locale)
+    );
+
+    if (existingLocales.has("DE") && existingLocales.has("RO")) {
+      continue;
+    }
+
+    try {
+      await generatePieceTranslations({
+        pieceId: piece.id,
+        title: piece.title,
+        collection: piece.collection,
+        shortDescription: piece.shortDescription,
+        story: piece.story,
+        material: piece.material,
+        atelier: piece.atelier,
+      });
+    } catch (error) {
+      console.error(`Missing translation generation failed for piece ${piece.id}:`, error);
+    }
+  }
+
+  revalidatePath("/admin");
+  revalidatePath("/");
+  revalidatePath("/de");
+  revalidatePath("/ro");
+  revalidatePath("/collections");
+  revalidatePath("/collections/origin");
+  revalidatePath("/collections/sacra");
+  revalidatePath("/collections/sonora");
+  revalidatePath("/de/collections/origin");
+  revalidatePath("/de/collections/sacra");
+  revalidatePath("/de/collections/sonora");
+  revalidatePath("/ro/collections/origin");
+  revalidatePath("/ro/collections/sacra");
+  revalidatePath("/ro/collections/sonora");
+
+  redirect("/admin?success=piece-translations-generated");
+}
+
 export async function archivePiece(formData: FormData) {
   const pieceId = String(formData.get("pieceId") || "").trim();
 
