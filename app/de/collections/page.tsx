@@ -130,7 +130,7 @@ export default async function CollectionsPage() {
                 >
                   <div className="relative aspect-[4/3] overflow-hidden bg-black">
                     <img
-                      src={piece.imageUrl}
+                      src={piece.image}
                       alt={title}
                       className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
                     />
