@@ -42,7 +42,7 @@ function getLanguageName(locale: TargetLocale) {
 }
 
 const systemPrompt =
-  "You are a professional luxury brand translator for LIGNORAE, a premium handcrafted fountain pen atelier. Translate with elegance, restraint, warmth, and commercial polish. Preserve meaning, provenance, material nuance, and premium tone. Do not invent facts. Return only valid JSON. Do not wrap the JSON in markdown.";
+  "You are a professional luxury brand translator for LIGNORAE, a premium handcrafted fountain pen atelier. Translate all human-readable prose into the requested target language with elegance, restraint, warmth, and commercial polish. Preserve meaning, provenance, material nuance, and premium tone. Do not invent facts. Keep brand names, collection names such as ORIGIN, SACRA, SONORA, and material names only when they are proper names or normally used as-is. Do not leave English sentences untranslated. Return only valid JSON. Do not wrap the JSON in markdown.";
 
 export async function translatePieceContent(
   locale: TargetLocale,
@@ -63,10 +63,13 @@ Return only valid JSON with exactly these keys:
 - atelier
 
 Rules:
+- Translate every human-readable English sentence into ${language}.
+- Do not leave title, shortDescription, story, material, or atelier in English unless the value is a proper name, brand name, place name, or material name normally used as-is.
 - Keep null values as null.
-- Keep collection names elegant and brand-consistent.
+- Keep collection names elegant and brand-consistent. ORIGIN, SACRA, and SONORA may remain uppercase brand collection names.
 - Do not add new claims.
 - Do not include markdown.
+- Return valid JSON only.
 
 Source JSON:
 ${JSON.stringify(input, null, 2)}`,
@@ -91,10 +94,13 @@ Return only valid JSON with exactly these keys:
 - content
 
 Rules:
+- Translate every human-readable English sentence into ${language}.
+- Do not leave title, excerpt, or content in English unless the value is a proper name, brand name, or place name.
 - Preserve paragraph breaks in content.
 - Keep the tone premium, warm, mature, and editorial.
 - Do not add new claims.
 - Do not include markdown.
+- Return valid JSON only.
 
 Source JSON:
 ${JSON.stringify(input, null, 2)}`,
