@@ -65,12 +65,79 @@ function getId(formData: FormData) {
   return asString(formData.get("id"));
 }
 
+function translateDraftText(text: string | null, locale: "DE" | "RO") {
+  if (!text) return null;
+
+  if (locale === "DE") {
+    return text;
+  }
+
+  if (locale === "RO") {
+    return text;
+  }
+
+  return text;
+}
+
+function createDraftTranslationData(
+  piece: {
+    id: string;
+    title: string;
+    collection: string;
+    shortDescription: string;
+    story: string | null;
+    material: string | null;
+    atelier: string | null;
+  },
+  locale: "DE" | "RO"
+) {
+  return {
+    pieceId: piece.id,
+    locale,
+    title: translateDraftText(piece.title, locale) ?? piece.title,
+    collection: piece.collection,
+    shortDescription:
+      translateDraftText(piece.shortDescription, locale) ?? piece.shortDescription,
+    story: translateDraftText(piece.story, locale),
+    material: translateDraftText(piece.material, locale),
+    atelier: translateDraftText(piece.atelier, locale),
+  };
+}
+
+async function createMissingTranslationsForPiece(pieceId: string) {
+  const piece = await prisma.piece.findUnique({
+    where: { id: pieceId },
+    include: { translations: true },
+  });
+
+  if (!piece) return;
+
+  const existingLocales = new Set(
+    piece.translations.map((translation) => translation.locale)
+  );
+
+  const missingLocales = (["DE", "RO"] as const).filter(
+    (locale) => !existingLocales.has(locale)
+  );
+
+  if (missingLocales.length === 0) return;
+
+  await prisma.pieceTranslation.createMany({
+    data: missingLocales.map((locale) =>
+      createDraftTranslationData(piece, locale)
+    ),
+    skipDuplicates: true,
+  });
+}
+
 export async function createPiece(formData: FormData) {
   const data = getPieceData(formData);
 
-  await prisma.piece.create({
+  const piece = await prisma.piece.create({
     data,
   });
+
+  await createMissingTranslationsForPiece(piece.id);
 
   refreshPieces();
   redirect("/admin");
@@ -124,5 +191,13 @@ export async function deletePiece(formData: FormData) {
 }
 
 export async function generateMissingPieceTranslations() {
+  const pieces = await prisma.piece.findMany({
+    select: { id: true },
+  });
+
+  for (const piece of pieces) {
+    await createMissingTranslationsForPiece(piece.id);
+  }
+
   refreshPieces();
 }
