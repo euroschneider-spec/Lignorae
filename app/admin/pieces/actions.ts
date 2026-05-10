@@ -92,6 +92,95 @@ export async function createPiece(formData: FormData) {
   redirect("/admin?success=piece-created");
 }
 
+export async function updatePiece(formData: FormData) {
+  const pieceId = String(formData.get("pieceId") || "").trim();
+  const title = String(formData.get("title") || "").trim();
+  const slugInput = String(formData.get("slug") || "").trim();
+  const collection = String(formData.get("collection") || "").trim();
+  const status = String(formData.get("status") || "prototype-archive").trim();
+  const year = String(formData.get("year") || "").trim();
+  const material = String(formData.get("material") || "").trim();
+  const atelier = String(formData.get("atelier") || "").trim();
+  const shortDescription = String(formData.get("shortDescription") || "").trim();
+  const story = String(formData.get("story") || "").trim();
+  const imageFile = formData.get("imageFile") as File | null;
+  const detailImageFile = formData.get("detailImageFile") as File | null;
+
+  if (!pieceId || !title || !collection || !status || !shortDescription) {
+    throw new Error("Missing required piece fields.");
+  }
+
+  const existingPiece = await prisma.piece.findUnique({
+    where: {
+      id: pieceId,
+    },
+  });
+
+  if (!existingPiece) {
+    throw new Error("Piece not found.");
+  }
+
+  const slug = slugInput || existingPiece.slug || createSlug(title);
+  const image = await uploadPieceImage(imageFile, slug, "main");
+  const detailImage = await uploadPieceImage(detailImageFile, slug, "detail");
+
+  await prisma.piece.update({
+    where: {
+      id: pieceId,
+    },
+    data: {
+      title,
+      slug,
+      collection,
+      status,
+      year: year || null,
+      material: material || null,
+      atelier: atelier || null,
+      shortDescription,
+      story: story || null,
+      image: image || existingPiece.image,
+      detailImage: detailImage || existingPiece.detailImage,
+      translations: {
+        upsert: {
+          where: {
+            pieceId_locale: {
+              pieceId,
+              locale: "EN",
+            },
+          },
+          update: {
+            title,
+            collection,
+            shortDescription,
+            story: story || null,
+            material: material || null,
+            atelier: atelier || null,
+          },
+          create: {
+            locale: "EN",
+            title,
+            collection,
+            shortDescription,
+            story: story || null,
+            material: material || null,
+            atelier: atelier || null,
+          },
+        },
+      },
+    },
+  });
+
+  revalidatePath("/admin");
+  revalidatePath("/");
+  revalidatePath("/collections");
+  revalidatePath("/collections/origin");
+  revalidatePath("/collections/sacra");
+  revalidatePath("/collections/sonora");
+  revalidatePath(`/pieces/${slug}`);
+
+  redirect("/admin?success=piece-updated");
+}
+
 export async function archivePiece(formData: FormData) {
   const pieceId = String(formData.get("pieceId") || "").trim();
 

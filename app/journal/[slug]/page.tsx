@@ -47,11 +47,14 @@ export default async function JournalPostPage({
           </p>
 
           {post.coverImage && (
-            <div className="mb-12 overflow-hidden rounded-[2rem] border border-[#4a3522]/70 bg-[#21170f]">
-              <div
-                className="aspect-[16/9] bg-cover bg-center"
-                style={{ backgroundImage: `url('${post.coverImage}')` }}
-              />
+            <div className="group mb-12 overflow-hidden rounded-[2rem] border border-[#c6a66a]/35 bg-[#21170f] shadow-[0_0_35px_rgba(198,166,106,0.08)] transition duration-500 hover:border-[#c6a66a]/70 hover:shadow-[0_0_45px_rgba(198,166,106,0.16)]">
+              <div className="relative aspect-[16/9] overflow-hidden">
+                <div
+                  className="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-105"
+                  style={{ backgroundImage: `url('${post.coverImage}')` }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
+              </div>
             </div>
           )}
 

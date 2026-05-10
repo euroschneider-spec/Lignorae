@@ -11,6 +11,7 @@ export const dynamic = "force-dynamic";
 
 function getSuccessMessage(success?: string) {
   if (success === "piece-created") return "Piece saved successfully.";
+  if (success === "piece-updated") return "Piece updated successfully.";
   if (success === "piece-archived") return "Piece archived successfully.";
   if (success === "piece-deleted") return "Piece deleted successfully.";
   if (success === "journal-created") return "Journal entry saved successfully.";
@@ -123,7 +124,7 @@ export default async function AdminPage({
             </Link>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-[#4a3522]/70">
+          <div className="overflow-visible rounded-2xl border border-[#4a3522]/70">
             <table className="w-full border-collapse">
               <thead className="bg-[#18110b] text-left text-xs uppercase tracking-[0.22em] text-[#c6a66a]">
                 <tr>
@@ -166,6 +167,13 @@ export default async function AdminPage({
 
                     <td className="px-6 py-5">
                       <div className="flex justify-end gap-3">
+                        <Link
+                          href={`/admin/pieces/${piece.id}/edit`}
+                          className="rounded-full border border-[#c6a66a]/40 px-4 py-2 text-xs uppercase tracking-[0.18em] text-[#c6a66a] transition hover:border-[#c6a66a] hover:bg-[#c6a66a] hover:text-black"
+                        >
+                          Edit
+                        </Link>
+
                         {piece.status !== "archived" && (
                           <form action={archivePiece}>
                             <input type="hidden" name="pieceId" value={piece.id} />
@@ -228,7 +236,7 @@ export default async function AdminPage({
             </Link>
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-[#4a3522]/70">
+          <div className="overflow-visible rounded-2xl border border-[#4a3522]/70">
             <table className="w-full border-collapse">
               <thead className="bg-[#18110b] text-left text-xs uppercase tracking-[0.22em] text-[#c6a66a]">
                 <tr>

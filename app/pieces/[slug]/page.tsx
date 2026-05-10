@@ -35,11 +35,14 @@ export default async function PieceDetailPage({
           </Link>
 
           <div className="grid gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-            <div className="overflow-hidden rounded-[2rem] border border-[#4a3522]/70 bg-[#21170f]">
-              <div
-                className="aspect-[4/3] bg-cover bg-center"
-                style={{ backgroundImage: `url('${piece.detailImage || piece.image}')` }}
-              />
+            <div className="group overflow-hidden rounded-[2rem] border border-[#c6a66a]/35 bg-[#21170f] shadow-[0_0_35px_rgba(198,166,106,0.08)] transition duration-500 hover:border-[#c6a66a]/70 hover:shadow-[0_0_45px_rgba(198,166,106,0.16)]">
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <div
+                  className="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-105"
+                  style={{ backgroundImage: `url('${piece.detailImage || piece.image}')` }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+              </div>
             </div>
 
             <article>
