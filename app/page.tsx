@@ -21,14 +21,14 @@ export default function HomePage() {
           </Link>
 
           <nav className="hidden items-center gap-12 text-[10px] uppercase tracking-[0.42em] text-black/58 md:flex">
-            <Link href="/pieces" className="transition hover:text-black">
-              Origin
+            <Link href="/collections/forma" className="transition hover:text-black">
+              Forma
             </Link>
-            <Link href="/pieces" className="transition hover:text-black">
-              Sonora
+            <Link href="/collections/origins" className="transition hover:text-black">
+              Origins
             </Link>
-            <Link href="/pieces" className="transition hover:text-black">
-              Sacra
+            <Link href="/collections/natura" className="transition hover:text-black">
+              Natura
             </Link>
             <Link href="/atelier" className="transition hover:text-black">
               About
@@ -70,8 +70,8 @@ export default function HomePage() {
                 Care
               </Link>
               <Link
-                href="/pieces"
-                aria-label="Explore objects"
+                href="/collections/forma"
+                aria-label="Explore Forma"
                 className="flex h-7 w-7 items-center justify-center rounded-full border border-black/55 text-[11px] text-black/70 transition hover:border-black hover:text-black"
               >
                 +
