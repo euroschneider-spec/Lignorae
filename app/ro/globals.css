@@ -1,8 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --gallery-white: #f7f5f0;
+  --paper-white: #fbfaf7;
+  --ink-black: #111111;
+  --soft-line: rgba(17, 17, 17, 0.15);
+  --background: var(--gallery-white);
+  --foreground: var(--ink-black);
 }
 
 @theme inline {
@@ -12,20 +16,69 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  min-height: 100%;
+  background: var(--gallery-white);
+  color: var(--foreground);
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
+  min-height: 100%;
+  margin: 0;
+  background: var(--gallery-white);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  overscroll-behavior-y: none;
 }
-body {
-  font-family: var(--font-inter), sans-serif;
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+::selection {
+  background: rgba(17, 17, 17, 0.12);
+  color: var(--ink-black);
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 1px solid var(--ink-black);
+  outline-offset: 4px;
 }
 
 h1,
@@ -37,4 +90,47 @@ h3 {
 
 p {
   text-wrap: pretty;
+}
+
+@supports not (text-wrap: pretty) {
+  p,
+  h1,
+  h2,
+  h3 {
+    text-wrap: normal;
+  }
+}
+
+.text-black\/40,
+.text-black\/45,
+.text-black\/50,
+.text-black\/55 {
+  color: rgb(0 0 0 / 0.62) !important;
+}
+
+.text-black\/60,
+.text-black\/65,
+.text-black\/70 {
+  color: rgb(0 0 0 / 0.76) !important;
+}
+
+.text-black\/75 {
+  color: rgb(0 0 0 / 0.82) !important;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gallery-white);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(17, 17, 17, 0.22);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(17, 17, 17, 0.34);
 }
