@@ -4,7 +4,10 @@ import { FormEvent, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-export default function ContactPage() {
+const inputClass =
+  "w-full border border-black/15 bg-[#fbfaf7] px-4 py-3 text-sm font-light text-black outline-none transition placeholder:text-black/40 focus:border-black";
+
+export default function RomanianContactPage() {
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -42,147 +45,163 @@ export default function ContactPage() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col bg-[#1a130d] text-[#f5f1e8]">
+    <main className="flex min-h-screen flex-col bg-[#f7f5f0] text-[#111111]">
       <Header />
 
-      <section className="mx-auto max-w-6xl flex-1 px-6 py-40">
-        <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-          Contact
-        </p>
+      <section className="mx-auto w-full max-w-[1500px] flex-1 px-9 pb-28 pt-40">
+        <div className="grid gap-14 md:grid-cols-[0.9fr_1.1fr] md:items-end">
+          <div>
+            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/55">
+              Contact
+            </p>
+            <h1 className="max-w-4xl text-5xl font-light leading-[0.95] tracking-[-0.06em] text-black md:text-7xl">
+              Începe o conversație.
+            </h1>
+          </div>
 
-        <h1 className="mb-8 text-5xl font-light md:text-6xl">
-          Solicită disponibilitatea
-        </h1>
+          <p className="max-w-2xl text-base font-light leading-8 text-black/70 md:text-lg">
+            Pentru disponibilitate, comenzi speciale, colecționari, colaborări
+            sau discuții retail/B2B, contactează atelierul direct. Fiecare
+            solicitare este citită personal.
+          </p>
+        </div>
 
-        <p className="mb-12 max-w-3xl text-lg leading-relaxed text-[#d0cabf]">
-          Prima ediție LIGNORAE este în prezent în pregătire. Sunt deschise
-          solicitările pentru precomenzi, piese la comandă, colaborări și
-          discuții selectate cu parteneri B2B și retail.
-        </p>
-
-        <div className="grid gap-10 md:grid-cols-[1.1fr_0.9fr]">
+        <div className="mt-24 grid gap-10 md:grid-cols-[1.05fr_0.95fr]">
           <form
             onSubmit={handleSubmit}
-            className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-8"
+            className="border border-black/15 bg-[#fbfaf7] p-6 md:p-8"
           >
-            <div className="mb-6">
-              <label className="mb-2 block text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
-                Nume
-              </label>
-              <input
-                name="name"
-                type="text"
-                required
-                placeholder="Numele dumneavoastră"
-                className="w-full rounded-xl border border-[#4a3522]/70 bg-[#120d09] px-4 py-3 text-[#f5f1e8] outline-none placeholder:text-[#7f7568] focus:border-[#c6a66a]"
-              />
+            <div className="grid gap-6 md:grid-cols-2">
+              <div>
+                <label className="mb-3 block text-[10px] uppercase tracking-[0.35em] text-black/60">
+                  Nume
+                </label>
+                <input
+                  name="name"
+                  type="text"
+                  required
+                  placeholder="Numele tău"
+                  className={inputClass}
+                />
+              </div>
+
+              <div>
+                <label className="mb-3 block text-[10px] uppercase tracking-[0.35em] text-black/60">
+                  E-mail
+                </label>
+                <input
+                  name="email"
+                  type="email"
+                  required
+                  placeholder="email@example.com"
+                  className={inputClass}
+                />
+              </div>
             </div>
 
-            <div className="mb-6">
-              <label className="mb-2 block text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
-                E-mail
-              </label>
-              <input
-                name="email"
-                type="email"
-                required
-                placeholder="emailul@dumneavoastră.ro"
-                className="w-full rounded-xl border border-[#4a3522]/70 bg-[#120d09] px-4 py-3 text-[#f5f1e8] outline-none placeholder:text-[#7f7568] focus:border-[#c6a66a]"
-              />
-            </div>
-
-            <div className="mb-6">
-              <label className="mb-2 block text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
+            <div className="mt-6">
+              <label className="mb-3 block text-[10px] uppercase tracking-[0.35em] text-black/60">
                 Tipul solicitării
               </label>
-              <select
-                name="enquiryType"
-                required
-                className="w-full rounded-xl border border-[#4a3522]/70 bg-[#120d09] px-4 py-3 text-[#f5f1e8] outline-none focus:border-[#c6a66a]"
-              >
-                <option>Solicitare de precomandă</option>
-                <option>Piesă la comandă</option>
+              <select name="enquiryType" required className={inputClass}>
+                <option>Întrebare despre disponibilitate</option>
+                <option>Comandă specială</option>
+                <option>Colecționar / solicitare privată</option>
                 <option>Retail / colaborare B2B</option>
                 <option>Presă / parteneriat</option>
                 <option>Altceva</option>
               </select>
             </div>
 
-            <div className="mb-8">
-              <label className="mb-2 block text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
+            <div className="mt-6">
+              <label className="mb-3 block text-[10px] uppercase tracking-[0.35em] text-black/60">
                 Mesaj
               </label>
               <textarea
                 name="message"
                 required
-                rows={7}
-                placeholder="Spuneți-ne pe scurt ce căutați..."
-                className="w-full rounded-xl border border-[#4a3522]/70 bg-[#120d09] px-4 py-3 text-[#f5f1e8] outline-none placeholder:text-[#7f7568] focus:border-[#c6a66a]"
+                rows={8}
+                placeholder="Spune-ne pe scurt ce cauți."
+                className={inputClass}
               />
             </div>
 
             <button
               type="submit"
               disabled={status === "sending"}
-              className="rounded-full border border-[#c6a66a] px-8 py-3 text-sm uppercase tracking-[0.2em] transition hover:bg-[#c6a66a] hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
+              className="mt-8 border border-black bg-black px-6 py-3 text-[10px] uppercase tracking-[0.35em] text-white transition hover:bg-transparent hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
             >
               {status === "sending" ? "Se trimite..." : "Trimite solicitarea"}
             </button>
 
             {status === "success" && (
-              <p className="mt-5 text-sm leading-relaxed text-[#c6a66a]">
-                Vă mulțumim. Solicitarea a fost trimisă cu succes.
+              <p className="mt-5 text-sm leading-7 text-black/70">
+                Mulțumim. Solicitarea a fost trimisă către LIGNORAE Atelier.
               </p>
             )}
 
             {status === "error" && (
-              <p className="mt-5 text-sm leading-relaxed text-red-300">
-                Ceva nu a funcționat. Încercați din nou sau contactați atelierul direct prin e-mail.
+              <p className="mt-5 text-sm leading-7 text-red-700">
+                Ceva nu a funcționat. Încearcă din nou sau contactează atelierul
+                direct prin e-mail.
               </p>
             )}
 
-            <p className="mt-5 text-sm leading-relaxed text-[#9f9588]">
-              Solicitarea va fi trimisă direct către atelier.
+            <p className="mt-5 text-sm leading-7 text-black/60">
+              Solicitarea va fi trimisă direct către LIGNORAE Atelier.
             </p>
           </form>
 
-          <div className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-8">
-            <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
-              E-mail direct
-            </p>
-
-            <a
-              href="mailto:info@lignorae.com"
-              className="text-2xl font-light hover:text-[#c6a66a]"
-            >
-              info@lignorae.com
-            </a>
-
-            <div className="mt-10 border-t border-[#4a3522]/70 pt-8">
-              <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
-                Prima ediție
+          <aside className="border border-black/15 bg-[#fbfaf7] p-6 md:p-8">
+            <div>
+              <p className="mb-5 text-[10px] uppercase tracking-[0.35em] text-black/60">
+                E-mail direct
               </p>
-
-              <p className="leading-relaxed text-[#d0cabf]">
-                Primele instrumente de scris LIGNORAE sunt pregătite în număr
-                foarte redus. Solicitările timpurii vor fi gestionate personal,
-                iar materialele, disponibilitatea, prețul și livrarea vor fi
-                discutate înaintea confirmării oricărei comenzi.
-              </p>
+              <a
+                href="mailto:info@lignorae.com"
+                className="text-3xl font-light tracking-[-0.04em] transition hover:text-black/65"
+              >
+                info@lignorae.com
+              </a>
             </div>
 
-            <div className="mt-10 border-t border-[#4a3522]/70 pt-8">
-              <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
-                Locație
+            <div className="mt-12 border-t border-black/15 pt-8">
+              <p className="mb-5 text-[10px] uppercase tracking-[0.35em] text-black/60">
+                Atelier
               </p>
-
-              <p className="leading-relaxed text-[#d0cabf]">
+              <p className="text-base font-light leading-8 text-black/70">
                 LIGNORAE Atelier
                 <br />
                 München, Germania
               </p>
             </div>
-          </div>
+
+            <div className="mt-12 border-t border-black/15 pt-8">
+              <p className="mb-5 text-[10px] uppercase tracking-[0.35em] text-black/60">
+                Obiecte în număr redus
+              </p>
+              <p className="text-base font-light leading-8 text-black/70">
+                Obiectele de scris LIGNORAE sunt pregătite în serii mici.
+                Detaliile despre material, disponibilitate, preț, livrare și
+                eventuale comenzi speciale sunt discutate înaintea confirmării
+                oricărei comenzi.
+              </p>
+            </div>
+
+            <div className="mt-12 border-t border-black/15 pt-8">
+              <p className="mb-5 text-[10px] uppercase tracking-[0.35em] text-black/60">
+                Instagram
+              </p>
+              <a
+                href="https://www.instagram.com/lignorae/"
+                target="_blank"
+                rel="noreferrer"
+                className="text-base font-light leading-8 text-black/70 transition hover:text-black"
+              >
+                @Lignorae
+              </a>
+            </div>
+          </aside>
         </div>
       </section>
 

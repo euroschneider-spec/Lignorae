@@ -117,6 +117,25 @@ p {
   }
 }
 
+.text-black\/35,
+.text-black\/40,
+.text-black\/45,
+.text-black\/50,
+.text-black\/55 {
+  color: rgb(0 0 0 / 0.68) !important;
+}
+
+.text-black\/60,
+.text-black\/65,
+.text-black\/70 {
+  color: rgb(0 0 0 / 0.82) !important;
+}
+
+.text-black\/75,
+.text-black\/80 {
+  color: rgb(0 0 0 / 0.88) !important;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -126,11 +145,11 @@ p {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(17, 17, 17, 0.22);
+  background: rgba(17, 17, 17, 0.3);
   border: 3px solid var(--gallery-white);
   border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(17, 17, 17, 0.34);
+  background: rgba(17, 17, 17, 0.42);
 }

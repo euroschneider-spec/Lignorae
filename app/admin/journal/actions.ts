@@ -29,6 +29,57 @@ async function uploadJournalImage(file: File | null, slug: string) {
   return blob.url;
 }
 
+function getOptionalTranslation(formData: FormData, locale: "DE" | "RO") {
+  const suffix = locale;
+  const title = String(formData.get(`title${suffix}`) || "").trim();
+  const excerpt = String(formData.get(`excerpt${suffix}`) || "").trim();
+  const content = String(formData.get(`content${suffix}`) || "").trim();
+
+  if (!title && !excerpt && !content) {
+    return null;
+  }
+
+  return {
+    locale,
+    title,
+    excerpt,
+    content,
+  };
+}
+
+async function upsertManualJournalTranslations(
+  journalPostId: string,
+  translations: Array<{
+    locale: "DE" | "RO";
+    title: string;
+    excerpt: string;
+    content: string;
+  }>
+) {
+  for (const translation of translations) {
+    await prisma.journalPostTranslation.upsert({
+      where: {
+        journalPostId_locale: {
+          journalPostId,
+          locale: translation.locale,
+        },
+      },
+      update: {
+        title: translation.title,
+        excerpt: translation.excerpt,
+        content: translation.content,
+      },
+      create: {
+        journalPostId,
+        locale: translation.locale,
+        title: translation.title,
+        excerpt: translation.excerpt,
+        content: translation.content,
+      },
+    });
+  }
+}
+
 async function generateJournalTranslations(input: {
   journalPostId: string;
   title: string;
@@ -140,6 +191,11 @@ export async function updateJournalPost(formData: FormData) {
   const coverImageFile = formData.get("coverImageFile") as File | null;
   const published = formData.get("published") === "on";
 
+  const manualTranslations = [
+    getOptionalTranslation(formData, "DE"),
+    getOptionalTranslation(formData, "RO"),
+  ].filter((translation) => translation !== null);
+
   if (!postId || !title || !excerpt || !content) {
     throw new Error("Missing required journal fields.");
   }
@@ -192,22 +248,31 @@ export async function updateJournalPost(formData: FormData) {
     },
   });
 
-  let savedTranslations = 0;
+  await upsertManualJournalTranslations(postId, manualTranslations);
 
-  try {
-    savedTranslations = await generateJournalTranslations({
-      journalPostId: postId,
-      title,
-      excerpt,
-      content,
-    });
-  } catch (error) {
-    console.error("Journal translation generation failed:", error);
-    redirect("/admin?error=journal-translation-failed");
+  const manualTranslationCount = manualTranslations.length;
+  let savedTranslations = manualTranslationCount;
+
+  if (manualTranslationCount === 0) {
+    try {
+      savedTranslations = await generateJournalTranslations({
+        journalPostId: postId,
+        title,
+        excerpt,
+        content,
+      });
+    } catch (error) {
+      console.error("Journal translation generation failed:", error);
+      redirect("/admin?error=journal-translation-failed");
+    }
   }
 
   revalidatePath("/admin");
   revalidatePath("/journal");
+  revalidatePath("/de/journal");
+  revalidatePath(`/de/journal/${slug}`);
+  revalidatePath("/ro/journal");
+  revalidatePath(`/ro/journal/${slug}`);
   revalidatePath(`/journal/${slug}`);
   revalidatePath("/");
 
@@ -236,6 +301,8 @@ export async function archiveJournalPost(formData: FormData) {
 
   revalidatePath("/admin");
   revalidatePath("/journal");
+  revalidatePath("/de/journal");
+  revalidatePath("/ro/journal");
   revalidatePath("/");
 
   redirect("/admin?success=journal-archived");
@@ -259,6 +326,10 @@ export async function publishJournalPost(formData: FormData) {
 
   revalidatePath("/admin");
   revalidatePath("/journal");
+  revalidatePath("/de/journal");
+  revalidatePath(`/de/journal/${post.slug}`);
+  revalidatePath("/ro/journal");
+  revalidatePath(`/ro/journal/${post.slug}`);
   revalidatePath(`/journal/${post.slug}`);
   revalidatePath("/");
 
@@ -280,6 +351,8 @@ export async function deleteJournalPost(formData: FormData) {
 
   revalidatePath("/admin");
   revalidatePath("/journal");
+  revalidatePath("/de/journal");
+  revalidatePath("/ro/journal");
   revalidatePath("/");
 
   redirect("/admin?success=journal-deleted");

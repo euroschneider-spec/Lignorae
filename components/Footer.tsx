@@ -81,24 +81,24 @@ export default function Footer() {
         };
 
   return (
-    <footer className="border-t border-black/10 bg-[#f7f5f0] px-9 py-12 text-black/58">
+    <footer className="mt-auto border-t border-black/10 bg-[#f7f5f0] px-9 py-12 text-black/70">
       <div className="mx-auto grid max-w-[1500px] gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
           <p className="mb-5 text-[13px] font-light uppercase tracking-[0.55em] text-black/88">
             LIGNORAE
           </p>
 
-          <p className="max-w-md text-sm font-light leading-7 text-black/55">
+          <p className="max-w-md text-sm font-light leading-7 text-black/70">
             {text.statement}
           </p>
         </div>
 
         <div>
-          <p className="mb-5 text-[10px] uppercase tracking-[0.42em] text-black/35">
+          <p className="mb-5 text-[10px] uppercase tracking-[0.42em] text-black/60">
             {text.explore}
           </p>
 
-          <nav className="flex flex-col gap-3 text-[11px] uppercase tracking-[0.32em] text-black/55">
+          <nav className="flex flex-col gap-3 text-[11px] uppercase tracking-[0.32em] text-black/70">
             <Link href={`${prefix}/collections/forma`} className="transition hover:text-black">
               {text.forma}
             </Link>
@@ -121,11 +121,11 @@ export default function Footer() {
         </div>
 
         <div>
-          <p className="mb-5 text-[10px] uppercase tracking-[0.42em] text-black/35">
+          <p className="mb-5 text-[10px] uppercase tracking-[0.42em] text-black/60">
             {text.legal}
           </p>
 
-          <nav className="flex flex-col gap-3 text-[11px] uppercase tracking-[0.32em] text-black/55">
+          <nav className="flex flex-col gap-3 text-[11px] uppercase tracking-[0.32em] text-black/70">
             <Link href={`${prefix}/legal-notice`} className="transition hover:text-black">
               {text.legalNotice}
             </Link>
@@ -145,7 +145,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="mx-auto mt-12 flex max-w-[1500px] flex-col gap-6 border-t border-black/10 pt-7 text-[10px] uppercase tracking-[0.32em] text-black/40 md:flex-row md:items-center md:justify-between">
+      <div className="mx-auto mt-12 flex max-w-[1500px] flex-col gap-6 border-t border-black/10 pt-7 text-[10px] uppercase tracking-[0.32em] text-black/65 md:flex-row md:items-center md:justify-between">
         <p>
           © {new Date().getFullYear()} LIGNORAE. {text.rights}
         </p>
