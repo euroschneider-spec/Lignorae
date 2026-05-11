@@ -10,19 +10,20 @@ function refreshPieces() {
   revalidatePath("/de");
   revalidatePath("/ro");
   revalidatePath("/admin");
+  revalidatePath("/admin/pieces");
   revalidatePath("/admin/pieces/new");
   revalidatePath("/collections");
-  revalidatePath("/collections/origin");
-  revalidatePath("/collections/sacra");
-  revalidatePath("/collections/sonora");
+  revalidatePath("/collections/forma");
+  revalidatePath("/collections/origins");
+  revalidatePath("/collections/natura");
   revalidatePath("/de/collections");
-  revalidatePath("/de/collections/origin");
-  revalidatePath("/de/collections/sacra");
-  revalidatePath("/de/collections/sonora");
+  revalidatePath("/de/collections/forma");
+  revalidatePath("/de/collections/origins");
+  revalidatePath("/de/collections/natura");
   revalidatePath("/ro/collections");
-  revalidatePath("/ro/collections/origin");
-  revalidatePath("/ro/collections/sacra");
-  revalidatePath("/ro/collections/sonora");
+  revalidatePath("/ro/collections/forma");
+  revalidatePath("/ro/collections/origins");
+  revalidatePath("/ro/collections/natura");
 }
 
 function asString(value: FormDataEntryValue | null) {
@@ -63,7 +64,7 @@ function getPieceData(formData: FormData) {
 }
 
 function getId(formData: FormData) {
-  return asString(formData.get("id"));
+  return asString(formData.get("pieceId")) || asString(formData.get("id"));
 }
 
 type PieceTranslationPayload = {
@@ -196,7 +197,7 @@ export async function updatePiece(formData: FormData) {
   });
 
   refreshPieces();
-  redirect("/admin");
+  redirect("/admin?success=piece-updated");
 }
 
 export async function archivePiece(formData: FormData) {
@@ -212,6 +213,7 @@ export async function archivePiece(formData: FormData) {
   });
 
   refreshPieces();
+  redirect("/admin?success=piece-archived");
 }
 
 export async function deletePiece(formData: FormData) {
@@ -226,6 +228,7 @@ export async function deletePiece(formData: FormData) {
   });
 
   refreshPieces();
+  redirect("/admin?success=piece-deleted");
 }
 
 export async function generateMissingPieceTranslations() {
