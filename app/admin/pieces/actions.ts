@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { generateOpenAIText, parseJsonResponse } from "@/lib/openai";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { put } from "@vercel/blob";
 
 function refreshPieces() {
   revalidatePath("/");
@@ -43,6 +44,23 @@ function slugify(value: string) {
     .replace(/^-+|-+$/g, "");
 }
 
+async function uploadPieceImage(file: FormDataEntryValue | null, prefix: string) {
+  if (!(file instanceof File) || file.size === 0) {
+    return null;
+  }
+
+  const safeName = file.name
+    .toLowerCase()
+    .replace(/[^a-z0-9.]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+  const blob = await put(`pieces/${prefix}-${Date.now()}-${safeName}`, file, {
+    access: "public",
+  });
+
+  return blob.url;
+}
+
 function getPieceData(formData: FormData) {
   const title = asString(formData.get("title"));
   const slugFromForm = asString(formData.get("slug"));
@@ -60,6 +78,25 @@ function getPieceData(formData: FormData) {
     story: asNullableString(formData.get("story")),
     image: asString(formData.get("image")),
     detailImage: asNullableString(formData.get("detailImage")),
+  };
+}
+
+async function getPieceDataWithImages(formData: FormData) {
+  const data = getPieceData(formData);
+
+  const uploadedMainImage = await uploadPieceImage(
+    formData.get("mainImageFile"),
+    "main"
+  );
+  const uploadedDetailImage = await uploadPieceImage(
+    formData.get("detailImageFile"),
+    "detail"
+  );
+
+  return {
+    ...data,
+    image: uploadedMainImage || data.image,
+    detailImage: uploadedDetailImage || data.detailImage,
   };
 }
 
@@ -164,7 +201,11 @@ async function createMissingTranslationsForPiece(pieceId: string) {
 }
 
 export async function createPiece(formData: FormData) {
-  const data = getPieceData(formData);
+  const data = await getPieceDataWithImages(formData);
+
+  if (!data.image) {
+    throw new Error("Main image is required.");
+  }
 
   const piece = await prisma.piece.create({
     data,
@@ -189,7 +230,7 @@ export async function updatePiece(formData: FormData) {
     throw new Error("Missing piece id.");
   }
 
-  const data = getPieceData(formData);
+  const data = await getPieceDataWithImages(formData);
 
   await prisma.piece.update({
     where: { id },

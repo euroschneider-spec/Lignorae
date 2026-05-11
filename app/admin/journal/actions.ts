@@ -14,13 +14,17 @@ function createSlug(value: string) {
     .replace(/^-+|-+$/g, "");
 }
 
-async function uploadJournalImage(file: File | null, slug: string) {
-  if (!file || file.size === 0) {
+async function uploadJournalImage(file: FormDataEntryValue | null, slug: string) {
+  if (!(file instanceof File) || file.size === 0) {
     return null;
   }
 
-  const extension = file.name.split(".").pop() || "jpg";
-  const pathname = `journal/${slug}-cover-${Date.now()}.${extension}`;
+  const safeName = file.name
+    .toLowerCase()
+    .replace(/[^a-z0-9.]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+
+  const pathname = `journal/${slug}-cover-${Date.now()}-${safeName}`;
 
   const blob = await put(pathname, file, {
     access: "public",
@@ -127,7 +131,7 @@ export async function createJournalPost(formData: FormData) {
   const slugInput = String(formData.get("slug") || "").trim();
   const excerpt = String(formData.get("excerpt") || "").trim();
   const content = String(formData.get("content") || "").trim();
-  const coverImageFile = formData.get("coverImageFile") as File | null;
+  const coverImageFile = formData.get("coverImageFile");
   const published = formData.get("published") === "on";
 
   const slug = slugInput || createSlug(title);
@@ -173,6 +177,11 @@ export async function createJournalPost(formData: FormData) {
 
   revalidatePath("/admin");
   revalidatePath("/journal");
+  revalidatePath("/de/journal");
+  revalidatePath(`/de/journal/${slug}`);
+  revalidatePath("/ro/journal");
+  revalidatePath(`/ro/journal/${slug}`);
+  revalidatePath(`/journal/${slug}`);
   revalidatePath("/");
 
   redirect(
@@ -188,7 +197,7 @@ export async function updateJournalPost(formData: FormData) {
   const slugInput = String(formData.get("slug") || "").trim();
   const excerpt = String(formData.get("excerpt") || "").trim();
   const content = String(formData.get("content") || "").trim();
-  const coverImageFile = formData.get("coverImageFile") as File | null;
+  const coverImageFile = formData.get("coverImageFile");
   const published = formData.get("published") === "on";
 
   const manualTranslations = [

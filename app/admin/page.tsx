@@ -71,10 +71,10 @@ const buttonGhost =
   "inline-flex shrink-0 items-center justify-center border border-black/20 px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-black/60 transition hover:border-black hover:text-black";
 
 const buttonBlack =
-  "inline-flex shrink-0 items-center justify-center border border-black bg-black px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-white transition hover:bg-transparent hover:text-black";
+  "inline-flex shrink-0 items-center justify-center border border-black/35 bg-transparent px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-black/80 transition hover:border-black hover:bg-black hover:text-white";
 
 const dangerButton =
-  "inline-flex shrink-0 items-center justify-center border border-red-500/40 px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-red-700 transition hover:bg-red-500 hover:text-white";
+  "inline-flex shrink-0 items-center justify-center border border-red-700/45 bg-transparent px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-red-800 transition hover:border-red-800 hover:bg-red-800 hover:text-white";
 
 export default async function AdminPage({
   searchParams,
@@ -271,11 +271,11 @@ export default async function AdminPage({
                         )}
 
                         <details className="shrink-0">
-                          <summary className="inline-flex shrink-0 cursor-pointer list-none items-center justify-center border border-red-500/40 px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-red-700 transition hover:bg-red-500 hover:text-white">
+                          <summary className="inline-flex shrink-0 cursor-pointer list-none items-center justify-center border border-red-700/45 bg-transparent px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-red-800 transition hover:border-red-800 hover:bg-red-800 hover:text-white">
                             Delete
                           </summary>
 
-                          <form action={deletePiece} className="mt-3 w-56 border border-red-500/30 bg-[#fbfaf7] p-4">
+                          <form action={deletePiece} className="mt-3 w-56 border border-red-700/25 bg-white p-4">
                             <input type="hidden" name="pieceId" value={piece.id} />
                             <p className="mb-4 text-sm leading-relaxed text-black/70">
                               Delete this piece permanently?
@@ -390,11 +390,11 @@ export default async function AdminPage({
                           )}
 
                           <details className="shrink-0">
-                            <summary className="inline-flex shrink-0 cursor-pointer list-none items-center justify-center border border-red-500/40 px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-red-700 transition hover:bg-red-500 hover:text-white">
+                            <summary className="inline-flex shrink-0 cursor-pointer list-none items-center justify-center border border-red-700/45 bg-transparent px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-red-800 transition hover:border-red-800 hover:bg-red-800 hover:text-white">
                               Delete
                             </summary>
 
-                            <form action={deleteJournalPost} className="mt-3 w-56 border border-red-500/30 bg-[#fbfaf7] p-4">
+                            <form action={deleteJournalPost} className="mt-3 w-56 border border-red-700/25 bg-white p-4">
                               <input type="hidden" name="postId" value={post.id} />
                               <p className="mb-4 text-sm leading-relaxed text-black/70">
                                 Delete this post permanently?

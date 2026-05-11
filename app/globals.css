@@ -122,18 +122,34 @@ p {
 .text-black\/45,
 .text-black\/50,
 .text-black\/55 {
-  color: rgb(0 0 0 / 0.68) !important;
+  color: rgb(0 0 0 / 0.78) !important;
 }
 
 .text-black\/60,
 .text-black\/65,
 .text-black\/70 {
-  color: rgb(0 0 0 / 0.82) !important;
+  color: rgb(0 0 0 / 0.88) !important;
 }
 
 .text-black\/75,
 .text-black\/80 {
-  color: rgb(0 0 0 / 0.88) !important;
+  color: rgb(0 0 0 / 0.94) !important;
+}
+
+p,
+li,
+label,
+input,
+select,
+textarea {
+  font-weight: 300;
+}
+
+@media (min-width: 768px) {
+  p,
+  li {
+    font-size-adjust: 0.52;
+  }
 }
 
 ::-webkit-scrollbar {
