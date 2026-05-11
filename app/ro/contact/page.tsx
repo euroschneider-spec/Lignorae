@@ -181,7 +181,7 @@ export default function RomanianContactPage() {
                 Obiecte în număr redus
               </p>
               <p className="text-base font-normal leading-8 text-black/95">
-                Stilourile LIGNORAE sunt pregătite în serii mici.
+                Stilourile LIGNORAE sunt finisate în serii mici.
                 Detaliile despre material, disponibilitate, preț, livrare și
                 eventuale comenzi speciale sunt discutate înaintea confirmării
                 oricărei comenzi.

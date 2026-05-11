@@ -181,7 +181,7 @@ export default function GermanContactPage() {
                 Objekte in kleinen Serien
               </p>
               <p className="text-base font-normal leading-8 text-black/80">
-                LIGNORAE Schreibobjekte entstehen in kleinen Serien. Details zu
+                LIGNORAE Füllfederhalter entstehen in kleinen Serien. Details zu
                 Material, Verfügbarkeit, Preis, Lieferung und möglichen
                 Einzelanfertigungen werden vor jeder Auftragsbestätigung
                 besprochen.

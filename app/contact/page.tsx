@@ -162,7 +162,7 @@ export default function ContactPage() {
             </p>
 
             <p className="text-base font-normal leading-8 text-black/80">
-              LIGNORAE writing objects are prepared in small numbers. Details on
+              LIGNORAE fountain pens are prepared in small series. Details on
               material, availability, pricing, delivery and possible commissions
               are discussed before any order is confirmed.
             </p>
