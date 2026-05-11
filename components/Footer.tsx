@@ -1,3 +1,5 @@
+
+
 "use client";
 
 import Link from "next/link";
@@ -24,13 +26,15 @@ export default function Footer() {
   const text = isGerman
     ? {
         statement:
-          "Handgefertigte Füllfederhalter aus München, gefertigt aus sorgfältig ausgewählten Hölzern, langsam geformt und von Hand veredelt.",
-        explore: "Entdecken",
-        collections: "Kollektionen",
-        atelier: "Atelier",
+          "Skulpturale Schreibobjekte aus München, geformt aus Holz, Feuer und reduzierter Präsenz.",
+        explore: "Explore",
+        forma: "Forma",
+        origins: "Origins",
+        natura: "Natura",
+        about: "Über",
         journal: "Journal",
         contact: "Kontakt",
-        legal: "Rechtliches",
+        legal: "Legal",
         legalNotice: "Impressum",
         privacy: "Datenschutz",
         terms: "AGB",
@@ -39,122 +43,132 @@ export default function Footer() {
         rights: "Alle Rechte vorbehalten.",
       }
     : isRomanian
-    ? {
-        statement:
-          "Stilouri realizate manual în München din lemn atent selecționat, formate încet și finisate cu grijă.",
-        explore: "Explorează",
-        collections: "Colecții",
-        atelier: "Atelier",
-        journal: "Jurnal",
-        contact: "Contact",
-        legal: "Legal",
-        legalNotice: "Date legale",
-        privacy: "Politica de confidențialitate",
-        terms: "Termeni și condiții",
-        withdrawal: "Drept de retragere",
-        shipping: "Livrare",
-        rights: "Toate drepturile rezervate.",
-      }
-    : {
-        statement:
-          "Handcrafted fountain pens made in Munich from carefully selected woods, shaped slowly and finished by hand.",
-        explore: "Explore",
-        collections: "Collections",
-        atelier: "Atelier",
-        journal: "Journal",
-        contact: "Contact",
-        legal: "Legal",
-        legalNotice: "Legal Notice",
-        privacy: "Privacy Policy",
-        terms: "Terms & Conditions",
-        withdrawal: "Right of Withdrawal",
-        shipping: "Shipping",
-        rights: "All rights reserved.",
-      };
+      ? {
+          statement:
+            "Obiecte sculpturale de scris, realizate în München din lemn, foc și prezență redusă la esență.",
+          explore: "Explorează",
+          forma: "Forma",
+          origins: "Origins",
+          natura: "Natura",
+          about: "Despre",
+          journal: "Jurnal",
+          contact: "Contact",
+          legal: "Legal",
+          legalNotice: "Date legale",
+          privacy: "Confidențialitate",
+          terms: "Termeni",
+          withdrawal: "Retragere",
+          shipping: "Livrare",
+          rights: "Toate drepturile rezervate.",
+        }
+      : {
+          statement:
+            "Sculptural objects of writing, shaped in Munich from wood, fire and quiet proportion.",
+          explore: "Explore",
+          forma: "Forma",
+          origins: "Origins",
+          natura: "Natura",
+          about: "About",
+          journal: "Journal",
+          contact: "Contact",
+          legal: "Legal",
+          legalNotice: "Legal Notice",
+          privacy: "Privacy",
+          terms: "Terms",
+          withdrawal: "Withdrawal",
+          shipping: "Shipping",
+          rights: "All rights reserved.",
+        };
 
   return (
-    <footer className="border-t border-[#4a3522]/70 bg-[#120d09] px-6 py-10 text-[#b8b2a8] md:py-12">
-      <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-[1.2fr_1fr_1fr] md:gap-10">
+    <footer className="border-t border-black/10 bg-[#f7f5f0] px-9 py-12 text-black/58">
+      <div className="mx-auto grid max-w-[1500px] gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
-          <p className="mb-3 text-lg font-light tracking-[0.35em] text-[#f5f1e8] md:mb-4 md:text-xl">
+          <p className="mb-5 text-[13px] font-light uppercase tracking-[0.55em] text-black/88">
             LIGNORAE
           </p>
 
-          <p className="max-w-sm text-sm leading-relaxed text-[#b8b2a8] md:text-base">
+          <p className="max-w-md text-sm font-light leading-7 text-black/55">
             {text.statement}
           </p>
         </div>
 
         <div>
-          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[#c6a66a] md:mb-4 md:text-sm">
+          <p className="mb-5 text-[10px] uppercase tracking-[0.42em] text-black/35">
             {text.explore}
           </p>
 
-          <nav className="flex flex-col gap-2 md:gap-3">
-            <Link href={`${prefix}/collections`} className="transition hover:text-[#c6a66a]">
-              {text.collections}
+          <nav className="flex flex-col gap-3 text-[11px] uppercase tracking-[0.32em] text-black/55">
+            <Link href={`${prefix}/collections/forma`} className="transition hover:text-black">
+              {text.forma}
             </Link>
-            <Link href={`${prefix}/atelier`} className="transition hover:text-[#c6a66a]">
-              {text.atelier}
+            <Link href={`${prefix}/collections/origins`} className="transition hover:text-black">
+              {text.origins}
             </Link>
-            <Link href={`${prefix}/journal`} className="transition hover:text-[#c6a66a]">
+            <Link href={`${prefix}/collections/natura`} className="transition hover:text-black">
+              {text.natura}
+            </Link>
+            <Link href={`${prefix}/atelier`} className="transition hover:text-black">
+              {text.about}
+            </Link>
+            <Link href={`${prefix}/journal`} className="transition hover:text-black">
               {text.journal}
             </Link>
-            <Link href={`${prefix}/contact`} className="transition hover:text-[#c6a66a]">
+            <Link href={`${prefix}/contact`} className="transition hover:text-black">
               {text.contact}
             </Link>
           </nav>
         </div>
 
         <div>
-          <p className="mb-3 text-xs uppercase tracking-[0.3em] text-[#c6a66a] md:mb-4 md:text-sm">
+          <p className="mb-5 text-[10px] uppercase tracking-[0.42em] text-black/35">
             {text.legal}
           </p>
 
-          <nav className="flex flex-col gap-2 md:gap-3">
-            <Link href={`${prefix}/legal-notice`} className="transition hover:text-[#c6a66a]">
+          <nav className="flex flex-col gap-3 text-[11px] uppercase tracking-[0.32em] text-black/55">
+            <Link href={`${prefix}/legal-notice`} className="transition hover:text-black">
               {text.legalNotice}
             </Link>
-            <Link href={`${prefix}/privacy-policy`} className="transition hover:text-[#c6a66a]">
+            <Link href={`${prefix}/privacy-policy`} className="transition hover:text-black">
               {text.privacy}
             </Link>
-            <Link href={`${prefix}/terms`} className="transition hover:text-[#c6a66a]">
+            <Link href={`${prefix}/terms`} className="transition hover:text-black">
               {text.terms}
             </Link>
-            <Link href={`${prefix}/withdrawal`} className="transition hover:text-[#c6a66a]">
+            <Link href={`${prefix}/withdrawal`} className="transition hover:text-black">
               {text.withdrawal}
             </Link>
-            <Link href={`${prefix}/shipping`} className="transition hover:text-[#c6a66a]">
+            <Link href={`${prefix}/shipping`} className="transition hover:text-black">
               {text.shipping}
             </Link>
           </nav>
         </div>
       </div>
 
-      <div className="mx-auto mt-10 flex max-w-7xl flex-col gap-4 border-t border-[#4a3522]/70 pt-6 text-xs md:mt-12 md:flex-row md:items-center md:justify-between md:text-sm">
+      <div className="mx-auto mt-12 flex max-w-[1500px] flex-col gap-6 border-t border-black/10 pt-7 text-[10px] uppercase tracking-[0.32em] text-black/40 md:flex-row md:items-center md:justify-between">
         <p>
-          © {new Date().getFullYear()} LIGNORAE Atelier. {text.rights}
+          © {new Date().getFullYear()} LIGNORAE. {text.rights}
         </p>
 
-        <div className="flex gap-4 text-xs uppercase tracking-[0.25em]">
+        <div className="flex gap-5">
           <Link
             href={languageHref("en")}
             onClick={() => setLanguageCookie("en")}
-            className={!isGerman && !isRomanian ? "text-[#c6a66a]" : "text-[#6f6558] hover:text-[#c6a66a]"}
+            className={!isGerman && !isRomanian ? "text-black" : "transition hover:text-black"}
           >
             EN
           </Link>
           <Link
             href={languageHref("de")}
             onClick={() => setLanguageCookie("de")}
-            className={isGerman ? "text-[#c6a66a]" : "text-[#6f6558] hover:text-[#c6a66a]"}
+            className={isGerman ? "text-black" : "transition hover:text-black"}
           >
             DE
           </Link>
           <Link
             href={languageHref("ro")}
             onClick={() => setLanguageCookie("ro")}
-            className={isRomanian ? "text-[#c6a66a]" : "text-[#6f6558] hover:text-[#c6a66a]"}
+            className={isRomanian ? "text-black" : "transition hover:text-black"}
           >
             RO
           </Link>
