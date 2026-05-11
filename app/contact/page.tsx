@@ -57,13 +57,14 @@ export default function ContactPage() {
               Contact
             </p>
             <h1 className="max-w-4xl text-5xl font-light leading-[0.95] tracking-[-0.06em] text-black md:text-7xl">
-              Request availability.
+              Begin a conversation.
             </h1>
           </div>
 
           <p className="max-w-2xl text-base font-light leading-8 text-black/70 md:text-lg">
-            For availability, commissions, collaborations or retail conversations,
-            contact the atelier directly. Each enquiry is handled personally.
+            For availability, commissions, collectors, collaborations or retail
+            conversations, contact the atelier directly. Each enquiry is handled
+            personally.
           </p>
         </div>
       </section>
@@ -100,6 +101,7 @@ export default function ContactPage() {
             <select name="enquiryType" required className={inputClass}>
               <option>Availability enquiry</option>
               <option>Commission request</option>
+              <option>Collector / private enquiry</option>
               <option>Retail / B2B collaboration</option>
               <option>Press / partnership</option>
               <option>Other</option>
@@ -138,7 +140,7 @@ export default function ContactPage() {
           )}
 
           <p className="mt-5 text-sm leading-relaxed text-black/55">
-            Your enquiry will be sent directly to the atelier.
+            Your enquiry will be sent directly to LIGNORAE Atelier.
           </p>
         </form>
 
@@ -161,8 +163,8 @@ export default function ContactPage() {
 
             <p className="text-base font-light leading-8 text-black/70">
               LIGNORAE writing objects are prepared in small numbers. Details on
-              material, availability, pricing and delivery are discussed before
-              any order is confirmed.
+              material, availability, pricing, delivery and possible commissions
+              are discussed before any order is confirmed.
             </p>
           </div>
 

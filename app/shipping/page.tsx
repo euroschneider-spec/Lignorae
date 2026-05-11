@@ -1,55 +1,119 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
+const sections = [
+  {
+    title: "Lieferung und Versand",
+    body: [
+      "LIGNORAE Atelier fertigt und verpackt Schreibobjekte in kleinen Stückzahlen. Versandbedingungen, Lieferzeiten und Versandkosten werden vor Vertragsschluss individuell mitgeteilt oder im jeweiligen Angebot angegeben.",
+      "Eine Anfrage über die Website stellt noch keine verbindliche Bestellung dar. Versanddetails werden erst im Rahmen eines konkreten Angebots oder einer bestätigten Bestellung verbindlich festgelegt.",
+    ],
+  },
+  {
+    title: "Bearbeitungs- und Vorbereitungszeit",
+    body: [
+      "Verfügbare Objekte werden nach Zahlungseingang, finaler Prüfung und sorgfältiger Verpackung versandbereit gemacht.",
+      "Bei handgefertigten Objekten, Sonderanfertigungen, Oberflächenveredelungen, Gravuren, Präsentationsformen oder Materialprüfungen können zusätzliche Vorbereitungszeiten entstehen.",
+      "Angegebene Liefer- oder Bearbeitungszeiten sind nur dann verbindlich, wenn sie ausdrücklich als verbindlich bestätigt wurden.",
+    ],
+  },
+  {
+    title: "Versandart und Versicherung",
+    body: [
+      "Hochwertige Schreibobjekte werden grundsätzlich sorgfältig verpackt und, soweit sinnvoll und verfügbar, mit Sendungsverfolgung und angemessener Versicherung versendet.",
+      "Je nach Warenwert, Bestimmungsort und Versanddienstleister kann eine persönliche Übergabe, Empfangsbestätigung oder Unterschrift erforderlich sein.",
+      "Der konkrete Versanddienstleister wird nach Zielort, Versicherbarkeit, Zuverlässigkeit und Objektwert ausgewählt.",
+    ],
+  },
+  {
+    title: "Verpackung",
+    body: [
+      "Die Verpackung wird dem jeweiligen Objekt, seiner Oberfläche, Präsentationsform und dem Versandweg angepasst.",
+      "Präsentationsformen, Cocoon-Boxen, empfindliche Holzoberflächen, Schreibsysteme und Zubehör werden so vorbereitet, dass ein angemessener Schutz während des Transports gewährleistet ist.",
+      "Verpackungen können sich je nach Objekt, Edition, Zielort und Versandanforderung unterscheiden.",
+    ],
+  },
+  {
+    title: "Versand innerhalb Deutschlands und der EU",
+    body: [
+      "Versand innerhalb Deutschlands und in ausgewählte EU-Länder ist grundsätzlich möglich, sofern keine rechtlichen, logistischen oder versicherungstechnischen Gründe entgegenstehen.",
+      "Versandkosten und voraussichtliche Laufzeiten werden vor Vertragsschluss individuell mitgeteilt.",
+    ],
+  },
+  {
+    title: "Internationaler Versand",
+    body: [
+      "Internationaler Versand außerhalb der Europäischen Union kann nach individueller Prüfung möglich sein.",
+      "Zölle, Einfuhrabgaben, lokale Steuern, Gebühren und Verzögerungen durch Zollbehörden liegen außerhalb des Einflussbereichs von LIGNORAE Atelier und sind, soweit nicht anders vereinbart, von der Kundin oder dem Kunden zu tragen.",
+      "LIGNORAE Atelier übernimmt keine Verantwortung für Verzögerungen, die durch Zollabfertigung, unvollständige Empfängerangaben, lokale Behörden oder ausländische Versanddienstleister entstehen.",
+    ],
+  },
+  {
+    title: "Transportschäden",
+    body: [
+      "Sollte ein Paket sichtbar beschädigt ankommen, sollte der Schaden nach Möglichkeit sofort beim Zusteller dokumentiert und LIGNORAE Atelier unverzüglich informiert werden.",
+      "Bitte bewahren Sie Verpackung, Versandmaterial und beschädigte Ware auf, bis der Vorgang geklärt ist.",
+      "Gesetzliche Rechte von Verbraucherinnen und Verbrauchern bleiben hiervon unberührt.",
+    ],
+  },
+  {
+    title: "Unzustellbare Sendungen",
+    body: [
+      "Kann eine Sendung wegen unvollständiger, fehlerhafter oder nicht zustellbarer Adressangaben nicht zugestellt werden, können zusätzliche Versandkosten für erneuten Versand oder Rücksendung entstehen.",
+      "Bitte prüfen Sie Lieferadresse, Namen, Hausnummer, Postleitzahl und Kontaktinformationen vor Bestätigung einer Bestellung sorgfältig.",
+    ],
+  },
+];
+
 export default function ShippingPage() {
   return (
-    <main className="flex min-h-screen flex-col bg-[#1a130d] text-[#f5f1e8]">
+    <main className="min-h-screen bg-[#f7f5f0] text-[#111111]">
       <Header />
 
-      <section className="mx-auto max-w-4xl flex-1 px-6 py-40">
-        <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-          Shipping
-        </p>
-
-        <h1 className="mb-12 text-5xl font-light md:text-6xl">
-          Delivery information
-        </h1>
-
-        <div className="space-y-10 text-[#d0cabf]">
+      <section className="mx-auto max-w-[1500px] px-9 pb-24 pt-40">
+        <div className="grid gap-14 md:grid-cols-[0.9fr_1.1fr] md:items-end">
           <div>
-            <h2 className="mb-3 text-2xl font-light text-[#f5f1e8]">
-              Individual confirmation
-            </h2>
-
-            <p className="leading-relaxed">
-              LIGNORAE writing instruments are produced in small numbers.
-              Shipping options, delivery times, and costs are confirmed
-              individually before an order is finalized.
+            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/55">
+              Versand
             </p>
+            <h1 className="max-w-4xl text-5xl font-light leading-[0.95] tracking-[-0.06em] text-black md:text-7xl">
+              Shipping information.
+            </h1>
           </div>
 
-          <div>
-            <h2 className="mb-3 text-2xl font-light text-[#f5f1e8]">
-              Packaging
-            </h2>
+          <p className="max-w-2xl text-base font-light leading-8 text-black/70 md:text-lg">
+            Versandinformationen für handgefertigte Schreibobjekte,
+            Präsentationsformen und individuelle LIGNORAE Anfragen.
+          </p>
+        </div>
+      </section>
 
-            <p className="leading-relaxed">
-              Each writing instrument is prepared and packaged with care,
-              according to the nature of the product, material, and destination.
-            </p>
-          </div>
+      <section className="mx-auto max-w-[1100px] px-9 pb-28">
+        <div className="space-y-6">
+          {sections.map((section) => (
+            <section
+              key={section.title}
+              className="border border-black/15 bg-[#fbfaf7] p-6 md:p-8"
+            >
+              <h2 className="mb-6 text-3xl font-light tracking-[-0.04em] text-black">
+                {section.title}
+              </h2>
 
-          <div>
-            <h2 className="mb-3 text-2xl font-light text-[#f5f1e8]">
-              Availability
-            </h2>
+              <div className="space-y-4 text-base font-light leading-8 text-black/70">
+                {section.body.map((paragraph) => (
+                  <p key={paragraph}>{paragraph}</p>
+                ))}
+              </div>
+            </section>
+          ))}
+        </div>
 
-            <p className="leading-relaxed">
-              EU and selected international shipping may be possible after
-              individual confirmation. Final shipping conditions will be updated
-              before commercial launch.
-            </p>
-          </div>
+        <div className="mt-8 border border-black/15 bg-[#fbfaf7] p-6 text-sm leading-7 text-black/65 md:p-8">
+          <p>
+            Stand: Mai 2026. Versandbedingungen, Kosten und Lieferzeiten werden
+            vor kommerziellem Verkaufsstart mit den tatsächlichen Versandwegen,
+            Versicherungsmöglichkeiten und Zielmärkten abgeglichen.
+          </p>
         </div>
       </section>
 

@@ -26,7 +26,7 @@ export default function Footer() {
   const text = isGerman
     ? {
         statement:
-          "Skulpturale Schreibobjekte aus München, geformt aus Holz, Feuer und reduzierter Präsenz.",
+          "Skulpturale Füllfederhalter aus München, geformt aus Holz, Feuer und reduzierter Präsenz.",
         explore: "Explore",
         forma: "Forma",
         origins: "Origins",
@@ -45,7 +45,7 @@ export default function Footer() {
     : isRomanian
       ? {
           statement:
-            "Obiecte sculpturale de scris, realizate în München din lemn, foc și prezență redusă la esență.",
+            "Stilouri realizate în München din lemn, foc și prezență redusă la esență.",
           explore: "Explorează",
           forma: "Forma",
           origins: "Origins",
@@ -63,7 +63,7 @@ export default function Footer() {
         }
       : {
           statement:
-            "Sculptural objects of writing, shaped in Munich from wood, fire and quiet proportion.",
+            "Sculptural fountain pens, shaped in Munich from wood, fire and quiet proportion.",
           explore: "Explore",
           forma: "Forma",
           origins: "Origins",
