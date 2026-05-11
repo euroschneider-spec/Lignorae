@@ -3,27 +3,29 @@ import PieceForm from "./PieceForm";
 
 export default function NewPiecePage() {
   return (
-    <main className="min-h-screen bg-[#050505] px-6 py-10 text-[#f5efe3]">
+    <main className="min-h-screen bg-[#f7f5f0] px-6 py-10 text-[#111111]">
       <section className="mx-auto max-w-3xl">
-        <div className="mb-10 flex items-center justify-between gap-4">
+        <div className="mb-10 flex items-center justify-between gap-4 border-b border-black/10 pb-8">
           <div>
-            <p className="text-xs uppercase tracking-[0.35em] text-[#c6a66a]">
-              Lignorae back-office
+            <p className="text-[10px] uppercase tracking-[0.42em] text-black/45">
+              LIGNORAE back-office
             </p>
-            <h1 className="mt-3 text-3xl font-light tracking-[0.08em] text-[#f5efe3] md:text-4xl">
+            <h1 className="mt-4 text-4xl font-light tracking-[-0.04em] text-black md:text-5xl">
               Add piece
             </h1>
           </div>
 
           <Link
             href="/admin"
-            className="rounded-full border border-[#c6a66a]/40 px-4 py-2 text-xs uppercase tracking-[0.2em] text-[#c6a66a] transition hover:border-[#c6a66a] hover:bg-[#c6a66a] hover:text-black"
+            className="border border-black/20 px-5 py-3 text-[10px] uppercase tracking-[0.32em] text-black/60 transition hover:border-black hover:text-black"
           >
             Back
           </Link>
         </div>
 
-        <PieceForm />
+        <div className="border border-black/10 bg-[#fbfaf7] p-6 md:p-8">
+          <PieceForm />
+        </div>
       </section>
     </main>
   );

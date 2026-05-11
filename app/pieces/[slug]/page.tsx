@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
@@ -12,7 +13,7 @@ function getStatusLabel(status: string) {
   if (normalizedStatus === "available") return "Available";
   if (normalizedStatus === "reserved") return "Reserved";
   if (normalizedStatus === "sold") return "Sold";
-  if (normalizedStatus === "prototype-archive") return "Prototype Archive";
+  if (normalizedStatus === "prototype-archive") return "Prototype archive";
 
   return status;
 }
@@ -20,12 +21,11 @@ function getStatusLabel(status: string) {
 function getCollectionSlug(collection: string) {
   const normalizedCollection = collection.toLowerCase().trim();
 
-  if (normalizedCollection === "origins") return "origin";
-  if (normalizedCollection === "origin") return "origin";
-  if (normalizedCollection === "sacra") return "sacra";
-  if (normalizedCollection === "sonora") return "sonora";
+  if (normalizedCollection === "forma") return "forma";
+  if (normalizedCollection === "origins") return "origins";
+  if (normalizedCollection === "natura") return "natura";
 
-  return normalizedCollection;
+  return "collections";
 }
 
 export default async function PieceDetailPage({
@@ -45,94 +45,105 @@ export default async function PieceDetailPage({
     notFound();
   }
 
+  const collectionSlug = getCollectionSlug(piece.collection);
+  const mainImage = piece.detailImage || piece.image;
+
+  const specs = [
+    { label: "Status", value: getStatusLabel(piece.status) },
+    piece.year ? { label: "Year", value: String(piece.year) } : null,
+    piece.material ? { label: "Material", value: piece.material } : null,
+    piece.atelier ? { label: "Atelier", value: piece.atelier } : null,
+  ].filter(Boolean) as Array<{ label: string; value: string }>;
+
   return (
-    <main className="flex min-h-screen flex-col bg-[#1a130d] text-[#f5f1e8]">
+    <main className="min-h-screen bg-[#f7f5f0] text-[#111111]">
       <Header />
 
-      <section className="flex-1 px-6 pb-24 pt-36">
-        <div className="mx-auto grid max-w-6xl gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-          <div>
-            <Link
-              href={`/collections/${getCollectionSlug(piece.collection)}`}
-              className="mb-10 inline-block text-sm uppercase tracking-[0.25em] text-[#c6a66a] transition hover:text-[#f5f1e8]"
-            >
-              ← Back to collection
-            </Link>
+      <section className="mx-auto max-w-[1500px] px-9 pb-24 pt-40">
+        <Link
+          href={`/collections/${collectionSlug}`}
+          className="mb-14 inline-block text-[10px] uppercase tracking-[0.35em] text-black/55 transition hover:text-black"
+        >
+          ← Back to collection
+        </Link>
 
-            <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
+        <div className="grid gap-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
+          <div className="group relative aspect-[4/5] overflow-hidden bg-[#eeeae2] lg:sticky lg:top-28">
+            <Image
+              src={mainImage}
+              alt={piece.title}
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 760px"
+              className="object-cover object-center transition duration-[1800ms] ease-out group-hover:scale-[1.035]"
+            />
+          </div>
+
+          <div className="lg:pt-8">
+            <p className="mb-8 text-[11px] uppercase tracking-[0.42em] text-black/55">
               {piece.collection}
             </p>
 
-            <h1 className="mb-8 font-serif text-5xl font-light leading-tight md:text-6xl">
+            <h1 className="max-w-3xl text-5xl font-light leading-[0.92] tracking-[-0.06em] text-black md:text-7xl">
               {piece.title}
             </h1>
 
-            <p className="mb-10 text-xl leading-relaxed text-[#d0cabf]">
+            <p className="mt-10 max-w-2xl text-lg font-light leading-9 text-black/70">
               {piece.shortDescription}
             </p>
 
-            <div className="grid gap-4 text-sm uppercase tracking-[0.22em] text-[#c6a66a] sm:grid-cols-2">
-              <div className="rounded-2xl border border-[#4a3522]/70 bg-[#21170f] p-5">
-                Status
-                <p className="mt-2 text-base normal-case tracking-normal text-[#f5f1e8]">
-                  {getStatusLabel(piece.status)}
-                </p>
-              </div>
-
-              {piece.year && (
-                <div className="rounded-2xl border border-[#4a3522]/70 bg-[#21170f] p-5">
-                  Year
-                  <p className="mt-2 text-base normal-case tracking-normal text-[#f5f1e8]">
-                    {piece.year}
+            <div className="mt-14 grid gap-px overflow-hidden border border-black/15 bg-black/15 sm:grid-cols-2">
+              {specs.map((spec) => (
+                <div key={spec.label} className="bg-[#fbfaf7] p-6">
+                  <p className="mb-4 text-[10px] uppercase tracking-[0.35em] text-black/45">
+                    {spec.label}
+                  </p>
+                  <p className="text-base font-light leading-7 text-black/75">
+                    {spec.value}
                   </p>
                 </div>
-              )}
-
-              {piece.material && (
-                <div className="rounded-2xl border border-[#4a3522]/70 bg-[#21170f] p-5">
-                  Material
-                  <p className="mt-2 text-base normal-case tracking-normal text-[#f5f1e8]">
-                    {piece.material}
-                  </p>
-                </div>
-              )}
-
-              {piece.atelier && (
-                <div className="rounded-2xl border border-[#4a3522]/70 bg-[#21170f] p-5">
-                  Atelier
-                  <p className="mt-2 text-base normal-case tracking-normal text-[#f5f1e8]">
-                    {piece.atelier}
-                  </p>
-                </div>
-              )}
+              ))}
             </div>
-          </div>
 
-          <div className="group overflow-hidden rounded-[2rem] border border-[#c6a66a]/35 bg-[#21170f] shadow-[0_0_35px_rgba(198,166,106,0.08)] transition duration-500 hover:border-[#c6a66a]/70 hover:shadow-[0_0_45px_rgba(198,166,106,0.16)]">
-            <div className="relative aspect-[4/3] overflow-hidden">
-              <div
-                className="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-105"
-                style={{ backgroundImage: `url('${piece.detailImage || piece.image}')` }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+            <div className="mt-12 flex flex-col gap-4 sm:flex-row">
+              <Link
+                href="/contact"
+                className="inline-flex justify-center border border-black bg-black px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-white transition hover:bg-transparent hover:text-black"
+              >
+                Request availability
+              </Link>
+
+              <Link
+                href="/collections"
+                className="inline-flex justify-center border border-black/20 px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-black/65 transition hover:border-black hover:text-black"
+              >
+                View collections
+              </Link>
             </div>
           </div>
         </div>
+      </section>
 
-        {piece.story && (
-          <div className="mx-auto mt-20 max-w-4xl border-t border-[#4a3522]/70 pt-16">
-            <p className="mb-6 text-sm uppercase tracking-[0.35em] text-[#c6a66a]">
-              Piece story
-            </p>
+      {piece.story && (
+        <section className="border-y border-black/10 bg-[#fbfaf7] px-9 py-28">
+          <div className="mx-auto grid max-w-[1500px] gap-14 md:grid-cols-[0.75fr_1.25fr]">
+            <div>
+              <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/55">
+                Object notes
+              </p>
+              <h2 className="max-w-xl text-4xl font-light leading-tight tracking-[-0.05em] md:text-6xl">
+                Material, surface and intention.
+              </h2>
+            </div>
 
-            <div className="space-y-6 text-lg leading-8 text-[#d0cabf]">
+            <div className="max-w-3xl space-y-7 text-lg font-light leading-9 text-black/70">
               {piece.story.split("\n").map((paragraph, index) => (
                 <p key={index}>{paragraph}</p>
               ))}
             </div>
           </div>
-        )}
-      </section>
+        </section>
+      )}
 
       <Footer />
     </main>

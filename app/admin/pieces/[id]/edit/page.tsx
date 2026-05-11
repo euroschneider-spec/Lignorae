@@ -5,6 +5,13 @@ import { updatePiece } from "../../actions";
 
 export const dynamic = "force-dynamic";
 
+const inputClass =
+  "w-full border border-black/15 bg-[#f7f5f0] px-4 py-3 text-sm text-black outline-none transition placeholder:text-black/35 focus:border-black";
+
+const labelClass = "text-xs uppercase tracking-[0.2em] text-black/55";
+
+const sectionClass = "space-y-5 border border-black/10 bg-[#f7f5f0] p-5";
+
 export default async function EditPiecePage({
   params,
 }: {
@@ -36,21 +43,21 @@ export default async function EditPiecePage({
   );
 
   return (
-    <main className="min-h-screen bg-[#050505] px-6 py-10 text-[#f5efe3]">
+    <main className="min-h-screen bg-[#f7f5f0] px-6 py-10 text-[#111111]">
       <section className="mx-auto max-w-3xl">
-        <div className="mb-10 flex items-center justify-between gap-4">
+        <div className="mb-10 flex items-center justify-between gap-4 border-b border-black/10 pb-8">
           <div>
-            <p className="text-xs uppercase tracking-[0.35em] text-[#c6a66a]">
-              Lignorae back-office
+            <p className="text-[10px] uppercase tracking-[0.42em] text-black/45">
+              LIGNORAE back-office
             </p>
-            <h1 className="mt-3 text-3xl font-light tracking-[0.08em] text-[#f5efe3] md:text-4xl">
+            <h1 className="mt-4 text-4xl font-light tracking-[-0.04em] text-black md:text-5xl">
               Edit piece
             </h1>
           </div>
 
           <Link
-            href="/admin"
-            className="rounded-full border border-[#c6a66a]/40 px-4 py-2 text-xs uppercase tracking-[0.2em] text-[#c6a66a] transition hover:border-[#c6a66a] hover:bg-[#c6a66a] hover:text-black"
+            href="/admin/pieces"
+            className="border border-black/20 px-5 py-3 text-[10px] uppercase tracking-[0.32em] text-black/60 transition hover:border-black hover:text-black"
           >
             Back
           </Link>
@@ -59,7 +66,7 @@ export default async function EditPiecePage({
         <form
           action={updatePiece}
           encType="multipart/form-data"
-          className="space-y-6 rounded-[2rem] border border-white/10 bg-white/[0.03] p-6 shadow-2xl shadow-black/30 md:p-8"
+          className="space-y-6 border border-black/10 bg-[#fbfaf7] p-6 md:p-8"
         >
           <input type="hidden" name="pieceId" value={piece.id} />
           <input type="hidden" name="image" value={piece.image} />
@@ -67,54 +74,45 @@ export default async function EditPiecePage({
 
           <div className="grid gap-5 md:grid-cols-2">
             <label className="space-y-2">
-              <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-                Title
-              </span>
+              <span className={labelClass}>Title</span>
               <input
                 name="title"
                 required
                 defaultValue={englishTranslation?.title || piece.title}
-                placeholder="ORIGIN No. 1"
-                className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+                placeholder="LIGNORAE Object No. 1"
+                className={inputClass}
               />
             </label>
 
             <label className="space-y-2">
-              <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-                Slug
-              </span>
+              <span className={labelClass}>Slug</span>
               <input
                 name="slug"
                 defaultValue={piece.slug}
                 placeholder="auto-generated if empty"
-                className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+                className={inputClass}
               />
             </label>
           </div>
 
           <div className="grid gap-5 md:grid-cols-2">
             <label className="space-y-2">
-              <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-                Collection
-              </span>
-              <input
+              <span className={labelClass}>Collection</span>
+              <select
                 name="collection"
                 required
-                defaultValue={englishTranslation?.collection || piece.collection}
-                placeholder="Origin / Sacra / Sonora"
-                className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
-              />
+                defaultValue={englishTranslation?.collection || piece.collection || "FORMA"}
+                className={inputClass}
+              >
+                <option value="FORMA">FORMA</option>
+                <option value="ORIGINS">ORIGINS</option>
+                <option value="NATURA">NATURA</option>
+              </select>
             </label>
 
             <label className="space-y-2">
-              <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-                Status
-              </span>
-              <select
-                name="status"
-                defaultValue={piece.status}
-                className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition focus:border-[#c6a66a]/70"
-              >
+              <span className={labelClass}>Status</span>
+              <select name="status" defaultValue={piece.status} className={inputClass}>
                 <option value="prototype-archive">Prototype archive</option>
                 <option value="draft">Draft</option>
                 <option value="available">Available</option>
@@ -127,228 +125,194 @@ export default async function EditPiecePage({
 
           <div className="grid gap-5 md:grid-cols-3">
             <label className="space-y-2">
-              <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-                Year
-              </span>
+              <span className={labelClass}>Year</span>
               <input
                 name="year"
                 defaultValue={piece.year || ""}
                 placeholder="2026"
-                className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+                className={inputClass}
               />
             </label>
 
             <label className="space-y-2">
-              <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-                Material
-              </span>
+              <span className={labelClass}>Material</span>
               <input
                 name="material"
                 defaultValue={englishTranslation?.material || piece.material || ""}
-                placeholder="Bog oak, walnut, ziricote..."
-                className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+                placeholder="Oak, beech, ziricote..."
+                className={inputClass}
               />
             </label>
 
             <label className="space-y-2">
-              <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-                Atelier
-              </span>
+              <span className={labelClass}>Atelier</span>
               <input
                 name="atelier"
                 defaultValue={englishTranslation?.atelier || piece.atelier || ""}
                 placeholder="Munich atelier"
-                className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+                className={inputClass}
               />
             </label>
           </div>
 
           <label className="block space-y-2">
-            <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-              Short description
-            </span>
+            <span className={labelClass}>Short description</span>
             <textarea
               name="shortDescription"
               required
               rows={4}
               defaultValue={englishTranslation?.shortDescription || piece.shortDescription}
-              placeholder="Short story, material, provenance, atmosphere."
-              className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+              placeholder="Short object description, material and atmosphere."
+              className={inputClass}
             />
           </label>
 
           <label className="block space-y-2">
-            <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-              Story
-            </span>
+            <span className={labelClass}>Story</span>
             <textarea
               name="story"
               rows={7}
               defaultValue={englishTranslation?.story || piece.story || ""}
-              placeholder="Longer piece story, provenance, making process, character."
-              className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+              placeholder="Longer object notes, making process, material character."
+              className={inputClass}
             />
           </label>
 
-          <div className="space-y-8 rounded-[2rem] border border-[#c6a66a]/25 bg-black/25 p-6">
+          <div className="space-y-8 border border-black/10 bg-[#f7f5f0] p-6">
             <div>
-              <p className="text-xs uppercase tracking-[0.3em] text-[#c6a66a]">
+              <p className="text-xs uppercase tracking-[0.3em] text-black/55">
                 Manual translation refinement
               </p>
-              <p className="mt-3 text-sm leading-relaxed text-[#d0cabf]">
+              <p className="mt-3 text-sm leading-relaxed text-black/65">
                 Generated translations are drafts. Refine German and Romanian
                 wording here before publishing, especially brand-specific terms
                 such as fountain pen, atelier, provenance and material language.
               </p>
             </div>
 
-            <div className="space-y-5 rounded-3xl border border-white/10 bg-black/30 p-5">
-              <p className="text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
+            <div className={sectionClass}>
+              <p className="text-sm uppercase tracking-[0.25em] text-black/55">
                 Deutsch
               </p>
 
               <label className="block space-y-2">
-                <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-                  Title DE
-                </span>
+                <span className={labelClass}>Title DE</span>
                 <input
                   name="deTitle"
                   defaultValue={germanTranslation?.title || ""}
-                  className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+                  className={inputClass}
                 />
               </label>
 
               <label className="block space-y-2">
-                <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-                  Short description DE
-                </span>
+                <span className={labelClass}>Short description DE</span>
                 <textarea
                   name="deShortDescription"
                   rows={4}
                   defaultValue={germanTranslation?.shortDescription || ""}
-                  className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+                  className={inputClass}
                 />
               </label>
 
               <label className="block space-y-2">
-                <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-                  Story DE
-                </span>
+                <span className={labelClass}>Story DE</span>
                 <textarea
                   name="deStory"
                   rows={7}
                   defaultValue={germanTranslation?.story || ""}
-                  className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+                  className={inputClass}
                 />
               </label>
 
               <div className="grid gap-5 md:grid-cols-3">
                 <label className="space-y-2">
-                  <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-                    Collection DE
-                  </span>
+                  <span className={labelClass}>Collection DE</span>
                   <input
                     name="deCollection"
                     defaultValue={germanTranslation?.collection || ""}
-                    className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+                    className={inputClass}
                   />
                 </label>
 
                 <label className="space-y-2">
-                  <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-                    Material DE
-                  </span>
+                  <span className={labelClass}>Material DE</span>
                   <input
                     name="deMaterial"
                     defaultValue={germanTranslation?.material || ""}
-                    className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+                    className={inputClass}
                   />
                 </label>
 
                 <label className="space-y-2">
-                  <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-                    Atelier DE
-                  </span>
+                  <span className={labelClass}>Atelier DE</span>
                   <input
                     name="deAtelier"
                     defaultValue={germanTranslation?.atelier || ""}
-                    className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+                    className={inputClass}
                   />
                 </label>
               </div>
             </div>
 
-            <div className="space-y-5 rounded-3xl border border-white/10 bg-black/30 p-5">
-              <p className="text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
+            <div className={sectionClass}>
+              <p className="text-sm uppercase tracking-[0.25em] text-black/55">
                 Română
               </p>
 
               <label className="block space-y-2">
-                <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-                  Title RO
-                </span>
+                <span className={labelClass}>Title RO</span>
                 <input
                   name="roTitle"
                   defaultValue={romanianTranslation?.title || ""}
-                  className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+                  className={inputClass}
                 />
               </label>
 
               <label className="block space-y-2">
-                <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-                  Short description RO
-                </span>
+                <span className={labelClass}>Short description RO</span>
                 <textarea
                   name="roShortDescription"
                   rows={4}
                   defaultValue={romanianTranslation?.shortDescription || ""}
-                  className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+                  className={inputClass}
                 />
               </label>
 
               <label className="block space-y-2">
-                <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-                  Story RO
-                </span>
+                <span className={labelClass}>Story RO</span>
                 <textarea
                   name="roStory"
                   rows={7}
                   defaultValue={romanianTranslation?.story || ""}
-                  className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+                  className={inputClass}
                 />
               </label>
 
               <div className="grid gap-5 md:grid-cols-3">
                 <label className="space-y-2">
-                  <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-                    Collection RO
-                  </span>
+                  <span className={labelClass}>Collection RO</span>
                   <input
                     name="roCollection"
                     defaultValue={romanianTranslation?.collection || ""}
-                    className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+                    className={inputClass}
                   />
                 </label>
 
                 <label className="space-y-2">
-                  <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-                    Material RO
-                  </span>
+                  <span className={labelClass}>Material RO</span>
                   <input
                     name="roMaterial"
                     defaultValue={romanianTranslation?.material || ""}
-                    className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+                    className={inputClass}
                   />
                 </label>
 
                 <label className="space-y-2">
-                  <span className="text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
-                    Atelier RO
-                  </span>
+                  <span className={labelClass}>Atelier RO</span>
                   <input
                     name="roAtelier"
                     defaultValue={romanianTranslation?.atelier || ""}
-                    className="w-full rounded-2xl border border-white/10 bg-black/40 px-4 py-3 text-sm text-[#f5efe3] outline-none transition placeholder:text-white/30 focus:border-[#c6a66a]/70"
+                    className={inputClass}
                   />
                 </label>
               </div>
@@ -356,30 +320,30 @@ export default async function EditPiecePage({
           </div>
 
           <div className="grid gap-5 md:grid-cols-2">
-            <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
-              <p className="mb-3 text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
+            <div className="border border-black/10 bg-[#f7f5f0] p-4">
+              <p className="mb-3 text-xs uppercase tracking-[0.2em] text-black/55">
                 Current main image
               </p>
               <div
-                className="aspect-[16/10] rounded-2xl bg-cover bg-center"
+                className="aspect-[16/10] bg-cover bg-center"
                 style={{ backgroundImage: `url('${piece.image}')` }}
               />
             </div>
 
             {piece.detailImage && (
-              <div className="rounded-2xl border border-white/10 bg-black/30 p-4">
-                <p className="mb-3 text-xs uppercase tracking-[0.2em] text-[#c6a66a]">
+              <div className="border border-black/10 bg-[#f7f5f0] p-4">
+                <p className="mb-3 text-xs uppercase tracking-[0.2em] text-black/55">
                   Current detail image
                 </p>
                 <div
-                  className="aspect-[16/10] rounded-2xl bg-cover bg-center"
+                  className="aspect-[16/10] bg-cover bg-center"
                   style={{ backgroundImage: `url('${piece.detailImage}')` }}
                 />
               </div>
             )}
           </div>
 
-          <div className="rounded-2xl border border-[#c6a66a]/20 bg-black/30 p-4 text-sm leading-relaxed text-[#d0cabf]">
+          <div className="border border-black/15 bg-[#f7f5f0] p-4 text-sm leading-relaxed text-black/65">
             Image replacement for existing pieces will be added through the same
             direct Blob upload flow used by new pieces. For now, this edit page
             preserves the current image URLs.
@@ -388,7 +352,7 @@ export default async function EditPiecePage({
           <div className="flex justify-end pt-4">
             <button
               type="submit"
-              className="rounded-full bg-[#c6a66a] px-6 py-3 text-xs font-semibold uppercase tracking-[0.22em] text-black transition hover:bg-[#e0c17d]"
+              className="border border-black bg-black px-6 py-3 text-xs font-semibold uppercase tracking-[0.22em] text-white transition hover:bg-transparent hover:text-black"
             >
               Save changes
             </button>
