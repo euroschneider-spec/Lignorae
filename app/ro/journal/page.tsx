@@ -24,13 +24,13 @@ export default async function RomanianJournalPage() {
   });
 
   return (
-    <main className="min-h-screen bg-[#f7f5f0] text-[#111111]">
+    <main className="flex min-h-screen flex-col bg-[#f7f5f0] text-[#111111]">
       <Header />
 
-      <section className="mx-auto max-w-[1500px] px-9 pb-24 pt-40">
+      <section className="mx-auto w-full max-w-[1500px] px-9 pb-24 pt-40">
         <div className="grid gap-14 md:grid-cols-[0.9fr_1.1fr] md:items-end">
           <div>
-            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/55">
+            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
               Jurnal
             </p>
             <h1 className="max-w-4xl text-5xl font-light leading-[0.95] tracking-[-0.06em] text-black md:text-7xl">
@@ -38,17 +38,17 @@ export default async function RomanianJournalPage() {
             </h1>
           </div>
 
-          <p className="max-w-2xl text-base font-light leading-8 text-black/70 md:text-lg">
+          <p className="max-w-2xl text-base font-normal leading-8 text-black/95 md:text-lg">
             Experimente, materiale, greșeli, descoperiri, teste de suprafață și
             construcția lentă a limbajului LIGNORAE.
           </p>
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1500px] px-9 pb-28">
+      <section className="mx-auto w-full max-w-[1500px] flex-1 px-9 pb-28">
         {posts.length === 0 ? (
           <div className="border border-black/15 bg-[#fbfaf7] p-10 text-center">
-            <p className="text-base font-light leading-7 text-black/70">
+            <p className="text-base font-normal leading-7 text-black/95">
               Nu există încă articole publicate în jurnal.
             </p>
           </div>
@@ -72,13 +72,13 @@ export default async function RomanianJournalPage() {
                         alt={title}
                         fill
                         sizes="(max-width: 768px) 100vw, 50vw"
-                        className="object-cover object-center transition duration-[1800ms] ease-out group-hover:scale-[1.035]"
+                        className="object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
                       />
                     </div>
                   )}
 
                   <div className="p-8">
-                    <p className="mb-5 text-[10px] uppercase tracking-[0.35em] text-black/55">
+                    <p className="mb-5 text-[10px] uppercase tracking-[0.35em] text-black/95">
                       {post.createdAt.toLocaleDateString("ro-RO", {
                         day: "2-digit",
                         month: "long",
@@ -90,11 +90,11 @@ export default async function RomanianJournalPage() {
                       {title}
                     </h2>
 
-                    <p className="mb-8 text-base font-light leading-8 text-black/70">
+                    <p className="mb-8 text-base font-normal leading-8 text-black/95">
                       {excerpt}
                     </p>
 
-                    <p className="text-[10px] uppercase tracking-[0.35em] text-black/60 transition group-hover:text-black">
+                    <p className="text-[10px] uppercase tracking-[0.35em] text-black/95 transition group-hover:text-black">
                       Citește articolul →
                     </p>
                   </div>

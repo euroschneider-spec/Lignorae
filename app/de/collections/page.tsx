@@ -70,13 +70,13 @@ export default async function GermanCollectionsPage() {
   });
 
   return (
-    <main className="min-h-screen bg-[#f7f5f0] text-[#111111]">
+    <main className="flex min-h-screen flex-col bg-[#f7f5f0] text-[#111111]">
       <Header />
 
-      <section className="mx-auto max-w-[1500px] px-9 pb-24 pt-40">
+      <section className="mx-auto w-full max-w-[1500px] px-9 pb-24 pt-40">
         <div className="grid gap-14 md:grid-cols-[0.9fr_1.1fr] md:items-end">
           <div>
-            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/55">
+            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
               Kollektionen
             </p>
             <h1 className="max-w-4xl text-5xl font-light leading-[0.95] tracking-[-0.06em] text-black md:text-7xl">
@@ -84,7 +84,7 @@ export default async function GermanCollectionsPage() {
             </h1>
           </div>
 
-          <p className="max-w-2xl text-base font-light leading-8 text-black/70 md:text-lg">
+          <p className="max-w-2xl text-base font-normal leading-8 text-black/95 md:text-lg">
             LIGNORAE ist um drei klare Ausdrucksformen organisiert: die
             skulpturale schwarze Sprache von FORMA, die ausdrucksstarken Hölzer
             von ORIGINS und die direkte Materialehrlichkeit von NATURA.
@@ -92,7 +92,7 @@ export default async function GermanCollectionsPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1500px] px-9 pb-28">
+      <section className="mx-auto w-full max-w-[1500px] px-9 pb-28">
         <div className="grid gap-10">
           {collections.map((collection, index) => (
             <Link
@@ -110,13 +110,13 @@ export default async function GermanCollectionsPage() {
                   alt={`${collection.title} collection`}
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover object-center transition duration-[1800ms] ease-out group-hover:scale-[1.035]"
+                  className="object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
                 />
               </div>
 
               <div className="flex min-h-[420px] flex-col justify-between p-8 md:p-12">
                 <div>
-                  <p className="mb-8 text-[10px] uppercase tracking-[0.35em] text-black/55">
+                  <p className="mb-8 text-[10px] uppercase tracking-[0.35em] text-black/95">
                     {collection.eyebrow}
                   </p>
 
@@ -130,11 +130,11 @@ export default async function GermanCollectionsPage() {
                 </div>
 
                 <div className="mt-14">
-                  <p className="max-w-xl text-base font-light leading-8 text-black/70">
+                  <p className="max-w-xl text-base font-normal leading-8 text-black/95">
                     {collection.description}
                   </p>
 
-                  <p className="mt-8 text-[10px] uppercase tracking-[0.35em] text-black/60 transition group-hover:text-black">
+                  <p className="mt-8 text-[10px] uppercase tracking-[0.35em] text-black/95 transition group-hover:text-black">
                     Kollektion ansehen →
                   </p>
                 </div>
@@ -147,7 +147,7 @@ export default async function GermanCollectionsPage() {
       <section className="border-y border-black/15 bg-[#fbfaf7] px-9 py-24">
         <div className="mx-auto grid max-w-[1500px] gap-14 md:grid-cols-[0.75fr_1.25fr] md:items-center">
           <div>
-            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/55">
+            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
               Künftige limitierte Linien
             </p>
             <h2 className="max-w-xl text-4xl font-light leading-tight tracking-[-0.05em] md:text-6xl">
@@ -155,7 +155,7 @@ export default async function GermanCollectionsPage() {
             </h2>
           </div>
 
-          <div className="space-y-7 text-base font-light leading-8 text-black/70 md:text-lg">
+          <div className="space-y-7 text-base font-normal leading-8 text-black/95 md:text-lg">
             <p>
               SONORA und SACRA bleiben für zukünftige limitierte Arbeiten
               reserviert, sobald geeignete musikalische oder sakral-historische
@@ -169,10 +169,10 @@ export default async function GermanCollectionsPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1500px] px-9 py-28">
+      <section className="mx-auto w-full max-w-[1500px] flex-1 px-9 py-28">
         <div className="mb-14 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="mb-4 text-[11px] uppercase tracking-[0.48em] text-black/55">
+            <p className="mb-4 text-[11px] uppercase tracking-[0.48em] text-black/95">
               Einzelobjekte
             </p>
             <h2 className="text-4xl font-light tracking-[-0.05em] text-black md:text-6xl">
@@ -180,7 +180,7 @@ export default async function GermanCollectionsPage() {
             </h2>
           </div>
 
-          <p className="max-w-xl text-base font-light leading-8 text-black/70">
+          <p className="max-w-xl text-base font-normal leading-8 text-black/95">
             Jedes Objekt kann eine eigene Archivseite mit Materialnotizen,
             Fotografien, Spezifikationen und Verfügbarkeit erhalten.
           </p>
@@ -188,7 +188,7 @@ export default async function GermanCollectionsPage() {
 
         {latestPieces.length === 0 ? (
           <div className="border border-black/15 bg-[#fbfaf7] p-10 text-center">
-            <p className="text-base font-light leading-7 text-black/70">
+            <p className="text-base font-normal leading-7 text-black/95">
               Noch wurden keine Einzelobjekte im Archiv hinzugefügt.
             </p>
           </div>
@@ -216,12 +216,12 @@ export default async function GermanCollectionsPage() {
                       alt={title}
                       fill
                       sizes="(max-width: 768px) 100vw, 33vw"
-                      className="object-cover object-center transition duration-[1800ms] ease-out group-hover:scale-[1.035]"
+                      className="object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
                     />
                   </div>
 
                   <div className="p-8">
-                    <div className="mb-5 flex flex-wrap gap-3 text-[10px] uppercase tracking-[0.3em] text-black/55">
+                    <div className="mb-5 flex flex-wrap gap-3 text-[10px] uppercase tracking-[0.3em] text-black/95">
                       <span className="border border-black/15 px-3 py-1">
                         {getCollectionLabel(collection)}
                       </span>
@@ -234,11 +234,11 @@ export default async function GermanCollectionsPage() {
                       {title}
                     </h3>
 
-                    <p className="mb-7 text-sm font-light leading-7 text-black/70">
+                    <p className="mb-7 text-sm font-light leading-7 text-black/95">
                       {shortDescription}
                     </p>
 
-                    <p className="text-[10px] uppercase tracking-[0.35em] text-black/60 transition group-hover:text-black">
+                    <p className="text-[10px] uppercase tracking-[0.35em] text-black/95 transition group-hover:text-black">
                       Objekt ansehen →
                     </p>
                   </div>

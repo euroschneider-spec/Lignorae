@@ -4,10 +4,10 @@ import PieceForm from "./PieceForm";
 export default function NewPiecePage() {
   return (
     <main className="min-h-screen bg-[#f7f5f0] px-6 py-10 text-[#111111]">
-      <section className="mx-auto max-w-3xl">
+      <section className="mx-auto max-w-5xl">
         <div className="mb-10 flex items-center justify-between gap-4 border-b border-black/10 pb-8">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.42em] text-black/45">
+            <p className="text-[10px] uppercase tracking-[0.42em] text-black/95">
               LIGNORAE back-office
             </p>
             <h1 className="mt-4 text-4xl font-light tracking-[-0.04em] text-black md:text-5xl">
@@ -17,13 +17,13 @@ export default function NewPiecePage() {
 
           <Link
             href="/admin"
-            className="border border-black/20 px-5 py-3 text-[10px] uppercase tracking-[0.32em] text-black/60 transition hover:border-black hover:text-black"
+            className="border border-black/35 px-5 py-3 text-[10px] uppercase tracking-[0.32em] text-black/95 transition hover:border-black hover:bg-black hover:text-white"
           >
             Back
           </Link>
         </div>
 
-        <div className="border border-black/10 bg-[#fbfaf7] p-6 md:p-8">
+        <div className="border border-black/15 bg-[#fbfaf7] p-6 md:p-8">
           <PieceForm />
         </div>
       </section>

@@ -37,20 +37,20 @@ export default async function RomanianJournalPostPage({
   const content = translation?.content || post.content;
 
   return (
-    <main className="min-h-screen bg-[#f7f5f0] text-[#111111]">
+    <main className="flex min-h-screen flex-col bg-[#f7f5f0] text-[#111111]">
       <Header />
 
-      <article className="mx-auto max-w-[1500px] px-9 pb-28 pt-40">
+      <article className="mx-auto w-full max-w-[1500px] flex-1 px-9 pb-28 pt-40">
         <Link
           href="/ro/journal"
-          className="mb-14 inline-block text-[10px] uppercase tracking-[0.35em] text-black/55 transition hover:text-black"
+          className="mb-14 inline-block text-[10px] uppercase tracking-[0.35em] text-black/95 transition hover:text-black"
         >
           ← Înapoi la jurnal
         </Link>
 
         <div className="grid gap-14 md:grid-cols-[0.9fr_1.1fr] md:items-end">
           <div>
-            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/55">
+            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
               Jurnal
             </p>
             <h1 className="max-w-4xl text-5xl font-light leading-[0.95] tracking-[-0.06em] text-black md:text-7xl">
@@ -59,14 +59,14 @@ export default async function RomanianJournalPostPage({
           </div>
 
           <div>
-            <p className="mb-6 text-[10px] uppercase tracking-[0.35em] text-black/55">
+            <p className="mb-6 text-[10px] uppercase tracking-[0.35em] text-black/95">
               {post.createdAt.toLocaleDateString("ro-RO", {
                 day: "2-digit",
                 month: "long",
                 year: "numeric",
               })}
             </p>
-            <p className="max-w-2xl text-base font-light leading-8 text-black/70 md:text-lg">
+            <p className="max-w-2xl text-base font-normal leading-8 text-black/95 md:text-lg">
               {excerpt}
             </p>
           </div>
@@ -80,12 +80,12 @@ export default async function RomanianJournalPostPage({
               fill
               priority
               sizes="(max-width: 1500px) 100vw, 1500px"
-              className="object-cover object-center transition duration-[1800ms] ease-out group-hover:scale-[1.035]"
+              className="object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
             />
           </div>
         )}
 
-        <div className="mx-auto mt-24 max-w-4xl space-y-7 text-lg font-light leading-9 text-black/70">
+        <div className="mx-auto mt-24 max-w-4xl space-y-7 text-lg font-normal leading-9 text-black/95">
           {content
             .split("\n")
             .filter((paragraph) => paragraph.trim().length > 0)

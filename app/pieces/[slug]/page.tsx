@@ -56,13 +56,13 @@ export default async function PieceDetailPage({
   ].filter(Boolean) as Array<{ label: string; value: string }>;
 
   return (
-    <main className="min-h-screen bg-[#f7f5f0] text-[#111111]">
+    <main className="flex min-h-screen flex-col bg-[#f7f5f0] text-[#111111]">
       <Header />
 
-      <section className="mx-auto max-w-[1500px] px-9 pb-24 pt-40">
+      <section className="mx-auto w-full max-w-[1500px] flex-1 px-9 pb-24 pt-40">
         <Link
           href={`/collections/${collectionSlug}`}
-          className="mb-14 inline-block text-[10px] uppercase tracking-[0.35em] text-black/55 transition hover:text-black"
+          className="mb-14 inline-block text-[10px] uppercase tracking-[0.35em] text-black/95 transition hover:text-black"
         >
           ← Back to collection
         </Link>
@@ -75,12 +75,12 @@ export default async function PieceDetailPage({
               fill
               priority
               sizes="(max-width: 1024px) 100vw, 760px"
-              className="object-cover object-center transition duration-[1800ms] ease-out group-hover:scale-[1.035]"
+              className="object-contain object-center p-0 transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
             />
           </div>
 
           <div className="lg:pt-8">
-            <p className="mb-8 text-[11px] uppercase tracking-[0.42em] text-black/55">
+            <p className="mb-8 text-[11px] uppercase tracking-[0.42em] text-black/95">
               {piece.collection}
             </p>
 
@@ -88,17 +88,17 @@ export default async function PieceDetailPage({
               {piece.title}
             </h1>
 
-            <p className="mt-10 max-w-2xl text-lg font-light leading-9 text-black/70">
+            <p className="mt-10 max-w-2xl text-lg font-normal leading-9 text-black/95">
               {piece.shortDescription}
             </p>
 
             <div className="mt-14 grid gap-px overflow-hidden border border-black/15 bg-black/15 sm:grid-cols-2">
               {specs.map((spec) => (
                 <div key={spec.label} className="bg-[#fbfaf7] p-6">
-                  <p className="mb-4 text-[10px] uppercase tracking-[0.35em] text-black/45">
+                  <p className="mb-4 text-[10px] uppercase tracking-[0.35em] text-black/95">
                     {spec.label}
                   </p>
-                  <p className="text-base font-light leading-7 text-black/75">
+                  <p className="text-base font-normal leading-7 text-black/95">
                     {spec.value}
                   </p>
                 </div>
@@ -108,14 +108,14 @@ export default async function PieceDetailPage({
             <div className="mt-12 flex flex-col gap-4 sm:flex-row">
               <Link
                 href="/contact"
-                className="inline-flex justify-center border border-black bg-black px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-white transition hover:bg-transparent hover:text-black"
+                className="inline-flex justify-center border border-black/35 bg-transparent px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-black/95 transition hover:border-black hover:bg-black hover:text-white"
               >
                 Request availability
               </Link>
 
               <Link
                 href="/collections"
-                className="inline-flex justify-center border border-black/20 px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-black/65 transition hover:border-black hover:text-black"
+                className="inline-flex justify-center border border-black/35 px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-black/95 transition hover:border-black hover:bg-black hover:text-white"
               >
                 View collections
               </Link>
@@ -128,7 +128,7 @@ export default async function PieceDetailPage({
         <section className="border-y border-black/10 bg-[#fbfaf7] px-9 py-28">
           <div className="mx-auto grid max-w-[1500px] gap-14 md:grid-cols-[0.75fr_1.25fr]">
             <div>
-              <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/55">
+              <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
                 Object notes
               </p>
               <h2 className="max-w-xl text-4xl font-light leading-tight tracking-[-0.05em] md:text-6xl">
@@ -136,7 +136,7 @@ export default async function PieceDetailPage({
               </h2>
             </div>
 
-            <div className="max-w-3xl space-y-7 text-lg font-light leading-9 text-black/70">
+            <div className="max-w-3xl space-y-7 text-lg font-normal leading-9 text-black/95">
               {piece.story.split("\n").map((paragraph, index) => (
                 <p key={index}>{paragraph}</p>
               ))}

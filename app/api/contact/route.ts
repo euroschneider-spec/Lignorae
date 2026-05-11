@@ -39,11 +39,12 @@ export async function POST(request: Request) {
     const safeMessage = escapeHtml(message);
 
     const result = await resend.emails.send({
-      from: "LIGNORAE Atelier <info@lignorae.com>",
+      from: "LIGNORAE Atelier <onboarding@resend.dev>",
       to: ["info@lignorae.com"],
       bcc: ["euroschneider@gmail.com"],
       subject: `New LIGNORAE enquiry: ${enquiryType}`,
       replyTo: email,
+      text: `New LIGNORAE Contact Request\n\nName: ${name}\nEmail: ${email}\nEnquiry Type: ${enquiryType}\n\n${message}`,
       html: `
         <div style="font-family:Arial,sans-serif;padding:20px;line-height:1.6;color:#111111;">
           <h2>New LIGNORAE Contact Request</h2>
@@ -62,7 +63,7 @@ export async function POST(request: Request) {
     if (result.error) {
       console.error("Resend contact form error:", result.error);
       return Response.json(
-        { error: "Failed to send email" },
+        { error: "Failed to send email", details: result.error },
         { status: 500 }
       );
     }
@@ -72,7 +73,7 @@ export async function POST(request: Request) {
     console.error("Contact form error:", error);
 
     return Response.json(
-      { error: "Failed to send email" },
+      { error: "Failed to send email", details: String(error) },
       { status: 500 }
     );
   }
