@@ -47,10 +47,10 @@ export default function ContactPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#f7f5f0] text-[#111111]">
+    <main className="flex min-h-screen flex-col bg-[#f7f5f0] text-[#111111]">
       <Header />
 
-      <section className="mx-auto max-w-[1500px] px-9 pb-24 pt-40">
+      <section className="mx-auto w-full max-w-[1500px] px-9 pb-24 pt-40">
         <div className="grid gap-14 md:grid-cols-[0.9fr_1.1fr] md:items-end">
           <div>
             <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/55">
@@ -61,7 +61,7 @@ export default function ContactPage() {
             </h1>
           </div>
 
-          <p className="max-w-2xl text-base font-light leading-8 text-black/70 md:text-lg">
+          <p className="max-w-2xl text-base font-normal leading-8 text-black/80 md:text-lg">
             For availability, commissions, collectors, collaborations or retail
             conversations, contact the atelier directly. Each enquiry is handled
             personally.
@@ -69,7 +69,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-[1500px] gap-10 px-9 pb-28 md:grid-cols-[1.1fr_0.9fr]">
+      <section className="mx-auto grid w-full max-w-[1500px] flex-1 gap-10 px-9 pb-28 md:grid-cols-[1.1fr_0.9fr]">
         <form
           onSubmit={handleSubmit}
           className="border border-black/15 bg-[#fbfaf7] p-6 md:p-8"
@@ -129,7 +129,7 @@ export default function ContactPage() {
 
           {status === "success" && (
             <p className="mt-5 text-sm leading-relaxed text-black/70">
-              Thank you. Your enquiry has been sent successfully.
+              Thank you. Your enquiry has been sent to LIGNORAE Atelier.
             </p>
           )}
 
@@ -139,13 +139,13 @@ export default function ContactPage() {
             </p>
           )}
 
-          <p className="mt-5 text-sm leading-relaxed text-black/55">
+          <p className="mt-5 text-sm font-normal leading-relaxed text-black/80">
             Your enquiry will be sent directly to LIGNORAE Atelier.
           </p>
         </form>
 
         <aside className="border border-black/15 bg-[#fbfaf7] p-6 md:p-8">
-          <p className="mb-4 text-[10px] uppercase tracking-[0.35em] text-black/55">
+          <p className="mb-4 text-[10px] uppercase tracking-[0.35em] text-black/70">
             Direct email
           </p>
 
@@ -157,11 +157,11 @@ export default function ContactPage() {
           </a>
 
           <div className="mt-12 border-t border-black/15 pt-8">
-            <p className="mb-4 text-[10px] uppercase tracking-[0.35em] text-black/55">
+            <p className="mb-4 text-[10px] uppercase tracking-[0.35em] text-black/70">
               Objects
             </p>
 
-            <p className="text-base font-light leading-8 text-black/70">
+            <p className="text-base font-normal leading-8 text-black/80">
               LIGNORAE writing objects are prepared in small numbers. Details on
               material, availability, pricing, delivery and possible commissions
               are discussed before any order is confirmed.
@@ -169,23 +169,19 @@ export default function ContactPage() {
           </div>
 
           <div className="mt-12 border-t border-black/15 pt-8">
-            <p className="mb-4 text-[10px] uppercase tracking-[0.35em] text-black/55">
+            <p className="mb-4 text-[10px] uppercase tracking-[0.35em] text-black/70">
               Location
             </p>
 
-            <p className="text-base font-light leading-8 text-black/70">
+            <p className="text-base font-normal leading-8 text-black/80">
               LIGNORAE Atelier
               <br />
-              Hohenlindener Str. 1
-              <br />
-              81677 Munich
-              <br />
-              Germany
+              Munich, Germany
             </p>
           </div>
 
           <div className="mt-12 border-t border-black/15 pt-8">
-            <p className="mb-4 text-[10px] uppercase tracking-[0.35em] text-black/55">
+            <p className="mb-4 text-[10px] uppercase tracking-[0.35em] text-black/70">
               Instagram
             </p>
 

@@ -1,5 +1,13 @@
 import { Resend } from "resend";
 
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
 
 export async function POST(request: Request) {
   try {
@@ -13,7 +21,10 @@ export async function POST(request: Request) {
     const resend = new Resend(process.env.RESEND_API_KEY);
     const body = await request.json();
 
-    const { name, email, enquiryType, message } = body;
+    const name = String(body.name || "").trim();
+    const email = String(body.email || "").trim();
+    const enquiryType = String(body.enquiryType || "").trim();
+    const message = String(body.message || "").trim();
 
     if (!name || !email || !enquiryType || !message) {
       return Response.json(
@@ -22,28 +33,41 @@ export async function POST(request: Request) {
       );
     }
 
-    const data = await resend.emails.send({
-      from: "LIGNORAE <onboarding@resend.dev>",
-      to: ["info@lignorae.com", "euroschneider@gmail.com"],
+    const safeName = escapeHtml(name);
+    const safeEmail = escapeHtml(email);
+    const safeEnquiryType = escapeHtml(enquiryType);
+    const safeMessage = escapeHtml(message);
+
+    const result = await resend.emails.send({
+      from: "LIGNORAE Atelier <info@lignorae.com>",
+      to: ["info@lignorae.com"],
+      bcc: ["euroschneider@gmail.com"],
       subject: `New LIGNORAE enquiry: ${enquiryType}`,
       replyTo: email,
-
       html: `
-        <div style="font-family:Arial,sans-serif;padding:20px;line-height:1.6;color:#1a130d;">
+        <div style="font-family:Arial,sans-serif;padding:20px;line-height:1.6;color:#111111;">
           <h2>New LIGNORAE Contact Request</h2>
 
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Enquiry Type:</strong> ${enquiryType}</p>
+          <p><strong>Name:</strong> ${safeName}</p>
+          <p><strong>Email:</strong> ${safeEmail}</p>
+          <p><strong>Enquiry Type:</strong> ${safeEnquiryType}</p>
 
           <hr />
 
-          <p style="white-space:pre-wrap;">${message}</p>
+          <p style="white-space:pre-wrap;">${safeMessage}</p>
         </div>
       `,
     });
 
-    return Response.json({ success: true, data });
+    if (result.error) {
+      console.error("Resend contact form error:", result.error);
+      return Response.json(
+        { error: "Failed to send email" },
+        { status: 500 }
+      );
+    }
+
+    return Response.json({ success: true, id: result.data?.id });
   } catch (error) {
     console.error("Contact form error:", error);
 

@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 const inputClass =
-  "w-full border border-black/15 bg-[#fbfaf7] px-4 py-3 text-sm font-light text-black outline-none transition placeholder:text-black/40 focus:border-black";
+  "w-full border border-black/15 bg-[#fbfaf7] px-4 py-3 text-sm font-normal text-black outline-none transition placeholder:text-black/60 focus:border-black";
 
 export default function RomanianContactPage() {
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
@@ -51,7 +51,7 @@ export default function RomanianContactPage() {
       <section className="mx-auto w-full max-w-[1500px] flex-1 px-9 pb-28 pt-40">
         <div className="grid gap-14 md:grid-cols-[0.9fr_1.1fr] md:items-end">
           <div>
-            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/55">
+            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
               Contact
             </p>
             <h1 className="max-w-4xl text-5xl font-light leading-[0.95] tracking-[-0.06em] text-black md:text-7xl">
@@ -59,7 +59,7 @@ export default function RomanianContactPage() {
             </h1>
           </div>
 
-          <p className="max-w-2xl text-base font-light leading-8 text-black/70 md:text-lg">
+          <p className="max-w-2xl text-base font-normal leading-8 text-black/95 md:text-lg">
             Pentru disponibilitate, comenzi speciale, colecționari, colaborări
             sau discuții retail/B2B, contactează atelierul direct. Fiecare
             solicitare este citită personal.
@@ -73,7 +73,7 @@ export default function RomanianContactPage() {
           >
             <div className="grid gap-6 md:grid-cols-2">
               <div>
-                <label className="mb-3 block text-[10px] uppercase tracking-[0.35em] text-black/60">
+                <label className="mb-3 block text-[10px] uppercase tracking-[0.35em] text-black/95">
                   Nume
                 </label>
                 <input
@@ -86,7 +86,7 @@ export default function RomanianContactPage() {
               </div>
 
               <div>
-                <label className="mb-3 block text-[10px] uppercase tracking-[0.35em] text-black/60">
+                <label className="mb-3 block text-[10px] uppercase tracking-[0.35em] text-black/95">
                   E-mail
                 </label>
                 <input
@@ -100,7 +100,7 @@ export default function RomanianContactPage() {
             </div>
 
             <div className="mt-6">
-              <label className="mb-3 block text-[10px] uppercase tracking-[0.35em] text-black/60">
+              <label className="mb-3 block text-[10px] uppercase tracking-[0.35em] text-black/95">
                 Tipul solicitării
               </label>
               <select name="enquiryType" required className={inputClass}>
@@ -114,7 +114,7 @@ export default function RomanianContactPage() {
             </div>
 
             <div className="mt-6">
-              <label className="mb-3 block text-[10px] uppercase tracking-[0.35em] text-black/60">
+              <label className="mb-3 block text-[10px] uppercase tracking-[0.35em] text-black/95">
                 Mesaj
               </label>
               <textarea
@@ -135,7 +135,7 @@ export default function RomanianContactPage() {
             </button>
 
             {status === "success" && (
-              <p className="mt-5 text-sm leading-7 text-black/70">
+              <p className="mt-5 text-sm font-normal leading-7 text-black/95">
                 Mulțumim. Solicitarea a fost trimisă către LIGNORAE Atelier.
               </p>
             )}
@@ -147,29 +147,29 @@ export default function RomanianContactPage() {
               </p>
             )}
 
-            <p className="mt-5 text-sm leading-7 text-black/60">
+            <p className="mt-5 text-sm font-normal leading-7 text-black/95">
               Solicitarea va fi trimisă direct către LIGNORAE Atelier.
             </p>
           </form>
 
           <aside className="border border-black/15 bg-[#fbfaf7] p-6 md:p-8">
             <div>
-              <p className="mb-5 text-[10px] uppercase tracking-[0.35em] text-black/60">
+              <p className="mb-5 text-[10px] uppercase tracking-[0.35em] text-black/95">
                 E-mail direct
               </p>
               <a
                 href="mailto:info@lignorae.com"
-                className="text-3xl font-light tracking-[-0.04em] transition hover:text-black/65"
+                className="text-3xl font-light tracking-[-0.04em] text-black/95 transition hover:text-black"
               >
                 info@lignorae.com
               </a>
             </div>
 
             <div className="mt-12 border-t border-black/15 pt-8">
-              <p className="mb-5 text-[10px] uppercase tracking-[0.35em] text-black/60">
+              <p className="mb-5 text-[10px] uppercase tracking-[0.35em] text-black/95">
                 Atelier
               </p>
-              <p className="text-base font-light leading-8 text-black/70">
+              <p className="text-base font-normal leading-8 text-black/95">
                 LIGNORAE Atelier
                 <br />
                 München, Germania
@@ -177,11 +177,11 @@ export default function RomanianContactPage() {
             </div>
 
             <div className="mt-12 border-t border-black/15 pt-8">
-              <p className="mb-5 text-[10px] uppercase tracking-[0.35em] text-black/60">
+              <p className="mb-5 text-[10px] uppercase tracking-[0.35em] text-black/95">
                 Obiecte în număr redus
               </p>
-              <p className="text-base font-light leading-8 text-black/70">
-                Obiectele de scris LIGNORAE sunt pregătite în serii mici.
+              <p className="text-base font-normal leading-8 text-black/95">
+                Stilourile LIGNORAE sunt pregătite în serii mici.
                 Detaliile despre material, disponibilitate, preț, livrare și
                 eventuale comenzi speciale sunt discutate înaintea confirmării
                 oricărei comenzi.
@@ -189,14 +189,14 @@ export default function RomanianContactPage() {
             </div>
 
             <div className="mt-12 border-t border-black/15 pt-8">
-              <p className="mb-5 text-[10px] uppercase tracking-[0.35em] text-black/60">
+              <p className="mb-5 text-[10px] uppercase tracking-[0.35em] text-black/95">
                 Instagram
               </p>
               <a
                 href="https://www.instagram.com/lignorae/"
                 target="_blank"
                 rel="noreferrer"
-                className="text-base font-light leading-8 text-black/70 transition hover:text-black"
+                className="text-base font-normal leading-8 text-black/95 transition hover:text-black"
               >
                 @Lignorae
               </a>
