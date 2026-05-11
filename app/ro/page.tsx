@@ -1,242 +1,59 @@
+import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import FadeIn from "@/components/FadeIn";
-import { prisma } from "@/lib/prisma";
 
-export const dynamic = "force-dynamic";
-
-export default async function HomePage() {
-  const recentPieces = await prisma.piece.findMany({
-    where: {
-      status: {
-        notIn: ["draft", "archived"],
-      },
-    },
-    include: {
-      translations: {
-        where: {
-          locale: "RO",
-        },
-      },
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-    take: 3,
-  });
-
+export default function RomanianHomePage() {
   return (
-    <main className="min-h-screen bg-[#1a130d] text-[#f5f1e8]">
+    <main className="min-h-screen bg-[#f7f5f0] text-[#111111]">
       <Header />
 
-      <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/hero.jpg')] bg-cover bg-center opacity-30" />
-        <div className="absolute inset-0 bg-[#0b0907]/80" />
-
-        <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
-          <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-            Stilouri realizate manual
-          </p>
-
-          <h1 className="mb-6 text-5xl font-light leading-tight md:text-7xl">
-            LIGNORAE
-          </h1>
-
-          <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-[#d6d1c7]">
-            Instrumente de scris realizate manual în München, din lemn atent
-            selecționat, formate încet, finisate cu grijă și create pentru a
-            purta povești peste generații.
-          </p>
-
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link
-              href="/ro/collections"
-              className="rounded-full border border-[#c6a66a] px-8 py-3 text-sm uppercase tracking-[0.2em] transition hover:bg-[#c6a66a] hover:text-black hover:shadow-[0_0_25px_rgba(198,166,106,0.35)]"
-            >
-              Descoperă colecțiile
-            </Link>
-
-            <Link
-              href="/ro/journal"
-              className="rounded-full border border-white/20 px-8 py-3 text-sm uppercase tracking-[0.2em] transition hover:border-white"
-            >
-              Jurnal
-            </Link>
-          </div>
-        </div>
-      </section>
-
-<FadeIn>
-
-  <section className="mx-auto max-w-7xl px-6 pb-28 pt-40">      
-        <div className="mb-16">
-          <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-            Colecții
-          </p>
-
-          <h2 className="text-4xl font-light md:text-5xl">
-            Lemn cu memorie
-          </h2>
-        </div>
-
-        <div className="grid gap-10 md:grid-cols-3">
-          <div className="group overflow-hidden rounded-3xl border border-[#4a3522]/70 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/60">
-            <div className="relative aspect-[16/10] overflow-hidden">
-  <div className="absolute inset-0 bg-[url('/origin.jpg')] bg-cover bg-center transition duration-700 group-hover:scale-105" />
-
-  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-</div>
-
-            <div className="p-8">
-              <h3 className="mb-4 text-2xl font-light">ORIGIN</h3>
-              <p className="leading-relaxed text-[#cfc8bc]">
-                Lemn nobil ales pentru textură, căldură și eleganță atemporală.
-              </p>
-            </div>
-          </div>
-
-          <div className="group overflow-hidden rounded-3xl border border-[#4a3522]/70 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/60">
-            <div className="relative aspect-[16/10] overflow-hidden">
-  <div className="absolute inset-0 bg-[url('/sonora.jpg')] bg-cover bg-center transition duration-700 group-hover:scale-105" />
-
-  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-</div>
-
-            <div className="p-8">
-              <h3 className="mb-4 text-2xl font-light">SONORA</h3>
-              <p className="leading-relaxed text-[#cfc8bc]">
-                Lemn recuperat din instrumente muzicale, transformate în instrumente de scris.
-              </p>
-            </div>
-          </div>
-
-          <div className="group overflow-hidden rounded-3xl border border-[#4a3522]/70 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/60">
-            <div className="relative aspect-[16/10] overflow-hidden">
-  <div className="absolute inset-0 bg-[url('/sacra.jpg')] bg-cover bg-center transition duration-700 group-hover:scale-105" />
-
-  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-</div>
-
-            <div className="p-8">
-              <h3 className="mb-4 text-2xl font-light">SACRA</h3>
-              <p className="leading-relaxed text-[#cfc8bc]">
-                Lemn istoric sacru, purtând secole de memorie și tăcere, uneori durere.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="mx-auto mt-20 max-w-5xl rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-10 text-center">
-          <p className="mb-4 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
-            Prima ediție
-          </p>
-
-          <h2 className="mb-6 text-4xl font-light">
-            Primele instrumente LIGNORAE sunt în pregătire.
-          </h2>
-
-          <p className="mx-auto mb-8 max-w-3xl text-lg leading-relaxed text-[#d0cabf]">
-            Primele piese vor fi realizate în număr redus, iar lemnul,
-            execuția și disponibilitatea vor fi confirmate individual înaintea
-            fiecărei comenzi.
-          </p>
+      <section className="relative min-h-[100svh] overflow-hidden pt-20">
+        <div className="relative mx-auto flex h-[calc(100svh-160px)] min-h-[360px] w-full max-w-[1500px] items-center justify-center overflow-hidden bg-[#f7f5f0] md:min-h-[560px]">
+          <Image
+            src="/gallery_landing.jpg"
+            alt="Obiect de scris LIGNORAE și formă de prezentare cocoon într-un spațiu alb de galerie"
+            fill
+            priority
+            sizes="(max-width: 1500px) 100vw, 1500px"
+            className="object-contain object-center px-4 md:px-0"
+          />
 
           <Link
-            href="/ro/contact"
-            className="inline-block rounded-full border border-[#c6a66a] px-8 py-3 text-sm uppercase tracking-[0.2em] transition hover:bg-[#c6a66a] hover:text-black hover:shadow-[0_0_25px_rgba(198,166,106,0.35)]"
+            href="/ro/collections"
+            className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 border border-black/20 bg-[#f7f5f0]/80 px-6 py-3 text-[10px] uppercase tracking-[0.35em] text-black/65 backdrop-blur-xl transition hover:border-black hover:text-black md:bottom-10"
           >
-            Solicită informații despre disponibilitate
+            Explorează colecțiile
           </Link>
         </div>
 
-        {recentPieces.length > 0 && (
-          <section className="mt-28">
-            <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-              <div>
-                <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-                  Arhiva curentă
-                </p>
+        <footer className="absolute inset-x-0 bottom-0 z-10 border-t border-black/10 bg-[#f7f5f0]/94 backdrop-blur-xl">
+          <div className="mx-auto flex h-20 max-w-[1500px] items-center justify-between px-6 md:px-9">
+            <p className="text-[10px] uppercase tracking-[0.34em] text-black/45 md:text-[11px] md:tracking-[0.48em]">
+              Objects of writing
+            </p>
 
-                <h2 className="text-4xl font-light md:text-5xl">
-                  Piese adăugate recent
-                </h2>
-              </div>
-
+            <div className="flex items-center gap-7 text-[10px] uppercase tracking-[0.32em] text-black/55 md:gap-10 md:tracking-[0.42em]">
+              <Link href="/ro/legal-notice" className="hidden transition hover:text-black md:inline">
+                Impressum
+              </Link>
+              <Link href="/ro/privacy-policy" className="hidden transition hover:text-black md:inline">
+                Datenschutz
+              </Link>
+              <Link href="/ro/shipping" className="hidden transition hover:text-black md:inline">
+                Versand
+              </Link>
               <Link
                 href="/ro/collections"
-                className="text-sm uppercase tracking-[0.25em] text-[#c6a66a] transition hover:text-[#f5f1e8]"
+                aria-label="Explorează colecțiile"
+                className="flex h-7 w-7 items-center justify-center rounded-full border border-black/55 text-[11px] text-black/70 transition hover:border-black hover:text-black"
               >
-                Vezi toate piesele
+                +
               </Link>
             </div>
-
-            <div className="grid gap-10 md:grid-cols-3">
-              {recentPieces.map((piece) => {
-                const translation = piece.translations[0];
-                const title = translation?.title || piece.title;
-                const collection = translation?.collection || piece.collection;
-                const shortDescription =
-                  translation?.shortDescription || piece.shortDescription;
-
-                return (
-                  <Link
-                    key={piece.id}
-                    href={`/ro/pieces/${piece.slug}`}
-                    className="group overflow-hidden rounded-3xl border border-[#c6a66a]/30 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/70 hover:shadow-[0_0_30px_rgba(198,166,106,0.14)]"
-                  >
-                    <div className="relative aspect-[16/10] overflow-hidden">
-                      <div
-                        className="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-105"
-                        style={{ backgroundImage: `url('${piece.image}')` }}
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
-                    </div>
-
-                    <div className="p-8">
-                      <p className="mb-4 text-xs uppercase tracking-[0.28em] text-[#c6a66a]">
-                        {collection}
-                      </p>
-
-                      <h3 className="mb-4 text-2xl font-light transition duration-300 group-hover:text-[#c6a66a]">
-                        {title}
-                      </h3>
-
-                      <p className="leading-relaxed text-[#cfc8bc]">
-                        {shortDescription}
-                      </p>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          </section>
-        )}
+          </div>
+        </footer>
       </section>
-    </FadeIn>
-
-      <FadeIn>
-
-  <section className="relative overflow-hidden border-y border-[#4a3522]/70 py-32">
-        <div className="absolute inset-0 bg-[url('/atelier.jpg')] bg-cover bg-center opacity-20" />
-        <div className="absolute inset-0 bg-[#0b0907]/80" />
-
-        <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-          <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-            Atelierul
-          </p>
-
-          <h2 className="mb-8 text-4xl font-light md:text-6xl">
-            Construit încet. Finisat cu grijă.
-          </h2>
-
-          <p className="mx-auto max-w-2xl text-lg leading-relaxed text-[#d6d1c7]">
-            Fiecare instrument de scris LIGNORAE începe atunci când material brut prinde formă cu răbdare, încercări repetate, șlefuire, lustruire și multe
-            corecții mici, aproape invizibile la final.
-          </p>
-        </div>
-      </section>
-</FadeIn>
 
       <Footer />
     </main>

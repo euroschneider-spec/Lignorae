@@ -1,241 +1,59 @@
+import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import FadeIn from "@/components/FadeIn";
-import { prisma } from "@/lib/prisma";
 
-export const dynamic = "force-dynamic";
-
-export default async function GermanHomePage() {
-  const recentPieces = await prisma.piece.findMany({
-    where: {
-      status: {
-        notIn: ["draft", "archived"],
-      },
-    },
-    include: {
-      translations: {
-        where: {
-          locale: "DE",
-        },
-      },
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-    take: 3,
-  });
-
+export default function GermanHomePage() {
   return (
-    <main className="min-h-screen bg-[#1a130d] text-[#f5f1e8]">
+    <main className="min-h-screen bg-[#f7f5f0] text-[#111111]">
       <Header />
 
-      <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/hero.jpg')] bg-cover bg-center opacity-30" />
-        <div className="absolute inset-0 bg-[#0b0907]/80" />
+      <section className="relative min-h-[100svh] overflow-hidden pt-20">
+        <div className="relative mx-auto flex h-[calc(100svh-160px)] min-h-[360px] w-full max-w-[1500px] items-center justify-center overflow-hidden bg-[#f7f5f0] md:min-h-[560px]">
+          <Image
+            src="/gallery_landing.jpg"
+            alt="LIGNORAE Schreibobjekt und Cocoon-Präsentationsform in einem weißen Galerieraum"
+            fill
+            priority
+            sizes="(max-width: 1500px) 100vw, 1500px"
+            className="object-contain object-center px-4 md:px-0"
+          />
 
-        <div className="relative z-10 mx-auto max-w-5xl px-6 text-center">
-          <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-            Handgefertigte Füllfederhalter
-          </p>
-
-          <h1 className="mb-6 text-5xl font-light leading-tight md:text-7xl">
-            LIGNORAE
-          </h1>
-
-          <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-[#d6d1c7]">
-            Schreibinstrumente, in München von Hand gefertigt aus sorgfältig
-            ausgewählten Hölzern, langsam geformt, behutsam veredelt und dafür
-            geschaffen, Geschichten über Generationen weiterzutragen.
-          </p>
-
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Link
-              href="/de/collections"
-              className="rounded-full border border-[#c6a66a] px-8 py-3 text-sm uppercase tracking-[0.2em] transition hover:bg-[#c6a66a] hover:text-black hover:shadow-[0_0_25px_rgba(198,166,106,0.35)]"
-            >
-              Kollektionen entdecken
-            </Link>
-
-            <Link
-              href="/de/journal"
-              className="rounded-full border border-white/20 px-8 py-3 text-sm uppercase tracking-[0.2em] transition hover:border-white"
-            >
-              Journal
-            </Link>
-          </div>
+          <Link
+            href="/de/collections"
+            className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 border border-black/20 bg-[#f7f5f0]/80 px-6 py-3 text-[10px] uppercase tracking-[0.35em] text-black/65 backdrop-blur-xl transition hover:border-black hover:text-black md:bottom-10"
+          >
+            Kollektionen erkunden
+          </Link>
         </div>
+
+        <footer className="absolute inset-x-0 bottom-0 z-10 border-t border-black/10 bg-[#f7f5f0]/94 backdrop-blur-xl">
+          <div className="mx-auto flex h-20 max-w-[1500px] items-center justify-between px-6 md:px-9">
+            <p className="text-[10px] uppercase tracking-[0.34em] text-black/45 md:text-[11px] md:tracking-[0.48em]">
+              Objects of writing
+            </p>
+
+            <div className="flex items-center gap-7 text-[10px] uppercase tracking-[0.32em] text-black/55 md:gap-10 md:tracking-[0.42em]">
+              <Link href="/de/legal-notice" className="hidden transition hover:text-black md:inline">
+                Impressum
+              </Link>
+              <Link href="/de/privacy-policy" className="hidden transition hover:text-black md:inline">
+                Datenschutz
+              </Link>
+              <Link href="/de/shipping" className="hidden transition hover:text-black md:inline">
+                Versand
+              </Link>
+              <Link
+                href="/de/collections"
+                aria-label="Kollektionen erkunden"
+                className="flex h-7 w-7 items-center justify-center rounded-full border border-black/55 text-[11px] text-black/70 transition hover:border-black hover:text-black"
+              >
+                +
+              </Link>
+            </div>
+          </div>
+        </footer>
       </section>
-
-      <FadeIn>
-        <section className="mx-auto max-w-7xl px-6 pb-28 pt-40">
-          <div className="mb-16">
-            <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-              Kollektionen
-            </p>
-
-            <h2 className="text-4xl font-light md:text-5xl">
-              Materialien mit Erinnerung
-            </h2>
-          </div>
-
-          <div className="grid gap-10 md:grid-cols-3">
-            <div className="group overflow-hidden rounded-3xl border border-[#4a3522]/70 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/60">
-              <div className="relative aspect-[16/10] overflow-hidden">
-                <div className="absolute inset-0 bg-[url('/origin.jpg')] bg-cover bg-center transition duration-700 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-              </div>
-
-              <div className="p-8">
-                <h3 className="mb-4 text-2xl font-light">ORIGIN</h3>
-                <p className="leading-relaxed text-[#cfc8bc]">
-                  Edle Hölzer, ausgewählt für Struktur, Wärme und zeitlose
-                  Eleganz.
-                </p>
-              </div>
-            </div>
-
-            <div className="group overflow-hidden rounded-3xl border border-[#4a3522]/70 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/60">
-              <div className="relative aspect-[16/10] overflow-hidden">
-                <div className="absolute inset-0 bg-[url('/sonora.jpg')] bg-cover bg-center transition duration-700 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-              </div>
-
-              <div className="p-8">
-                <h3 className="mb-4 text-2xl font-light">SONORA</h3>
-                <p className="leading-relaxed text-[#cfc8bc]">
-                  Wiedergewonnene musikalische Materialien, verwandelt in
-                  Schreibinstrumente.
-                </p>
-              </div>
-            </div>
-
-            <div className="group overflow-hidden rounded-3xl border border-[#4a3522]/70 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/60">
-              <div className="relative aspect-[16/10] overflow-hidden">
-                <div className="absolute inset-0 bg-[url('/sacra.jpg')] bg-cover bg-center transition duration-700 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
-              </div>
-
-              <div className="p-8">
-                <h3 className="mb-4 text-2xl font-light">SACRA</h3>
-                <p className="leading-relaxed text-[#cfc8bc]">
-                  Historische Hölzer mit dokumentierter Herkunft, getragen von
-                  Erinnerung, Stille und Bestand.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="mx-auto mt-20 max-w-5xl rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-10 text-center">
-            <p className="mb-4 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
-              Erste Edition
-            </p>
-
-            <h2 className="mb-6 text-4xl font-light">
-              Die ersten LIGNORAE Schreibinstrumente sind in Vorbereitung.
-            </h2>
-
-            <p className="mx-auto mb-8 max-w-3xl text-lg leading-relaxed text-[#d0cabf]">
-              Die ersten Stücke entstehen in kleinen Mengen. Material,
-              Ausführung und Verfügbarkeit werden vor jeder Bestellung
-              individuell abgestimmt.
-            </p>
-
-            <Link
-              href="/de/contact"
-              className="inline-block rounded-full border border-[#c6a66a] px-8 py-3 text-sm uppercase tracking-[0.2em] transition hover:bg-[#c6a66a] hover:text-black hover:shadow-[0_0_25px_rgba(198,166,106,0.35)]"
-            >
-              Verfügbarkeit anfragen
-            </Link>
-          </div>
-
-          {recentPieces.length > 0 && (
-            <section className="mt-28">
-              <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-                <div>
-                  <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-                    Aktuelles Archiv
-                  </p>
-
-                  <h2 className="text-4xl font-light md:text-5xl">
-                    Zuletzt hinzugefügte Stücke
-                  </h2>
-                </div>
-
-                <Link
-                  href="/de/collections"
-                  className="text-sm uppercase tracking-[0.25em] text-[#c6a66a] transition hover:text-[#f5f1e8]"
-                >
-                  Alle Stücke ansehen
-                </Link>
-              </div>
-
-              <div className="grid gap-10 md:grid-cols-3">
-                {recentPieces.map((piece) => {
-                  const translation = piece.translations[0];
-                  const title = translation?.title || piece.title;
-                  const collection = translation?.collection || piece.collection;
-                  const shortDescription =
-                    translation?.shortDescription || piece.shortDescription;
-
-                  return (
-                    <Link
-                      key={piece.id}
-                      href={`/de/pieces/${piece.slug}`}
-                      className="group overflow-hidden rounded-3xl border border-[#c6a66a]/30 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/70 hover:shadow-[0_0_30px_rgba(198,166,106,0.14)]"
-                    >
-                      <div className="relative aspect-[16/10] overflow-hidden">
-                        <div
-                          className="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-105"
-                          style={{ backgroundImage: `url('${piece.image}')` }}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
-                      </div>
-
-                      <div className="p-8">
-                        <p className="mb-4 text-xs uppercase tracking-[0.28em] text-[#c6a66a]">
-                          {collection}
-                        </p>
-
-                        <h3 className="mb-4 text-2xl font-light transition duration-300 group-hover:text-[#c6a66a]">
-                          {title}
-                        </h3>
-
-                        <p className="leading-relaxed text-[#cfc8bc]">
-                          {shortDescription}
-                        </p>
-                      </div>
-                    </Link>
-                  );
-                })}
-              </div>
-            </section>
-          )}
-        </section>
-      </FadeIn>
-
-      <FadeIn>
-        <section className="relative overflow-hidden border-y border-[#4a3522]/70 py-32">
-          <div className="absolute inset-0 bg-[url('/atelier.jpg')] bg-cover bg-center opacity-20" />
-          <div className="absolute inset-0 bg-[#0b0907]/80" />
-
-          <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-            <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-              Das Atelier
-            </p>
-
-            <h2 className="mb-8 text-4xl font-light md:text-6xl">
-              Langsam gebaut. Sorgfältig veredelt.
-            </h2>
-
-            <p className="mx-auto max-w-2xl text-lg leading-relaxed text-[#d6d1c7]">
-              Jedes LIGNORAE Schreibinstrument beginnt als Rohmaterial und
-              entsteht durch Geduld, Versuche, Schleifen, Polieren und viele
-              kleine Korrekturen, die dem Auge oft verborgen bleiben.
-            </p>
-          </div>
-        </section>
-      </FadeIn>
 
       <Footer />
     </main>

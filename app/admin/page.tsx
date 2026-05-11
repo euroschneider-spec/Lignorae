@@ -270,12 +270,12 @@ export default async function AdminPage({
                           </form>
                         )}
 
-                        <details className="relative">
+                        <details className="shrink-0">
                           <summary className="inline-flex shrink-0 cursor-pointer list-none items-center justify-center border border-red-500/40 px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-red-700 transition hover:bg-red-500 hover:text-white">
                             Delete
                           </summary>
 
-                          <form action={deletePiece} className="absolute right-0 z-10 mt-2 w-56 border border-red-500/30 bg-[#fbfaf7] p-4 shadow-2xl">
+                          <form action={deletePiece} className="mt-3 w-56 border border-red-500/30 bg-[#fbfaf7] p-4">
                             <input type="hidden" name="pieceId" value={piece.id} />
                             <p className="mb-4 text-sm leading-relaxed text-black/70">
                               Delete this piece permanently?
@@ -389,12 +389,12 @@ export default async function AdminPage({
                             </form>
                           )}
 
-                          <details className="relative">
+                          <details className="shrink-0">
                             <summary className="inline-flex shrink-0 cursor-pointer list-none items-center justify-center border border-red-500/40 px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-red-700 transition hover:bg-red-500 hover:text-white">
                               Delete
                             </summary>
 
-                            <form action={deleteJournalPost} className="absolute right-0 z-10 mt-2 w-56 border border-red-500/30 bg-[#fbfaf7] p-4 shadow-2xl">
+                            <form action={deleteJournalPost} className="mt-3 w-56 border border-red-500/30 bg-[#fbfaf7] p-4">
                               <input type="hidden" name="postId" value={post.id} />
                               <p className="mb-4 text-sm leading-relaxed text-black/70">
                                 Delete this post permanently?
