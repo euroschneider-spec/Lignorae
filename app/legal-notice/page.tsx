@@ -1,4 +1,4 @@
-text-sm font-medium leading-7 text-black/95import Header from "@/components/Header";
+import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 const sections = [
