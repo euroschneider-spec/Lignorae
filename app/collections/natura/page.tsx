@@ -23,7 +23,7 @@ export default async function NaturaPage() {
       <section className="mx-auto max-w-[1500px] px-9 pb-24 pt-40">
         <div className="grid gap-14 md:grid-cols-[0.9fr_1.1fr] md:items-end">
           <div>
-            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-[#555555]">
+            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/55">
               Lower range collection
             </p>
             <h1 className="max-w-3xl text-6xl font-light leading-[0.9] tracking-[-0.07em] text-black md:text-8xl">
@@ -31,7 +31,7 @@ export default async function NaturaPage() {
             </h1>
           </div>
 
-          <p className="max-w-2xl text-base font-light leading-8 text-[#2f2f2f] md:text-lg">
+          <p className="max-w-2xl text-base font-light leading-8 text-black/70 md:text-lg">
             NATURA is the most direct LIGNORAE language: local woods, honest
             surfaces and minimal intervention. Simple, tactile writing objects
             shaped for use without theatrical excess.
@@ -50,42 +50,42 @@ export default async function NaturaPage() {
         </div>
       </section>
 
-      <section className="border-y border-[#d8d2c8] bg-[#fbfaf7] px-9 py-24">
+      <section className="border-y border-black/15 bg-[#fbfaf7] px-9 py-24">
         <div className="mx-auto grid max-w-[1500px] gap-12 md:grid-cols-3">
-          <article className="border-l border-[#c9c2b7] pl-7">
-            <p className="mb-6 text-[10px] uppercase tracking-[0.42em] text-[#555555]">
+          <article className="border-l border-black/20 pl-7">
+            <p className="mb-6 text-[10px] uppercase tracking-[0.42em] text-black/55">
               01
             </p>
             <h2 className="mb-5 text-3xl font-light tracking-[-0.04em]">
               Honesty
             </h2>
-            <p className="text-sm font-light leading-7 text-[#2f2f2f]">
+            <p className="text-sm font-light leading-7 text-black/70">
               NATURA keeps the wood close to itself: visible fibres, natural
               warmth and a finish that does not hide the material.
             </p>
           </article>
 
-          <article className="border-l border-[#c9c2b7] pl-7">
-            <p className="mb-6 text-[10px] uppercase tracking-[0.42em] text-[#555555]">
+          <article className="border-l border-black/20 pl-7">
+            <p className="mb-6 text-[10px] uppercase tracking-[0.42em] text-black/55">
               02
             </p>
             <h2 className="mb-5 text-3xl font-light tracking-[-0.04em]">
               Simplicity
             </h2>
-            <p className="text-sm font-light leading-7 text-[#2f2f2f]">
+            <p className="text-sm font-light leading-7 text-black/70">
               The form is restrained and functional, designed to carry the
               LIGNORAE feeling in a more accessible expression.
             </p>
           </article>
 
-          <article className="border-l border-[#c9c2b7] pl-7">
-            <p className="mb-6 text-[10px] uppercase tracking-[0.42em] text-[#555555]">
+          <article className="border-l border-black/20 pl-7">
+            <p className="mb-6 text-[10px] uppercase tracking-[0.42em] text-black/55">
               03
             </p>
             <h2 className="mb-5 text-3xl font-light tracking-[-0.04em]">
               Use
             </h2>
-            <p className="text-sm font-light leading-7 text-[#2f2f2f]">
+            <p className="text-sm font-light leading-7 text-black/70">
               NATURA is made for daily contact: lighter in concept, direct in
               material and quiet on the desk.
             </p>
@@ -96,7 +96,7 @@ export default async function NaturaPage() {
       <section className="mx-auto max-w-[1500px] px-9 py-28">
         <div className="mb-14 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="mb-4 text-[11px] uppercase tracking-[0.48em] text-[#555555]">
+            <p className="mb-4 text-[11px] uppercase tracking-[0.48em] text-black/55">
               Available objects
             </p>
             <h2 className="text-4xl font-light tracking-[-0.05em] md:text-6xl">
@@ -104,15 +104,15 @@ export default async function NaturaPage() {
             </h2>
           </div>
 
-          <p className="max-w-xl text-base font-light leading-8 text-[#2f2f2f]">
+          <p className="max-w-xl text-base font-light leading-8 text-black/70">
             NATURA pieces may be produced in small batches, with natural
             variation in tone, grain and surface.
           </p>
         </div>
 
         {pieces.length === 0 ? (
-          <div className="border border-[#d8d2c8] bg-[#fbfaf7] p-10 text-center">
-            <p className="text-base font-light leading-7 text-[#2f2f2f]">
+          <div className="border border-black/15 bg-[#fbfaf7] p-10 text-center">
+            <p className="text-base font-light leading-7 text-black/70">
               No NATURA objects have been added yet.
             </p>
           </div>
@@ -122,7 +122,7 @@ export default async function NaturaPage() {
               <Link
                 key={piece.id}
                 href={`/pieces/${piece.slug}`}
-                className="group overflow-hidden border border-[#d8d2c8] bg-[#fbfaf7] transition duration-500 hover:-translate-y-1 hover:border-[#9f9688]"
+                className="group overflow-hidden border border-black/15 bg-[#fbfaf7] transition duration-500 hover:-translate-y-1 hover:border-black/35"
               >
                 <div className="relative aspect-[4/5] overflow-hidden bg-[#eeeae2]">
                   <Image
@@ -138,10 +138,10 @@ export default async function NaturaPage() {
                   <h3 className="mb-4 text-3xl font-light tracking-[-0.04em]">
                     {piece.title}
                   </h3>
-                  <p className="mb-7 text-sm font-light leading-7 text-[#2f2f2f]">
+                  <p className="mb-7 text-sm font-light leading-7 text-black/70">
                     {piece.shortDescription}
                   </p>
-                  <p className="text-[10px] uppercase tracking-[0.35em] text-[#2f2f2f] transition group-hover:text-black">
+                  <p className="text-[10px] uppercase tracking-[0.35em] text-black/70 transition group-hover:text-black">
                     View object →
                   </p>
                 </div>
