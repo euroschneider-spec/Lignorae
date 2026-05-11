@@ -4,26 +4,27 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL("https://lignorae.com"),
   title: {
-    default: "LIGNORAE Atelier",
-    template: "%s | LIGNORAE Atelier",
+    default: "LIGNORAE — Objects of Writing",
+    template: "%s | LIGNORAE",
   },
   description:
-    "Handcrafted fountain pens made in Munich from carefully selected woods, shaped slowly and crafted by hand.",
+    "LIGNORAE creates sculptural objects of writing in Munich: handcrafted fountain pens and cocoon presentation forms shaped by fire, wood and presence.",
   keywords: [
     "LIGNORAE",
-    "fountain pens",
+    "objects of writing",
     "handcrafted fountain pens",
     "wooden fountain pens",
     "Munich atelier",
-    "luxury writing instruments",
+    "sculptural writing instruments",
+    "yakisugi fountain pen",
   ],
-  authors: [{ name: "LIGNORAE Atelier" }],
-  creator: "LIGNORAE Atelier",
+  authors: [{ name: "LIGNORAE" }],
+  creator: "LIGNORAE",
   openGraph: {
-    title: "LIGNORAE Atelier",
+    title: "LIGNORAE — Objects of Writing",
     description:
-      "Handcrafted fountain pens made in Munich from carefully selected woods.",
-    siteName: "LIGNORAE Atelier",
+      "Sculptural objects of writing, handcrafted in Munich from wood, fire and form.",
+    siteName: "LIGNORAE",
     type: "website",
     locale: "en_GB",
     images: [
@@ -31,7 +32,7 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "LIGNORAE Atelier handcrafted fountain pens",
+        alt: "LIGNORAE sculptural objects of writing",
       },
     ],
   },
