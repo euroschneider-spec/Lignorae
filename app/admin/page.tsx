@@ -68,13 +68,13 @@ function getCollectionLabel(collection: string) {
 }
 
 const buttonGhost =
-  "border border-black/20 px-4 py-2 text-[10px] uppercase tracking-[0.28em] text-black/60 transition hover:border-black hover:text-black";
+  "inline-flex shrink-0 items-center justify-center border border-black/20 px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-black/60 transition hover:border-black hover:text-black";
 
 const buttonBlack =
-  "border border-black bg-black px-4 py-2 text-[10px] uppercase tracking-[0.28em] text-white transition hover:bg-transparent hover:text-black";
+  "inline-flex shrink-0 items-center justify-center border border-black bg-black px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-white transition hover:bg-transparent hover:text-black";
 
 const dangerButton =
-  "border border-red-500/40 px-4 py-2 text-[10px] uppercase tracking-[0.28em] text-red-700 transition hover:bg-red-500 hover:text-white";
+  "inline-flex shrink-0 items-center justify-center border border-red-500/40 px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-red-700 transition hover:bg-red-500 hover:text-white";
 
 export default async function AdminPage({
   searchParams,
@@ -190,7 +190,7 @@ export default async function AdminPage({
         </div>
 
         <section className="border border-black/10 bg-[#fbfaf7] p-6 md:p-8">
-          <div className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+          <div className="mb-8 flex flex-col gap-5">
             <div>
               <p className="mb-3 text-[10px] uppercase tracking-[0.35em] text-black/45">
                 Pieces
@@ -200,7 +200,7 @@ export default async function AdminPage({
               </h2>
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3 border-t border-black/10 pt-5">
               <form action={generateMissingPieceTranslations}>
                 <button type="submit" className={buttonGhost}>
                   Regenerate translations
@@ -216,7 +216,7 @@ export default async function AdminPage({
           </div>
 
           <div className="overflow-x-auto border border-black/10">
-            <table className="w-full min-w-[900px] border-collapse bg-[#fbfaf7]">
+            <table className="w-full min-w-[1120px] border-collapse bg-[#fbfaf7]">
               <thead className="border-b border-black/10 text-left text-[10px] uppercase tracking-[0.28em] text-black/45">
                 <tr>
                   <th className="px-5 py-4">Title</th>
@@ -224,7 +224,7 @@ export default async function AdminPage({
                   <th className="px-5 py-4">Published</th>
                   <th className="px-5 py-4">Created</th>
                   <th className="px-5 py-4">Translations</th>
-                  <th className="px-5 py-4 text-right">Actions</th>
+                  <th className="w-[310px] px-5 py-4 text-right">Actions</th>
                 </tr>
               </thead>
 
@@ -255,8 +255,8 @@ export default async function AdminPage({
                         : "None"}
                     </td>
 
-                    <td className="px-5 py-5">
-                      <div className="flex justify-end gap-3">
+                    <td className="px-5 py-5 align-top">
+                      <div className="flex min-w-[290px] flex-wrap justify-end gap-3">
                         <Link href={`/admin/pieces/${piece.id}/edit`} className={buttonGhost}>
                           Edit
                         </Link>
@@ -271,7 +271,7 @@ export default async function AdminPage({
                         )}
 
                         <details className="relative">
-                          <summary className="cursor-pointer list-none border border-red-500/40 px-4 py-2 text-[10px] uppercase tracking-[0.28em] text-red-700 transition hover:bg-red-500 hover:text-white">
+                          <summary className="inline-flex shrink-0 cursor-pointer list-none items-center justify-center border border-red-500/40 px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-red-700 transition hover:bg-red-500 hover:text-white">
                             Delete
                           </summary>
 
@@ -295,7 +295,7 @@ export default async function AdminPage({
         </section>
 
         <section className="mt-10 border border-black/10 bg-[#fbfaf7] p-6 md:p-8">
-          <div className="mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+          <div className="mb-8 flex flex-col gap-5">
             <div>
               <p className="mb-3 text-[10px] uppercase tracking-[0.35em] text-black/45">
                 Journal
@@ -305,7 +305,7 @@ export default async function AdminPage({
               </h2>
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3 border-t border-black/10 pt-5">
               <form action={generateMissingJournalTranslations}>
                 <button type="submit" className={buttonGhost}>
                   Regenerate translations
@@ -318,14 +318,14 @@ export default async function AdminPage({
           </div>
 
           <div className="overflow-x-auto border border-black/10">
-            <table className="w-full min-w-[900px] border-collapse bg-[#fbfaf7]">
+            <table className="w-full min-w-[1120px] border-collapse bg-[#fbfaf7]">
               <thead className="border-b border-black/10 text-left text-[10px] uppercase tracking-[0.28em] text-black/45">
                 <tr>
                   <th className="px-5 py-4">Title</th>
                   <th className="px-5 py-4">Published</th>
                   <th className="px-5 py-4">Created</th>
                   <th className="px-5 py-4">Translations</th>
-                  <th className="px-5 py-4 text-right">Actions</th>
+                  <th className="w-[310px] px-5 py-4 text-right">Actions</th>
                 </tr>
               </thead>
 
@@ -367,8 +367,8 @@ export default async function AdminPage({
                           : "None"}
                       </td>
 
-                      <td className="px-5 py-5">
-                        <div className="flex justify-end gap-3">
+                      <td className="px-5 py-5 align-top">
+                        <div className="flex min-w-[290px] flex-wrap justify-end gap-3">
                           <Link href={`/admin/journal/${post.id}/edit`} className={buttonGhost}>
                             Edit
                           </Link>
@@ -390,7 +390,7 @@ export default async function AdminPage({
                           )}
 
                           <details className="relative">
-                            <summary className="cursor-pointer list-none border border-red-500/40 px-4 py-2 text-[10px] uppercase tracking-[0.28em] text-red-700 transition hover:bg-red-500 hover:text-white">
+                            <summary className="inline-flex shrink-0 cursor-pointer list-none items-center justify-center border border-red-500/40 px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-red-700 transition hover:bg-red-500 hover:text-white">
                               Delete
                             </summary>
 
