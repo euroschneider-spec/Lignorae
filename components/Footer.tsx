@@ -108,7 +108,7 @@ export default function Footer() {
             <Link href={`${prefix}/collections/natura`} className="transition hover:text-black">
               {text.natura}
             </Link>
-            <Link href={`${prefix}/atelier`} className="transition hover:text-black">
+            <Link href={`${prefix}/about`} className="transition hover:text-black">
               {text.about}
             </Link>
             <Link href={`${prefix}/journal`} className="transition hover:text-black">

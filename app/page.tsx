@@ -17,6 +17,13 @@ export default function HomePage() {
             sizes="(max-width: 1500px) 100vw, 1500px"
             className="object-contain object-center px-4 md:px-0"
           />
+
+          <Link
+            href="/collections"
+            className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 border border-black/20 bg-[#f7f5f0]/80 px-6 py-3 text-[10px] uppercase tracking-[0.35em] text-black/65 backdrop-blur-xl transition hover:border-black hover:text-black md:bottom-10"
+          >
+            Explore collections
+          </Link>
         </div>
 
         <footer className="absolute inset-x-0 bottom-0 z-10 border-t border-black/10 bg-[#f7f5f0]/94 backdrop-blur-xl">
@@ -34,8 +41,8 @@ export default function HomePage() {
                 Care
               </Link>
               <Link
-                href="/collections/forma"
-                aria-label="Explore Forma"
+                href="/collections"
+                aria-label="Explore collections"
                 className="flex h-7 w-7 items-center justify-center rounded-full border border-black/55 text-[11px] text-black/70 transition hover:border-black hover:text-black"
               >
                 +

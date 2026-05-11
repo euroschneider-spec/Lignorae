@@ -1,5 +1,6 @@
-import { notFound } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
@@ -24,47 +25,61 @@ export default async function JournalPostPage({
   }
 
   return (
-    <main className="flex min-h-screen flex-col bg-[#1a130d] text-[#f5f1e8]">
+    <main className="min-h-screen bg-[#f7f5f0] text-[#111111]">
       <Header />
 
-      <article className="flex-1 px-6 pb-24 pt-36">
-        <div className="mx-auto max-w-4xl">
-          <Link
-            href="/journal"
-            className="mb-10 inline-block text-sm uppercase tracking-[0.25em] text-[#c6a66a] transition hover:text-[#f5f1e8]"
-          >
-            Back to journal
-          </Link>
+      <article className="mx-auto max-w-[1500px] px-9 pb-28 pt-40">
+        <Link
+          href="/journal"
+          className="mb-14 inline-block text-[10px] uppercase tracking-[0.35em] text-black/55 transition hover:text-black"
+        >
+          ← Back to journal
+        </Link>
 
-          <p className="mb-5 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-            Journal
-          </p>
-
-          <h1 className="mb-8 text-5xl font-light leading-tight md:text-7xl">
-            {post.title}
-          </h1>
-
-          <p className="mb-10 text-xl leading-relaxed text-[#d0cabf]">
-            {post.excerpt}
-          </p>
-
-          {post.coverImage && (
-            <div className="group mb-12 overflow-hidden rounded-[2rem] border border-[#c6a66a]/35 bg-[#21170f] shadow-[0_0_35px_rgba(198,166,106,0.08)] transition duration-500 hover:border-[#c6a66a]/70 hover:shadow-[0_0_45px_rgba(198,166,106,0.16)]">
-              <div className="relative aspect-[16/9] overflow-hidden">
-                <div
-                  className="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-105"
-                  style={{ backgroundImage: `url('${post.coverImage}')` }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
-              </div>
-            </div>
-          )}
-
-          <div className="space-y-6 text-lg leading-relaxed text-[#d0cabf]">
-            {post.content.split("\n").map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
+        <div className="grid gap-14 md:grid-cols-[0.9fr_1.1fr] md:items-end">
+          <div>
+            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/55">
+              Journal
+            </p>
+            <h1 className="max-w-4xl text-5xl font-light leading-[0.95] tracking-[-0.06em] text-black md:text-7xl">
+              {post.title}
+            </h1>
           </div>
+
+          <div>
+            <p className="mb-6 text-[10px] uppercase tracking-[0.35em] text-black/45">
+              {post.createdAt.toLocaleDateString("en-GB", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric",
+              })}
+            </p>
+            <p className="max-w-2xl text-base font-light leading-8 text-black/70 md:text-lg">
+              {post.excerpt}
+            </p>
+          </div>
+        </div>
+
+        {post.coverImage && (
+          <div className="group relative mt-24 aspect-[16/9] overflow-hidden bg-[#eeeae2]">
+            <Image
+              src={post.coverImage}
+              alt={post.title}
+              fill
+              priority
+              sizes="(max-width: 1500px) 100vw, 1500px"
+              className="object-cover object-center transition duration-[1800ms] ease-out group-hover:scale-[1.035]"
+            />
+          </div>
+        )}
+
+        <div className="mx-auto mt-24 max-w-4xl space-y-7 text-lg font-light leading-9 text-black/70">
+          {post.content
+            .split("\n")
+            .filter((paragraph) => paragraph.trim().length > 0)
+            .map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
         </div>
       </article>
 

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -20,10 +20,26 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "LIGNORAE" }],
   creator: "LIGNORAE",
+  publisher: "LIGNORAE",
+  applicationName: "LIGNORAE",
+  category: "Design objects",
+  alternates: {
+    canonical: "/",
+    languages: {
+      en: "/",
+      de: "/de",
+      ro: "/ro",
+    },
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
   openGraph: {
     title: "LIGNORAE — Objects of Writing",
     description:
       "Sculptural objects of writing, handcrafted in Munich from wood, fire and form.",
+    url: "https://lignorae.com",
     siteName: "LIGNORAE",
     type: "website",
     locale: "en_GB",
@@ -36,6 +52,24 @@ export const metadata: Metadata = {
       },
     ],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "LIGNORAE — Objects of Writing",
+    description:
+      "Sculptural objects of writing, handcrafted in Munich from wood, fire and form.",
+    images: ["/og-image.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#f7f5f0",
+  colorScheme: "light",
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({

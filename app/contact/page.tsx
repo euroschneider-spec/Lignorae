@@ -4,6 +4,11 @@ import { FormEvent, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
+const inputClass =
+  "w-full border border-black/15 bg-[#f7f5f0] px-4 py-3 text-sm text-black outline-none transition placeholder:text-black/35 focus:border-black";
+
+const labelClass = "mb-2 block text-xs uppercase tracking-[0.28em] text-black/55";
+
 export default function ContactPage() {
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
@@ -42,148 +47,156 @@ export default function ContactPage() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col bg-[#1a130d] text-[#f5f1e8]">
+    <main className="min-h-screen bg-[#f7f5f0] text-[#111111]">
       <Header />
 
-      <section className="mx-auto max-w-6xl flex-1 px-6 py-40">
-        <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-          Contact
-        </p>
-
-        <h1 className="mb-8 text-5xl font-light md:text-6xl">
-          Request availability
-        </h1>
-
-        <p className="mb-12 max-w-3xl text-lg leading-relaxed text-[#d0cabf]">
-          The first LIGNORAE edition is currently in preparation. Pre-order
-          enquiries are now open for selected writing instruments, commissions,
-          collaborations, and retail conversations.
-        </p>
-
-        <div className="grid gap-10 md:grid-cols-[1.1fr_0.9fr]">
-          <form
-            onSubmit={handleSubmit}
-            className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-8"
-          >
-            <div className="mb-6">
-              <label className="mb-2 block text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
-                Name
-              </label>
-              <input
-                name="name"
-                type="text"
-                required
-                placeholder="Your name"
-                className="w-full rounded-xl border border-[#4a3522]/70 bg-[#120d09] px-4 py-3 text-[#f5f1e8] outline-none placeholder:text-[#7f7568] focus:border-[#c6a66a]"
-              />
-            </div>
-
-            <div className="mb-6">
-              <label className="mb-2 block text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
-                Email
-              </label>
-              <input
-                name="email"
-                type="email"
-                required
-                placeholder="your@email.com"
-                className="w-full rounded-xl border border-[#4a3522]/70 bg-[#120d09] px-4 py-3 text-[#f5f1e8] outline-none placeholder:text-[#7f7568] focus:border-[#c6a66a]"
-              />
-            </div>
-
-            <div className="mb-6">
-              <label className="mb-2 block text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
-                Enquiry type
-              </label>
-              <select
-                name="enquiryType"
-                required
-                className="w-full rounded-xl border border-[#4a3522]/70 bg-[#120d09] px-4 py-3 text-[#f5f1e8] outline-none focus:border-[#c6a66a]"
-              >
-                <option>Pre-order enquiry</option>
-                <option>Commission request</option>
-                <option>Retail / B2B collaboration</option>
-                <option>Press / partnership</option>
-                <option>Other</option>
-              </select>
-            </div>
-
-            <div className="mb-8">
-              <label className="mb-2 block text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
-                Message
-              </label>
-              <textarea
-                name="message"
-                required
-                rows={7}
-                placeholder="Tell us what you are looking for..."
-                className="w-full rounded-xl border border-[#4a3522]/70 bg-[#120d09] px-4 py-3 text-[#f5f1e8] outline-none placeholder:text-[#7f7568] focus:border-[#c6a66a]"
-              />
-            </div>
-
-            <button
-              type="submit"
-              disabled={status === "sending"}
-              className="rounded-full border border-[#c6a66a] px-8 py-3 text-sm uppercase tracking-[0.2em] transition hover:bg-[#c6a66a] hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              {status === "sending" ? "Sending..." : "Send enquiry"}
-            </button>
-
-            {status === "success" && (
-              <p className="mt-5 text-sm leading-relaxed text-[#c6a66a]">
-                Thank you. Your enquiry has been sent successfully.
-              </p>
-            )}
-
-            {status === "error" && (
-              <p className="mt-5 text-sm leading-relaxed text-red-300">
-                Something went wrong. Please try again or contact the atelier directly by email.
-              </p>
-            )}
-
-            <p className="mt-5 text-sm leading-relaxed text-[#9f9588]">
-              Your enquiry will be sent directly to the atelier.
+      <section className="mx-auto max-w-[1500px] px-9 pb-24 pt-40">
+        <div className="grid gap-14 md:grid-cols-[0.9fr_1.1fr] md:items-end">
+          <div>
+            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/55">
+              Contact
             </p>
-          </form>
+            <h1 className="max-w-4xl text-5xl font-light leading-[0.95] tracking-[-0.06em] text-black md:text-7xl">
+              Request availability.
+            </h1>
+          </div>
 
-          <div className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-8">
-            <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
-              Direct email
+          <p className="max-w-2xl text-base font-light leading-8 text-black/70 md:text-lg">
+            For availability, commissions, collaborations or retail conversations,
+            contact the atelier directly. Each enquiry is handled personally.
+          </p>
+        </div>
+      </section>
+
+      <section className="mx-auto grid max-w-[1500px] gap-10 px-9 pb-28 md:grid-cols-[1.1fr_0.9fr]">
+        <form
+          onSubmit={handleSubmit}
+          className="border border-black/15 bg-[#fbfaf7] p-6 md:p-8"
+        >
+          <div className="mb-6">
+            <label className={labelClass}>Name</label>
+            <input
+              name="name"
+              type="text"
+              required
+              placeholder="Your name"
+              className={inputClass}
+            />
+          </div>
+
+          <div className="mb-6">
+            <label className={labelClass}>Email</label>
+            <input
+              name="email"
+              type="email"
+              required
+              placeholder="your@email.com"
+              className={inputClass}
+            />
+          </div>
+
+          <div className="mb-6">
+            <label className={labelClass}>Enquiry type</label>
+            <select name="enquiryType" required className={inputClass}>
+              <option>Availability enquiry</option>
+              <option>Commission request</option>
+              <option>Retail / B2B collaboration</option>
+              <option>Press / partnership</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div className="mb-8">
+            <label className={labelClass}>Message</label>
+            <textarea
+              name="message"
+              required
+              rows={7}
+              placeholder="Tell us what you are looking for..."
+              className={inputClass}
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={status === "sending"}
+            className="border border-black bg-black px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-white transition hover:bg-transparent hover:text-black disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {status === "sending" ? "Sending..." : "Send enquiry"}
+          </button>
+
+          {status === "success" && (
+            <p className="mt-5 text-sm leading-relaxed text-black/70">
+              Thank you. Your enquiry has been sent successfully.
+            </p>
+          )}
+
+          {status === "error" && (
+            <p className="mt-5 text-sm leading-relaxed text-red-700">
+              Something went wrong. Please try again or contact the atelier directly by email.
+            </p>
+          )}
+
+          <p className="mt-5 text-sm leading-relaxed text-black/55">
+            Your enquiry will be sent directly to the atelier.
+          </p>
+        </form>
+
+        <aside className="border border-black/15 bg-[#fbfaf7] p-6 md:p-8">
+          <p className="mb-4 text-[10px] uppercase tracking-[0.35em] text-black/55">
+            Direct email
+          </p>
+
+          <a
+            href="mailto:info@lignorae.com"
+            className="text-2xl font-light tracking-[-0.03em] text-black transition hover:opacity-60 md:text-3xl"
+          >
+            info@lignorae.com
+          </a>
+
+          <div className="mt-12 border-t border-black/15 pt-8">
+            <p className="mb-4 text-[10px] uppercase tracking-[0.35em] text-black/55">
+              Objects
+            </p>
+
+            <p className="text-base font-light leading-8 text-black/70">
+              LIGNORAE writing objects are prepared in small numbers. Details on
+              material, availability, pricing and delivery are discussed before
+              any order is confirmed.
+            </p>
+          </div>
+
+          <div className="mt-12 border-t border-black/15 pt-8">
+            <p className="mb-4 text-[10px] uppercase tracking-[0.35em] text-black/55">
+              Location
+            </p>
+
+            <p className="text-base font-light leading-8 text-black/70">
+              LIGNORAE Atelier
+              <br />
+              Hohenlindener Str. 1
+              <br />
+              81677 Munich
+              <br />
+              Germany
+            </p>
+          </div>
+
+          <div className="mt-12 border-t border-black/15 pt-8">
+            <p className="mb-4 text-[10px] uppercase tracking-[0.35em] text-black/55">
+              Instagram
             </p>
 
             <a
-              href="mailto:info@lignorae.com"
-              className="text-2xl font-light hover:text-[#c6a66a]"
+              href="https://www.instagram.com/lignorae/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-2xl font-light tracking-[-0.03em] text-black transition hover:opacity-60 md:text-3xl"
             >
-              info@lignorae.com
+              @Lignorae
             </a>
-
-            <div className="mt-10 border-t border-[#4a3522]/70 pt-8">
-              <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
-                First edition
-              </p>
-
-              <p className="leading-relaxed text-[#d0cabf]">
-                The first LIGNORAE writing instruments are being prepared in
-                small numbers. Early enquiries will be handled personally, with
-                details on materials, availability, pricing, and delivery
-                discussed before any order is confirmed.
-              </p>
-            </div>
-
-            <div className="mt-10 border-t border-[#4a3522]/70 pt-8">
-              <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
-                Location
-              </p>
-
-              <p className="leading-relaxed text-[#d0cabf]">
-                LIGNORAE Atelier
-                <br />
-                Munich, Germany
-              </p>
-            </div>
           </div>
-        </div>
+        </aside>
       </section>
 
       <Footer />

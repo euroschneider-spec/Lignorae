@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -16,61 +17,72 @@ export default async function JournalPage() {
   });
 
   return (
-    <main className="flex min-h-screen flex-col bg-[#1a130d] text-[#f5f1e8]">
+    <main className="min-h-screen bg-[#f7f5f0] text-[#111111]">
       <Header />
 
-      <section className="mx-auto max-w-6xl flex-1 px-6 py-40">
-        <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-          Journal
-        </p>
+      <section className="mx-auto max-w-[1500px] px-9 pb-24 pt-40">
+        <div className="grid gap-14 md:grid-cols-[0.9fr_1.1fr] md:items-end">
+          <div>
+            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/55">
+              Journal
+            </p>
+            <h1 className="max-w-4xl text-5xl font-light leading-[0.95] tracking-[-0.06em] text-black md:text-7xl">
+              Notes from the atelier.
+            </h1>
+          </div>
 
-        <h1 className="mb-8 text-5xl font-light md:text-6xl">
-          Notes from the atelier
-        </h1>
+          <p className="max-w-2xl text-base font-light leading-8 text-black/70 md:text-lg">
+            Experiments, material studies, surface decisions and quiet fragments
+            from the making of LIGNORAE objects.
+          </p>
+        </div>
+      </section>
 
-        <p className="mb-20 max-w-5xl text-xl leading-relaxed text-[#d0cabf]">
-          Experiments, materials, failures, discoveries, reclaimed woods,
-          surface refinement, and the slow construction of LIGNORAE.
-        </p>
-
+      <section className="mx-auto max-w-[1500px] px-9 pb-28">
         {posts.length === 0 ? (
-          <div className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-10 text-center">
-            <p className="text-lg leading-relaxed text-[#d0cabf]">
+          <div className="border border-black/15 bg-[#fbfaf7] p-10 text-center">
+            <p className="text-base font-light leading-7 text-black/70">
               No journal entries have been published yet.
             </p>
           </div>
         ) : (
-          <div className="space-y-12">
+          <div className="grid gap-8 md:grid-cols-2">
             {posts.map((post) => (
               <Link
                 key={post.id}
                 href={`/journal/${post.slug}`}
-                className="group block overflow-hidden rounded-3xl border border-[#4a3522]/70 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/60"
+                className="group block overflow-hidden border border-black/15 bg-[#fbfaf7] transition duration-500 hover:-translate-y-1 hover:border-black/35"
               >
                 {post.coverImage && (
-                  <div className="relative aspect-[16/9] overflow-hidden">
-                    <div
-                      className="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-105"
-                      style={{ backgroundImage: `url('${post.coverImage}')` }}
+                  <div className="relative aspect-[16/10] overflow-hidden bg-[#eeeae2]">
+                    <Image
+                      src={post.coverImage}
+                      alt={post.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover object-center transition duration-[1800ms] ease-out group-hover:scale-[1.035]"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                   </div>
                 )}
 
-                <div className="p-8">
-                  <p className="mb-3 text-sm uppercase tracking-[0.3em] text-[#c6a66a]">
+                <div className="p-8 md:p-10">
+                  <p className="mb-5 text-[10px] uppercase tracking-[0.35em] text-black/55">
                     {post.createdAt.toLocaleDateString("en-GB", {
                       month: "long",
                       year: "numeric",
                     })}
                   </p>
 
-                  <h2 className="mb-5 text-3xl font-light transition duration-300 group-hover:text-[#c6a66a]">
+                  <h2 className="mb-6 text-3xl font-light leading-tight tracking-[-0.04em] text-black md:text-4xl">
                     {post.title}
                   </h2>
 
-                  <p className="leading-relaxed text-[#d0cabf]">
+                  <p className="text-sm font-light leading-7 text-black/70 md:text-base md:leading-8">
                     {post.excerpt}
+                  </p>
+
+                  <p className="mt-8 text-[10px] uppercase tracking-[0.35em] text-black/60 transition group-hover:text-black">
+                    Read entry →
                   </p>
                 </div>
               </Link>

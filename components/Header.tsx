@@ -15,54 +15,46 @@ export default function Header() {
 
   const labels = isGerman
     ? {
-        forma: "Forma",
-        origins: "Origins",
-        natura: "Natura",
+        collections: "Collections",
         about: "Über",
         journal: "Journal",
         contact: "Kontakt",
       }
     : isRomanian
       ? {
-          forma: "Forma",
-          origins: "Origins",
-          natura: "Natura",
+          collections: "Collections",
           about: "Despre",
           journal: "Jurnal",
           contact: "Contact",
         }
       : {
-          forma: "Forma",
-          origins: "Origins",
-          natura: "Natura",
+          collections: "Collections",
           about: "About",
           journal: "Journal",
           contact: "Contact",
         };
 
   const links = [
-    { href: `${prefix}/collections/forma`, label: labels.forma },
-    { href: `${prefix}/collections/origins`, label: labels.origins },
-    { href: `${prefix}/collections/natura`, label: labels.natura },
-    { href: `${prefix}/atelier`, label: labels.about },
+    { href: `${prefix}/collections`, label: labels.collections },
+    { href: `${prefix}/about`, label: labels.about },
     { href: `${prefix}/journal`, label: labels.journal },
     { href: `${prefix}/contact`, label: labels.contact },
   ];
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-black/10 bg-[#f7f5f0]/94 backdrop-blur-xl">
-      <div className="mx-auto flex h-20 max-w-[1500px] items-center justify-between px-9">
+      <div className="mx-auto flex h-20 max-w-[1500px] items-center justify-between px-6 md:px-9">
         <Link href={`${prefix}/`} className="group flex items-center gap-5">
           <Image
             src="/logo.png"
             alt="LIGNORAE logo"
             width={28}
             height={56}
-            className="h-14 w-auto object-contain opacity-90 transition group-hover:opacity-100"
+            className="h-11 w-auto object-contain opacity-90 transition group-hover:opacity-100 md:h-14"
             priority
           />
 
-          <span className="text-[13px] font-light uppercase tracking-[0.55em] text-black/88">
+          <span className="text-[12px] font-light uppercase tracking-[0.42em] text-black/88 md:text-[13px] md:tracking-[0.55em]">
             LIGNORAE
           </span>
         </Link>
@@ -90,7 +82,7 @@ export default function Header() {
           menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <nav className="px-9 py-7">
+        <nav className="px-6 py-7 md:px-9">
           <div className="mx-auto flex max-w-[1500px] flex-col gap-6 text-[11px] uppercase tracking-[0.35em] text-black/58">
             {links.map((link) => (
               <Link

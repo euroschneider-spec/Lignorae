@@ -1,5 +1,3 @@
-
-
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
@@ -13,29 +11,30 @@ const collections = [
     title: "FORMA",
     href: "/collections/forma",
     image: "/gallery_landing.jpg",
-    eyebrow: "Top tier",
+    eyebrow: "Flagship collection",
+    statement: "Blackened surfaces. Sculptural stillness. Cocoon forms.",
     description:
-      "Yakisugi surfaces, black sculptural presence and cocoon presentation forms. The flagship language of LIGNORAE.",
+      "FORMA is the defining LIGNORAE language: yakisugi surfaces, reduced silhouettes and a museum-like presence shaped around the act of writing.",
   },
   {
     title: "ORIGINS",
     href: "/collections/origins",
     image: "/origin.jpg",
-    eyebrow: "Middle range",
+    eyebrow: "Expressive woods",
+    statement: "Exotic grain, depth and material character.",
     description:
-      "Exotic and expressive woods selected for grain, depth and material character, shaped into refined writing objects.",
+      "ORIGINS is built around selected woods whose figure, colour and density give each object its own visual rhythm.",
   },
   {
     title: "NATURA",
     href: "/collections/natura",
     image: "/natura.jpg",
-    eyebrow: "Lower range",
+    eyebrow: "Essential material",
+    statement: "Raw warmth. Minimal intervention. Honest texture.",
     description:
-      "Raw local woods with honest texture and minimal intervention: simple, tactile and accessible LIGNORAE pieces.",
+      "NATURA keeps the work direct: local woods, tactile surfaces and a more accessible expression of the LIGNORAE object language.",
   },
 ];
-
-const futureLines = ["SONORA", "SACRA"];
 
 function getStatusLabel(status: string) {
   const normalizedStatus = status.toLowerCase();
@@ -49,6 +48,16 @@ function getStatusLabel(status: string) {
   return status;
 }
 
+function getCollectionLabel(collection: string) {
+  const normalizedCollection = collection.toLowerCase().trim();
+
+  if (normalizedCollection === "forma") return "FORMA";
+  if (normalizedCollection === "origins") return "ORIGINS";
+  if (normalizedCollection === "natura") return "NATURA";
+
+  return "UNASSIGNED";
+}
+
 export default async function CollectionsPage() {
   const latestPieces = await prisma.piece.findMany({
     orderBy: {
@@ -58,153 +67,172 @@ export default async function CollectionsPage() {
   });
 
   return (
-    <main className="flex min-h-screen flex-col bg-[#f7f5f0] text-[#111111]">
+    <main className="min-h-screen bg-[#f7f5f0] text-[#111111]">
       <Header />
 
-      <section className="mx-auto w-full max-w-[1500px] flex-1 px-9 pb-24 pt-40">
-        <div className="mb-20 grid gap-12 md:grid-cols-[0.9fr_1.1fr] md:items-end">
+      <section className="mx-auto max-w-[1500px] px-9 pb-24 pt-40">
+        <div className="grid gap-14 md:grid-cols-[0.9fr_1.1fr] md:items-end">
           <div>
-            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/40">
+            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/55">
               Collections
             </p>
-            <h1 className="max-w-3xl text-5xl font-light leading-[0.95] tracking-[-0.06em] text-black md:text-7xl">
+            <h1 className="max-w-4xl text-5xl font-light leading-[0.95] tracking-[-0.06em] text-black md:text-7xl">
               Three material languages.
             </h1>
           </div>
 
-          <p className="max-w-2xl text-base font-light leading-8 text-black/55 md:text-lg">
-            LIGNORAE is organised around form, material and presence: from the
-            sculptural black language of FORMA to expressive exotic woods and
-            honest natural pieces.
+          <p className="max-w-2xl text-base font-light leading-8 text-black/70 md:text-lg">
+            LIGNORAE is organised around three clear expressions: the sculptural
+            black language of FORMA, the expressive woods of ORIGINS and the
+            direct material honesty of NATURA.
           </p>
         </div>
+      </section>
 
-        <div className="grid gap-8 md:grid-cols-3">
-          {collections.map((collection) => (
+      <section className="mx-auto max-w-[1500px] px-9 pb-28">
+        <div className="grid gap-10">
+          {collections.map((collection, index) => (
             <Link
               key={collection.title}
               href={collection.href}
-              className="group block overflow-hidden border border-black/10 bg-[#fbfaf7] transition duration-500 hover:-translate-y-1 hover:border-black/25"
+              className="group grid overflow-hidden border border-black/15 bg-[#fbfaf7] transition duration-500 hover:-translate-y-1 hover:border-black/35 md:grid-cols-[1.05fr_0.95fr]"
             >
-              <div className="relative aspect-[4/5] overflow-hidden bg-[#eeeae2]">
+              <div
+                className={`relative min-h-[420px] overflow-hidden bg-[#eeeae2] ${
+                  index % 2 === 1 ? "md:order-2" : ""
+                }`}
+              >
                 <Image
                   src={collection.image}
                   alt={`${collection.title} collection`}
                   fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover transition duration-700 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover object-center transition duration-[1800ms] ease-out group-hover:scale-[1.035]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
               </div>
 
-              <div className="p-8">
-                <p className="mb-5 text-[10px] uppercase tracking-[0.42em] text-black/40">
-                  {collection.eyebrow}
-                </p>
-                <h2 className="mb-5 text-4xl font-light tracking-[-0.04em]">
-                  {collection.title}
-                </h2>
-                <p className="text-sm font-light leading-7 text-black/55">
-                  {collection.description}
-                </p>
+              <div className="flex min-h-[420px] flex-col justify-between p-8 md:p-12">
+                <div>
+                  <p className="mb-8 text-[10px] uppercase tracking-[0.35em] text-black/55">
+                    {collection.eyebrow}
+                  </p>
+
+                  <h2 className="mb-8 text-5xl font-light leading-[0.9] tracking-[-0.06em] text-black md:text-7xl">
+                    {collection.title}
+                  </h2>
+
+                  <p className="max-w-xl text-2xl font-light leading-tight tracking-[-0.04em] text-black md:text-3xl">
+                    {collection.statement}
+                  </p>
+                </div>
+
+                <div className="mt-14">
+                  <p className="max-w-xl text-base font-light leading-8 text-black/70">
+                    {collection.description}
+                  </p>
+
+                  <p className="mt-8 text-[10px] uppercase tracking-[0.35em] text-black/60 transition group-hover:text-black">
+                    View collection →
+                  </p>
+                </div>
               </div>
             </Link>
           ))}
         </div>
+      </section>
 
-        <section className="mt-24 border-y border-black/10 py-12">
-          <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
-            <div>
-              <p className="mb-3 text-[10px] uppercase tracking-[0.42em] text-black/35">
-                Future limited lines
-              </p>
-              <p className="max-w-3xl text-sm font-light leading-7 text-black/55">
-                SONORA and SACRA remain reserved for future provenance-based
-                work, once suitable musical or sacred historical woods are
-                sourced and documented properly.
-              </p>
-            </div>
-
-            <div className="flex flex-wrap gap-3">
-              {futureLines.map((line) => (
-                <span
-                  key={line}
-                  className="border border-black/15 px-5 py-2 text-[10px] uppercase tracking-[0.38em] text-black/40"
-                >
-                  {line}
-                </span>
-              ))}
-            </div>
+      <section className="border-y border-black/15 bg-[#fbfaf7] px-9 py-24">
+        <div className="mx-auto grid max-w-[1500px] gap-14 md:grid-cols-[0.75fr_1.25fr] md:items-center">
+          <div>
+            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/55">
+              Future limited lines
+            </p>
+            <h2 className="max-w-xl text-4xl font-light leading-tight tracking-[-0.05em] md:text-6xl">
+              Reserved for provenance-based work.
+            </h2>
           </div>
-        </section>
 
-        <section className="mt-24">
-          <div className="mb-14 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="mb-4 text-[11px] uppercase tracking-[0.48em] text-black/40">
-                Individual objects
-              </p>
-              <h2 className="text-4xl font-light tracking-[-0.04em] md:text-5xl">
-                Pieces from the atelier
-              </h2>
-            </div>
-            <p className="max-w-xl text-base font-light leading-8 text-black/55">
-              Each LIGNORAE object may receive its own archive page with
-              material notes, photographs, specifications and availability.
+          <div className="space-y-7 text-base font-light leading-8 text-black/70 md:text-lg">
+            <p>
+              SONORA and SACRA remain reserved for future limited work, once
+              suitable musical or sacred historical woods are sourced and
+              documented properly.
+            </p>
+            <p>
+              Until then, the active LIGNORAE structure remains deliberately
+              focused: FORMA, ORIGINS and NATURA.
             </p>
           </div>
+        </div>
+      </section>
 
-          {latestPieces.length === 0 ? (
-            <div className="border border-black/10 bg-[#fbfaf7] p-10 text-center">
-              <p className="text-base font-light leading-7 text-black/55">
-                No individual objects have been added to the archive yet.
-              </p>
-            </div>
-          ) : (
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {latestPieces.map((piece) => (
-                <Link
-                  key={piece.id}
-                  href={`/pieces/${piece.slug}`}
-                  className="group overflow-hidden border border-black/10 bg-[#fbfaf7] transition duration-500 hover:-translate-y-1 hover:border-black/25"
-                >
-                  <div className="relative aspect-[4/5] overflow-hidden bg-[#eeeae2]">
-                    <Image
-                      src={piece.image}
-                      alt={piece.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                      className="object-cover transition duration-700 group-hover:scale-105"
-                    />
+      <section className="mx-auto max-w-[1500px] px-9 py-28">
+        <div className="mb-14 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="mb-4 text-[11px] uppercase tracking-[0.48em] text-black/55">
+              Individual objects
+            </p>
+            <h2 className="text-4xl font-light tracking-[-0.05em] text-black md:text-6xl">
+              Pieces from the atelier
+            </h2>
+          </div>
+
+          <p className="max-w-xl text-base font-light leading-8 text-black/70">
+            Each object may receive its own archive page with material notes,
+            photographs, specifications and availability.
+          </p>
+        </div>
+
+        {latestPieces.length === 0 ? (
+          <div className="border border-black/15 bg-[#fbfaf7] p-10 text-center">
+            <p className="text-base font-light leading-7 text-black/70">
+              No individual objects have been added to the archive yet.
+            </p>
+          </div>
+        ) : (
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {latestPieces.map((piece) => (
+              <Link
+                key={piece.id}
+                href={`/pieces/${piece.slug}`}
+                className="group overflow-hidden border border-black/15 bg-[#fbfaf7] transition duration-500 hover:-translate-y-1 hover:border-black/35"
+              >
+                <div className="relative aspect-[4/5] overflow-hidden bg-[#eeeae2]">
+                  <Image
+                    src={piece.image}
+                    alt={piece.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover object-center transition duration-[1800ms] ease-out group-hover:scale-[1.035]"
+                  />
+                </div>
+
+                <div className="p-8">
+                  <div className="mb-5 flex flex-wrap gap-3 text-[10px] uppercase tracking-[0.3em] text-black/55">
+                    <span className="border border-black/15 px-3 py-1">
+                      {getCollectionLabel(piece.collection)}
+                    </span>
+                    <span className="border border-black/15 px-3 py-1">
+                      {getStatusLabel(piece.status)}
+                    </span>
                   </div>
 
-                  <div className="p-8">
-                    <div className="mb-5 flex flex-wrap gap-3 text-[10px] uppercase tracking-[0.3em] text-black/40">
-                      <span className="border border-black/15 px-3 py-1">
-                        {piece.collection.toUpperCase()}
-                      </span>
-                      <span className="border border-black/15 px-3 py-1">
-                        {getStatusLabel(piece.status)}
-                      </span>
-                    </div>
+                  <h3 className="mb-4 text-3xl font-light tracking-[-0.04em] text-black">
+                    {piece.title}
+                  </h3>
 
-                    <h3 className="mb-4 text-3xl font-light tracking-[-0.04em]">
-                      {piece.title}
-                    </h3>
+                  <p className="mb-7 text-sm font-light leading-7 text-black/70">
+                    {piece.shortDescription}
+                  </p>
 
-                    <p className="mb-7 text-sm font-light leading-7 text-black/55">
-                      {piece.shortDescription}
-                    </p>
-
-                    <p className="text-[10px] uppercase tracking-[0.35em] text-black/55 transition group-hover:text-black">
-                      View object →
-                    </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
-        </section>
+                  <p className="text-[10px] uppercase tracking-[0.35em] text-black/60 transition group-hover:text-black">
+                    View object →
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
       </section>
 
       <Footer />
