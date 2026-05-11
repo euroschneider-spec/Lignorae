@@ -1,5 +1,3 @@
-
-
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
@@ -8,10 +6,10 @@ import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
-export default async function OriginsPage() {
+export default async function FormaPage() {
   const pieces = await prisma.piece.findMany({
     where: {
-      collection: "ORIGINS",
+      collection: "FORMA",
     },
     orderBy: {
       createdAt: "desc",
@@ -26,24 +24,24 @@ export default async function OriginsPage() {
         <div className="grid gap-14 md:grid-cols-[0.9fr_1.1fr] md:items-end">
           <div>
             <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/40">
-              Middle range collection
+              Top tier collection
             </p>
             <h1 className="max-w-3xl text-6xl font-light leading-[0.9] tracking-[-0.07em] text-black md:text-8xl">
-              ORIGINS
+              FORMA
             </h1>
           </div>
 
           <p className="max-w-2xl text-base font-light leading-8 text-black/55 md:text-lg">
-            ORIGINS is built around expressive woods with visible character:
-            exotic grain, depth, colour and natural variation shaped into
-            refined writing objects.
+            FORMA is the sculptural black language of LIGNORAE: yakisugi
+            surfaces, quiet silhouettes and cocoon presentation forms shaped as
+            objects of presence.
           </p>
         </div>
 
         <div className="relative mt-24 aspect-[16/9] overflow-hidden bg-[#eeeae2]">
           <Image
-            src="/origin.jpg"
-            alt="ORIGINS exotic wood writing object"
+            src="/gallery_landing.jpg"
+            alt="FORMA sculptural writing object"
             fill
             priority
             sizes="(max-width: 1500px) 100vw, 1500px"
@@ -59,11 +57,11 @@ export default async function OriginsPage() {
               01
             </p>
             <h2 className="mb-5 text-3xl font-light tracking-[-0.04em]">
-              Grain
+              Fire
             </h2>
             <p className="text-sm font-light leading-7 text-black/55">
-              The visual language comes from the wood itself: figure, rhythm,
-              contrast and natural irregularity.
+              The surface is darkened and opened instead of being forced into a
+              conventional high-gloss finish.
             </p>
           </article>
 
@@ -72,11 +70,11 @@ export default async function OriginsPage() {
               02
             </p>
             <h2 className="mb-5 text-3xl font-light tracking-[-0.04em]">
-              Balance
+              Cocoon
             </h2>
             <p className="text-sm font-light leading-7 text-black/55">
-              ORIGINS keeps the sculptural discipline of LIGNORAE while allowing
-              the material to remain visibly warm and expressive.
+              The presentation form is part of the object: protective,
+              sculptural and intentionally quiet.
             </p>
           </article>
 
@@ -85,11 +83,11 @@ export default async function OriginsPage() {
               03
             </p>
             <h2 className="mb-5 text-3xl font-light tracking-[-0.04em]">
-              Refinement
+              Presence
             </h2>
             <p className="text-sm font-light leading-7 text-black/55">
-              Surfaces are finished with restraint: polished enough to honour
-              the grain, quiet enough to avoid excess.
+              FORMA is designed less as an accessory and more as a writing
+              instrument with the stillness of a small sculpture.
             </p>
           </article>
         </div>
@@ -102,20 +100,20 @@ export default async function OriginsPage() {
               Available objects
             </p>
             <h2 className="text-4xl font-light tracking-[-0.05em] md:text-6xl">
-              Current ORIGINS pieces
+              Current FORMA pieces
             </h2>
           </div>
 
           <p className="max-w-xl text-base font-light leading-8 text-black/55">
-            Each piece depends on the character of the blank. No two ORIGINS
-            objects are expected to look identical.
+            Each piece is produced in small numbers and may vary slightly in
+            burn, surface and proportion.
           </p>
         </div>
 
         {pieces.length === 0 ? (
           <div className="border border-black/10 bg-[#fbfaf7] p-10 text-center">
             <p className="text-base font-light leading-7 text-black/55">
-              No ORIGINS objects have been added yet.
+              No FORMA objects have been added yet.
             </p>
           </div>
         ) : (

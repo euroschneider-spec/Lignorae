@@ -1,3 +1,6 @@
+
+
+import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -5,25 +8,10 @@ import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 
-function getStatusLabel(status: string) {
-  const normalizedStatus = status.toLowerCase();
-
-  if (normalizedStatus === "available") return "Available";
-  if (normalizedStatus === "reserved") return "Reserved";
-  if (normalizedStatus === "sold") return "Sold";
-  if (normalizedStatus === "draft") return "Draft";
-  if (normalizedStatus === "prototype-archive") return "Prototype archive";
-
-  return status;
-}
-
-export default async function OriginPage() {
-  const originPieces = await prisma.piece.findMany({
+export default async function OriginsPage() {
+  const pieces = await prisma.piece.findMany({
     where: {
-      collection: {
-        equals: "Origin",
-        mode: "insensitive",
-      },
+      collection: "ORIGINS",
     },
     orderBy: {
       createdAt: "desc",
@@ -31,121 +19,138 @@ export default async function OriginPage() {
   });
 
   return (
-    <main className="flex min-h-screen flex-col bg-[#1a130d] text-[#f5f1e8]">
+    <main className="min-h-screen bg-[#f7f5f0] text-[#111111]">
       <Header />
 
-      <section className="mx-auto max-w-6xl flex-1 px-6 py-40">
-        <Link
-          href="/collections"
-          className="mb-10 inline-block text-sm uppercase tracking-[0.25em] text-[#c6a66a] hover:text-[#f5f1e8]"
-        >
-          ← Collections
-        </Link>
+      <section className="mx-auto max-w-[1500px] px-9 pb-24 pt-40">
+        <div className="grid gap-14 md:grid-cols-[0.9fr_1.1fr] md:items-end">
+          <div>
+            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/40">
+              Middle range collection
+            </p>
+            <h1 className="max-w-3xl text-6xl font-light leading-[0.9] tracking-[-0.07em] text-black md:text-8xl">
+              ORIGINS
+            </h1>
+          </div>
 
-        <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-          Collection
-        </p>
-
-        <h1 className="mb-8 text-6xl font-light md:text-7xl">ORIGIN</h1>
-
-        <p className="mb-16 max-w-4xl text-xl leading-relaxed text-[#d0cabf]">
-          Noble woods selected for their natural beauty, structure, warmth, and
-          timeless character. ORIGIN is the quiet foundation of LIGNORAE.
-        </p>
-
-        <div className="group overflow-hidden rounded-3xl border border-[#4a3522]/70 transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/60">
-          <div className="aspect-[16/8] bg-[url('/origin.jpg')] bg-cover bg-center transition duration-700 group-hover:scale-105" />
+          <p className="max-w-2xl text-base font-light leading-8 text-black/55 md:text-lg">
+            ORIGINS is built around expressive woods with visible character:
+            exotic grain, depth, colour and natural variation shaped into
+            refined fountain pens.
+          </p>
         </div>
 
-        <div className="mt-16 grid gap-8 md:grid-cols-2">
-          <div className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-8">
-            <h2 className="mb-5 text-3xl font-light">Material character</h2>
-            <p className="leading-relaxed text-[#d0cabf]">
-              Each piece is shaped from carefully selected wood, chosen for its
-              grain, density, colour, and ability to become a refined daily
-              writing instrument.
+        <div className="relative mt-24 aspect-[16/9] overflow-hidden bg-[#eeeae2]">
+          <Image
+            src="/origin.jpg"
+            alt="ORIGINS exotic wood writing object"
+            fill
+            priority
+            sizes="(max-width: 1500px) 100vw, 1500px"
+            className="object-cover object-center"
+          />
+        </div>
+      </section>
+
+      <section className="border-y border-black/10 bg-[#fbfaf7] px-9 py-24">
+        <div className="mx-auto grid max-w-[1500px] gap-12 md:grid-cols-3">
+          <article className="border-l border-black/15 pl-7">
+            <p className="mb-6 text-[10px] uppercase tracking-[0.42em] text-black/35">
+              01
             </p>
+            <h2 className="mb-5 text-3xl font-light tracking-[-0.04em]">
+              Grain
+            </h2>
+            <p className="text-sm font-light leading-7 text-black/55">
+              The visual language comes from the wood itself: figure, rhythm,
+              contrast and natural perfect imperfection.
+            </p>
+          </article>
+
+          <article className="border-l border-black/15 pl-7">
+            <p className="mb-6 text-[10px] uppercase tracking-[0.42em] text-black/35">
+              02
+            </p>
+            <h2 className="mb-5 text-3xl font-light tracking-[-0.04em]">
+              Balance
+            </h2>
+            <p className="text-sm font-light leading-7 text-black/55">
+              ORIGINS keeps the sculptural discipline of LIGNORAE while allowing
+              the material to remain visibly warm and expressive.
+            </p>
+          </article>
+
+          <article className="border-l border-black/15 pl-7">
+            <p className="mb-6 text-[10px] uppercase tracking-[0.42em] text-black/35">
+              03
+            </p>
+            <h2 className="mb-5 text-3xl font-light tracking-[-0.04em]">
+              Refinement
+            </h2>
+            <p className="text-sm font-light leading-7 text-black/55">
+              Surfaces are finished with restraint: polished enough to honour
+              the grain, quiet enough to avoid excess.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-[1500px] px-9 py-28">
+        <div className="mb-14 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="mb-4 text-[11px] uppercase tracking-[0.48em] text-black/40">
+              Available objects
+            </p>
+            <h2 className="text-4xl font-light tracking-[-0.05em] md:text-6xl">
+              Current ORIGINS pieces
+            </h2>
           </div>
 
-          <div className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-8">
-            <h2 className="mb-5 text-3xl font-light">Purpose</h2>
-            <p className="leading-relaxed text-[#d0cabf]">
-              ORIGIN is designed for those who value understatement: material,
-              balance, craftsmanship, and a calm elegance without unnecessary
-              ornament.
-            </p>
-          </div>
+          <p className="max-w-xl text-base font-light leading-8 text-black/55">
+            Each piece depends on the character of the blank. No two ORIGINS
+            objects are expected to look identical.
+          </p>
         </div>
 
-        <section className="mt-24 border-t border-[#4a3522]/70 pt-20">
-          <div className="mb-14 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="mb-4 text-sm uppercase tracking-[0.4em] text-[#c6a66a]">
-                Origin instruments
-              </p>
-
-              <h2 className="text-4xl font-light md:text-5xl">
-                Individual pieces
-              </h2>
-            </div>
-
-            <p className="max-w-xl text-lg leading-relaxed text-[#cfc8bc]">
-              Each instrument in the ORIGIN collection receives its own archive
-              page, with photographs, material notes, specifications, and
-              availability.
+        {pieces.length === 0 ? (
+          <div className="border border-black/10 bg-[#fbfaf7] p-10 text-center">
+            <p className="text-base font-light leading-7 text-black/55">
+              No ORIGINS objects have been added yet.
             </p>
           </div>
+        ) : (
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {pieces.map((piece) => (
+              <Link
+                key={piece.id}
+                href={`/pieces/${piece.slug}`}
+                className="group overflow-hidden border border-black/10 bg-[#fbfaf7] transition duration-500 hover:-translate-y-1 hover:border-black/25"
+              >
+                <div className="relative aspect-[4/5] overflow-hidden bg-[#eeeae2]">
+                  <Image
+                    src={piece.image}
+                    alt={piece.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover transition duration-700 group-hover:scale-105"
+                  />
+                </div>
 
-          {originPieces.length === 0 ? (
-            <div className="rounded-3xl border border-[#4a3522]/70 bg-[#21170f] p-10 text-center">
-              <p className="text-lg leading-relaxed text-[#d0cabf]">
-                No ORIGIN pieces have been added to the archive yet.
-              </p>
-            </div>
-          ) : (
-            <div className="grid gap-10 md:grid-cols-2">
-              {originPieces.map((piece) => (
-                <Link
-                  key={piece.id}
-                  href={`/pieces/${piece.slug}`}
-                  className="group overflow-hidden rounded-3xl border border-[#c6a66a]/30 bg-[#21170f] transition duration-500 hover:-translate-y-1 hover:border-[#c6a66a]/70 hover:shadow-[0_0_30px_rgba(198,166,106,0.14)]"
-                >
-                  <div className="relative aspect-[16/10] overflow-hidden">
-                    <div
-                      className="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-105"
-                      style={{ backgroundImage: `url('${piece.image}')` }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-transparent" />
-                  </div>
-
-                  <div className="p-8">
-                    <div className="mb-4 flex flex-wrap gap-3 text-xs uppercase tracking-[0.22em] text-[#c6a66a]">
-                      <span className="rounded-full border border-[#c6a66a]/40 px-3 py-1">
-                        {piece.collection.toUpperCase()}
-                      </span>
-
-                      <span className="rounded-full border border-[#c6a66a]/40 px-3 py-1">
-                        {getStatusLabel(piece.status)}
-                      </span>
-                    </div>
-
-                    <h3 className="mb-4 text-3xl font-light transition duration-300 group-hover:text-[#c6a66a]">
-                      {piece.title}
-                    </h3>
-
-                    <p className="mb-6 leading-relaxed text-[#cfc8bc]">
-                      {piece.shortDescription}
-                    </p>
-
-                    <p className="text-sm uppercase tracking-[0.25em] text-[#c6a66a]">
-                      View instrument →
-                    </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
-        </section>
+                <div className="p-8">
+                  <h3 className="mb-4 text-3xl font-light tracking-[-0.04em]">
+                    {piece.title}
+                  </h3>
+                  <p className="mb-7 text-sm font-light leading-7 text-black/55">
+                    {piece.shortDescription}
+                  </p>
+                  <p className="text-[10px] uppercase tracking-[0.35em] text-black/55 transition group-hover:text-black">
+                    View object →
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
       </section>
 
       <Footer />
