@@ -46,7 +46,7 @@ export default async function NaturaPage() {
             height={1000}
             priority
             sizes="(max-width: 1200px) 100vw, 1200px"
-            className="h-auto w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
+            className="mx-auto max-h-[720px] w-auto max-w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
           />
         </div>
       </section>
