@@ -39,7 +39,7 @@ export async function POST(request: Request) {
     const safeMessage = escapeHtml(message);
 
     const result = await resend.emails.send({
-      from: "LIGNORAE Atelier <onboarding@resend.dev>",
+      from: "LIGNORAE Atelier <info@lignorae.com>",
       to: ["info@lignorae.com"],
       bcc: ["euroschneider@gmail.com"],
       subject: `New LIGNORAE enquiry: ${enquiryType}`,

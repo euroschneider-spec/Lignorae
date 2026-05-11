@@ -71,7 +71,7 @@ const buttonGhost =
   "inline-flex shrink-0 items-center justify-center border border-black/20 px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-black/60 transition hover:border-black hover:text-black";
 
 const buttonBlack =
-  "inline-flex shrink-0 items-center justify-center border border-black/35 bg-transparent px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-black/80 transition hover:border-black hover:bg-black hover:text-white";
+  "inline-flex shrink-0 items-center justify-center border border-black/35 bg-transparent px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-black/95 transition hover:border-black hover:bg-transparent hover:text-black";
 
 const dangerButton =
   "inline-flex shrink-0 items-center justify-center border border-red-700/45 bg-transparent px-4 py-2 text-[10px] uppercase tracking-[0.22em] text-red-800 transition hover:border-red-800 hover:bg-red-800 hover:text-white";
