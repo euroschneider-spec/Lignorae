@@ -6,7 +6,7 @@ const sections = [
     title: "Angaben gemäß § 5 DDG",
     body: [
       "LIGNORAE Atelier",
-      "Inhaber / Verantwortlicher: [VOLLSTÄNDIGEN RECHTLICHEN NAMEN EINTRAGEN]",
+      "Inhaber / Verantwortlicher: Paul Daniel Schneider",
       "Hohenlindener Str. 1",
       "81677 München",
       "Deutschland",
@@ -16,31 +16,29 @@ const sections = [
     title: "Kontakt",
     body: [
       "E-Mail: info@lignorae.com",
-      "Telefon: [TELEFONNUMMER EINTRAGEN, SOFERN GESCHÄFTLICH VERWENDET]",
       "Internet: www.lignorae.com",
     ],
   },
   {
     title: "Rechtsform und Registerangaben",
     body: [
-      "Rechtsform: [z. B. Einzelunternehmen / GmbH / UG / GbR EINTRAGEN]",
-      "Registergericht: [NUR BEI REGISTERPFLICHTIGEN RECHTSFORMEN EINTRAGEN]",
-      "Registernummer: [NUR BEI REGISTERPFLICHTIGEN RECHTSFORMEN EINTRAGEN]",
-      "Vertretungsberechtigte Person: [BEI JURISTISCHEN PERSONEN EINTRAGEN]",
+      "Rechtsform: Einzelunternehmen",
+      "Es besteht derzeit keine Eintragung im Handelsregister.",
+      "Vertretungsberechtigt: Paul Daniel Schneider",
     ],
   },
   {
     title: "Umsatzsteuer",
     body: [
-      "Umsatzsteuer-Identifikationsnummer gemäß § 27a Umsatzsteuergesetz: [USt-IdNr. EINTRAGEN, FALLS ERTEILT]",
-      "Wirtschafts-Identifikationsnummer: [W-IdNr. EINTRAGEN, FALLS ZUGETEILT]",
-      "Hinweis: Eine private Steuernummer wird im Impressum nicht veröffentlicht.",
+      "Eine Umsatzsteuer-Identifikationsnummer gemäß § 27a Umsatzsteuergesetz wurde derzeit nicht angegeben.",
+      "Eine private Steuernummer wird im Impressum nicht veröffentlicht.",
+      "Sollte künftig eine Umsatzsteuer-Identifikationsnummer oder Wirtschafts-Identifikationsnummer erteilt und veröffentlichungspflichtig sein, wird diese Angabe ergänzt.",
     ],
   },
   {
     title: "Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV",
     body: [
-      "[VOLLSTÄNDIGEN RECHTLICHEN NAMEN EINTRAGEN]",
+      "Paul Daniel Schneider",
       "Hohenlindener Str. 1",
       "81677 München",
       "Deutschland",
@@ -100,28 +98,28 @@ const sections = [
 
 export default function LegalNoticePage() {
   return (
-    <main className="min-h-screen bg-[#f7f5f0] text-[#111111]">
+    <main className="flex min-h-screen flex-col bg-[#f7f5f0] text-[#111111]">
       <Header />
 
-      <section className="mx-auto max-w-[1500px] px-9 pb-24 pt-40">
+      <section className="mx-auto w-full max-w-[1500px] px-9 pb-24 pt-40">
         <div className="grid gap-14 md:grid-cols-[0.9fr_1.1fr] md:items-end">
           <div>
-            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/55">
+            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
               Impressum
             </p>
             <h1 className="max-w-4xl text-5xl font-light leading-[0.95] tracking-[-0.06em] text-black md:text-7xl">
-              Legal notice.
+              Impressum.
             </h1>
           </div>
 
-          <p className="max-w-2xl text-base font-light leading-8 text-black/70 md:text-lg">
+          <p className="max-w-2xl text-base font-normal leading-8 text-black/95 md:text-lg">
             Anbieterkennzeichnung und rechtliche Pflichtangaben für die Website
             von LIGNORAE Atelier.
           </p>
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1100px] px-9 pb-28">
+      <section className="mx-auto w-full max-w-[1100px] flex-1 px-9 pb-28">
         <div className="space-y-6">
           {sections.map((section) => (
             <section key={section.title} className="border border-black/15 bg-[#fbfaf7] p-6 md:p-8">
@@ -129,7 +127,7 @@ export default function LegalNoticePage() {
                 {section.title}
               </h2>
 
-              <div className="space-y-4 text-base font-light leading-8 text-black/70">
+              <div className="space-y-4 text-base font-normal leading-8 text-black/95">
                 {section.body.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
@@ -138,12 +136,12 @@ export default function LegalNoticePage() {
           ))}
         </div>
 
-        <div className="mt-8 border border-black/15 bg-[#fbfaf7] p-6 text-sm leading-7 text-black/65 md:p-8">
+        <div className="mt-8 border border-black/15 bg-[#fbfaf7] p-6 text-sm font-normal leading-7 text-black/95 md:p-8">
           <p>
-            Stand: Mai 2026. Dieses Impressum muss vor Veröffentlichung mit den
-            endgültigen Unternehmensdaten, der korrekten Rechtsform, dem vollständigen
-            Namen des Verantwortlichen sowie gegebenenfalls Register- und Umsatzsteuerdaten
-            abgeglichen werden.
+            Stand: Mai 2026. Dieses Impressum wurde für den aktuellen Stand des
+            LIGNORAE Ateliers erstellt. Bei Änderungen der Rechtsform, Kontaktdaten,
+            Registerangaben oder steuerlichen Angaben wird diese Seite entsprechend
+            aktualisiert.
           </p>
         </div>
       </section>

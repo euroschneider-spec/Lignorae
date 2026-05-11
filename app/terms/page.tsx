@@ -14,9 +14,8 @@ const sections = [
     title: "2. Anbieter",
     body: [
       "LIGNORAE Atelier",
-      "[VOLLSTÄNDIGEN RECHTLICHEN NAMEN EINTRAGEN]",
-      "Hohenlindener Str. 1",
-      "81677 München",
+      "Paul Daniel Schneider",
+      "München",
       "Deutschland",
       "E-Mail: info@lignorae.com",
     ],
@@ -156,15 +155,15 @@ export default function TermsPage() {
       <section className="mx-auto w-full max-w-[1500px] px-9 pb-24 pt-40">
         <div className="grid gap-14 md:grid-cols-[0.9fr_1.1fr] md:items-end">
           <div>
-            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/55">
+            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
               AGB
             </p>
             <h1 className="max-w-4xl text-5xl font-light leading-[0.95] tracking-[-0.06em] text-black md:text-7xl">
-              Terms & conditions.
+              Allgemeine Geschäftsbedingungen.
             </h1>
           </div>
 
-          <p className="max-w-2xl text-base font-normal leading-8 text-black/80 md:text-lg">
+          <p className="max-w-2xl text-base font-normal leading-8 text-black/95 md:text-lg">
             Allgemeine Geschäftsbedingungen für Anfragen, individuelle Angebote,
             handgefertigte Schreibobjekte und Präsentationsformen von LIGNORAE Atelier.
           </p>
@@ -182,7 +181,7 @@ export default function TermsPage() {
                 {section.title}
               </h2>
 
-              <div className="space-y-4 text-base font-normal leading-8 text-black/80">
+              <div className="space-y-4 text-base font-normal leading-8 text-black/95">
                 {section.body.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
@@ -191,12 +190,13 @@ export default function TermsPage() {
           ))}
         </div>
 
-        <div className="mt-8 border border-black/15 bg-[#fbfaf7] p-6 text-sm font-normal leading-7 text-black/80 md:p-8">
+        <div className="mt-8 border border-black/15 bg-[#fbfaf7] p-6 text-sm font-normal leading-7 text-black/95 md:p-8">
           <p>
-            Stand: Mai 2026. Diese Allgemeinen Geschäftsbedingungen müssen vor
-            kommerziellem Verkaufsstart mit der finalen Rechtsform, steuerlichen
-            Situation, Zahlungsabwicklung und tatsächlichen Verkaufsprozessen
-            abgeglichen werden.
+            Stand: Mai 2026. Diese Allgemeinen Geschäftsbedingungen wurden für
+            den aktuellen Stand von LIGNORAE Atelier erstellt. Bei Änderungen der
+            Rechtsform, steuerlichen Situation, Zahlungsabwicklung oder
+            tatsächlichen Verkaufsprozesse werden diese Bedingungen entsprechend
+            aktualisiert.
           </p>
         </div>
       </section>

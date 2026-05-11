@@ -68,14 +68,15 @@ export default async function PieceDetailPage({
         </Link>
 
         <div className="grid gap-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
-          <div className="group relative aspect-[4/5] overflow-hidden bg-[#eeeae2] lg:sticky lg:top-28">
+          <div className="group overflow-hidden bg-[#eeeae2] lg:sticky lg:top-28">
             <Image
               src={mainImage}
               alt={piece.title}
-              fill
+              width={1400}
+              height={1000}
               priority
               sizes="(max-width: 1024px) 100vw, 760px"
-              className="object-contain object-center p-0 transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
+              className="h-auto w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
             />
           </div>
 
@@ -108,14 +109,14 @@ export default async function PieceDetailPage({
             <div className="mt-12 flex flex-col gap-4 sm:flex-row">
               <Link
                 href="/contact"
-                className="inline-flex justify-center border border-black/35 bg-transparent px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-black/95 transition hover:border-black hover:bg-black hover:text-white"
+                className="inline-flex justify-center border border-black/35 bg-transparent px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-black/95 transition hover:border-black hover:bg-transparent hover:text-black"
               >
                 Request availability
               </Link>
 
               <Link
                 href="/collections"
-                className="inline-flex justify-center border border-black/35 px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-black/95 transition hover:border-black hover:bg-black hover:text-white"
+                className="inline-flex justify-center border border-black/35 bg-transparent px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-black/95 transition hover:border-black hover:bg-transparent hover:text-black"
               >
                 View collections
               </Link>

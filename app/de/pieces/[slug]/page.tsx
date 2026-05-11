@@ -82,14 +82,15 @@ export default async function GermanPiecePage({
         </Link>
 
         <div className="grid gap-16 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
-          <div className="group relative aspect-[4/5] overflow-hidden bg-[#eeeae2] lg:sticky lg:top-28">
+          <div className="group overflow-hidden bg-[#eeeae2] lg:sticky lg:top-28">
             <Image
               src={piece.detailImage || piece.image}
               alt={title}
-              fill
+              width={1400}
+              height={1000}
               priority
               sizes="(max-width: 1024px) 100vw, 760px"
-              className="object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
+              className="h-auto w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
             />
           </div>
 
@@ -122,14 +123,14 @@ export default async function GermanPiecePage({
             <div className="mt-12 flex flex-col gap-4 sm:flex-row">
               <Link
                 href="/de/contact"
-                className="inline-flex justify-center border border-black/35 bg-transparent px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-black/95 transition hover:border-black hover:bg-black hover:text-white"
+                className="inline-flex justify-center border border-black/35 bg-transparent px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-black/95 transition hover:border-black hover:bg-transparent hover:text-black"
               >
                 Verfügbarkeit anfragen
               </Link>
 
               <Link
                 href="/de/collections"
-                className="inline-flex justify-center border border-black/35 px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-black/95 transition hover:border-black hover:bg-black hover:text-white"
+                className="inline-flex justify-center border border-black/35 bg-transparent px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-black/95 transition hover:border-black hover:bg-transparent hover:text-black"
               >
                 Kollektionen ansehen
               </Link>

@@ -6,6 +6,14 @@ import { createPiece } from "../actions";
 
 type UploadState = "idle" | "uploading" | "saving" | "error";
 
+const fieldClass =
+  "w-full border border-black/15 bg-[#f7f5f0] px-4 py-3 text-sm font-normal text-black outline-none transition placeholder:text-black/60 focus:border-black";
+
+const labelClass = "block space-y-2";
+
+const labelTextClass =
+  "block text-xs uppercase tracking-[0.2em] text-black/95";
+
 function createSafeFileName(file: File, prefix: string) {
   const extension = file.name.split(".").pop() || "jpg";
   const safePrefix = prefix
@@ -98,40 +106,40 @@ export default function PieceForm() {
       <input type="hidden" name="detailImage" />
 
       <div className="grid gap-6 md:grid-cols-2">
-        <label className="space-y-2">
-          <span className="text-xs uppercase tracking-[0.2em] text-black/95">
+        <label className={labelClass}>
+          <span className={labelTextClass}>
             Title
           </span>
           <input
             name="title"
             required
             placeholder="ORIGIN No. 1"
-            className="border border-black/15 bg-[#f7f5f0] px-4 py-3 text-sm font-normal text-black outline-none transition placeholder:text-black/60 focus:border-black"
+            className={fieldClass}
           />
         </label>
 
-        <label className="space-y-2">
-          <span className="text-xs uppercase tracking-[0.2em] text-black/95">
+        <label className={labelClass}>
+          <span className={labelTextClass}>
             Slug
           </span>
           <input
             name="slug"
             placeholder="auto-generated if empty"
-            className="border border-black/15 bg-[#f7f5f0] px-4 py-3 text-sm font-normal text-black outline-none transition placeholder:text-black/60 focus:border-black"
+            className={fieldClass}
           />
         </label>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <label className="space-y-2">
-          <span className="text-xs uppercase tracking-[0.2em] text-black/95">
+        <label className={labelClass}>
+          <span className={labelTextClass}>
             Collection
           </span>
           <select
             name="collection"
             required
             defaultValue="FORMA"
-            className="border border-black/15 bg-[#f7f5f0] px-4 py-3 text-sm font-normal text-black outline-none transition focus:border-black"
+            className={fieldClass}
           >
             <option value="FORMA">FORMA</option>
             <option value="ORIGINS">ORIGINS</option>
@@ -139,14 +147,14 @@ export default function PieceForm() {
           </select>
         </label>
 
-        <label className="space-y-2">
-          <span className="text-xs uppercase tracking-[0.2em] text-black/95">
+        <label className={labelClass}>
+          <span className={labelTextClass}>
             Status
           </span>
           <select
             name="status"
             defaultValue="prototype-archive"
-            className="w-full border border-black/15 bg-[#f7f5f0] px-4 py-3 text-sm font-normal text-black outline-none transition focus:border-black"
+            className={fieldClass}
           >
             <option value="prototype-archive">Prototype archive</option>
             <option value="draft">Draft</option>
@@ -158,42 +166,42 @@ export default function PieceForm() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-3">
-        <label className="space-y-2">
-          <span className="text-xs uppercase tracking-[0.2em] text-black/95">
+        <label className={labelClass}>
+          <span className={labelTextClass}>
             Year
           </span>
           <input
             name="year"
             placeholder="2026"
-            className="border border-black/15 bg-[#f7f5f0] px-4 py-3 text-sm font-normal text-black outline-none transition placeholder:text-black/60 focus:border-black"
+            className={fieldClass}
           />
         </label>
 
-        <label className="space-y-2">
-          <span className="text-xs uppercase tracking-[0.2em] text-black/95">
+        <label className={labelClass}>
+          <span className={labelTextClass}>
             Material
           </span>
           <input
             name="material"
             placeholder="Bog oak, walnut, ziricote..."
-            className="border border-black/15 bg-[#f7f5f0] px-4 py-3 text-sm font-normal text-black outline-none transition placeholder:text-black/60 focus:border-black"
+            className={fieldClass}
           />
         </label>
 
-        <label className="space-y-2">
-          <span className="text-xs uppercase tracking-[0.2em] text-black/95">
+        <label className={labelClass}>
+          <span className={labelTextClass}>
             Atelier
           </span>
           <input
             name="atelier"
             placeholder="Munich atelier"
-            className="border border-black/15 bg-[#f7f5f0] px-4 py-3 text-sm font-normal text-black outline-none transition placeholder:text-black/60 focus:border-black"
+            className={fieldClass}
           />
         </label>
       </div>
 
-      <label className="block space-y-2">
-        <span className="text-xs uppercase tracking-[0.2em] text-black/95">
+      <label className={labelClass}>
+        <span className={labelTextClass}>
           Short description
         </span>
         <textarea
@@ -201,25 +209,25 @@ export default function PieceForm() {
           required
           rows={4}
           placeholder="Short story, material, provenance, atmosphere."
-          className="border border-black/15 bg-[#f7f5f0] px-4 py-3 text-sm font-normal text-black outline-none transition placeholder:text-black/60 focus:border-black"
+          className={`${fieldClass} min-h-32 resize-y`}
         />
       </label>
 
-      <label className="block space-y-2">
-        <span className="text-xs uppercase tracking-[0.2em] text-black/95">
+      <label className={labelClass}>
+        <span className={labelTextClass}>
           Story
         </span>
         <textarea
           name="story"
           rows={7}
           placeholder="Longer piece story, provenance, making process, character."
-          className="border border-black/15 bg-[#f7f5f0] px-4 py-3 text-sm font-normal text-black outline-none transition placeholder:text-black/60 focus:border-black"
+          className={`${fieldClass} min-h-48 resize-y`}
         />
       </label>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <label className="space-y-2">
-          <span className="text-xs uppercase tracking-[0.2em] text-black/95">
+        <label className={labelClass}>
+          <span className={labelTextClass}>
             Main image
           </span>
           <input
@@ -228,12 +236,12 @@ export default function PieceForm() {
             type="file"
             accept="image/*"
             required
-            className="border border-black/15 bg-[#f7f5f0] px-4 py-3 text-sm font-normal text-black file:mr-4 file:border-0 file:bg-black file:px-4 file:py-2 file:text-xs file:font-semibold file:uppercase file:tracking-[0.18em] file:text-white hover:file:bg-black/80"
+            className="w-full border border-black/15 bg-[#f7f5f0] px-4 py-3 text-sm font-normal text-black file:mr-4 file:border-0 file:bg-black file:px-4 file:py-2 file:text-xs file:font-semibold file:uppercase file:tracking-[0.18em] file:text-white hover:file:bg-black/80"
           />
         </label>
 
-        <label className="space-y-2">
-          <span className="text-xs uppercase tracking-[0.2em] text-black/95">
+        <label className={labelClass}>
+          <span className={labelTextClass}>
             Detail image
           </span>
           <input
@@ -241,7 +249,7 @@ export default function PieceForm() {
             name="detailImageFile"
             type="file"
             accept="image/*"
-            className="border border-black/15 bg-[#f7f5f0] px-4 py-3 text-sm font-normal text-black file:mr-4 file:border-0 file:bg-black file:px-4 file:py-2 file:text-xs file:font-semibold file:uppercase file:tracking-[0.18em] file:text-white hover:file:bg-black/80"
+            className="w-full border border-black/15 bg-[#f7f5f0] px-4 py-3 text-sm font-normal text-black file:mr-4 file:border-0 file:bg-black file:px-4 file:py-2 file:text-xs file:font-semibold file:uppercase file:tracking-[0.18em] file:text-white hover:file:bg-black/80"
           />
         </label>
       </div>
@@ -268,7 +276,7 @@ export default function PieceForm() {
         <button
           type="submit"
           disabled={isBusy}
-          className="border border-black bg-black px-6 py-3 text-xs font-semibold uppercase tracking-[0.22em] text-white transition hover:bg-transparent hover:text-black disabled:cursor-not-allowed disabled:opacity-60"
+          className="border border-black/35 bg-transparent px-6 py-3 text-xs font-semibold uppercase tracking-[0.22em] text-black/95 transition hover:border-black hover:bg-transparent hover:text-black disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isBusy ? "Working..." : "Save piece"}
         </button>

@@ -7,9 +7,8 @@ const sections = [
     body: [
       "Verantwortlich für die Datenverarbeitung auf dieser Website ist:",
       "LIGNORAE Atelier",
-      "[VOLLSTÄNDIGEN RECHTLICHEN NAMEN EINTRAGEN]",
-      "Hohenlindener Str. 1",
-      "81677 München",
+      "Paul Daniel Schneider",
+      "München",
       "Deutschland",
       "E-Mail: info@lignorae.com",
     ],
@@ -52,8 +51,10 @@ const sections = [
     title: "6. Cookies und lokale Speicherung",
     body: [
       "Diese Website verwendet derzeit keine Marketing-, Tracking- oder Analyse-Cookies.",
-      "Es kann jedoch ein technisch notwendiger funktionaler Mechanismus verwendet werden, um beispielsweise die ausgewählte Spracheinstellung oder grundlegende Anzeigepräferenzen lokal zu speichern.",
-      "Die Speicherung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO zur nutzerfreundlichen Bereitstellung der Website.",
+      "Es werden nur technisch notwendige Cookies beziehungsweise lokale Speichermechanismen verwendet, die für die ordnungsgemäße Funktion, Sicherheit und grundlegende Bedienbarkeit der Website erforderlich sind.",
+      "Hierzu kann insbesondere die lokale Speicherung der Cookie-Hinweis-Bestätigung gehören.",
+      "Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO beziehungsweise, soweit erforderlich, auf Grundlage der einschlägigen Vorschriften des TTDSG.",
+      "Sollten künftig optionale Analyse-, Marketing- oder Drittanbieter-Dienste eingesetzt werden, werden diese nicht ohne vorherige Einwilligung geladen.",
     ],
   },
   {
@@ -119,28 +120,28 @@ const sections = [
 
 export default function PrivacyPolicyPage() {
   return (
-    <main className="min-h-screen bg-[#f7f5f0] text-[#111111]">
+    <main className="flex min-h-screen flex-col bg-[#f7f5f0] text-[#111111]">
       <Header />
 
-      <section className="mx-auto max-w-[1500px] px-9 pb-24 pt-40">
+      <section className="mx-auto w-full max-w-[1500px] px-9 pb-24 pt-40">
         <div className="grid gap-14 md:grid-cols-[0.9fr_1.1fr] md:items-end">
           <div>
-            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/55">
+            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
               Datenschutz
             </p>
             <h1 className="max-w-4xl text-5xl font-light leading-[0.95] tracking-[-0.06em] text-black md:text-7xl">
-              Privacy policy.
+              Datenschutzerklärung.
             </h1>
           </div>
 
-          <p className="max-w-2xl text-base font-light leading-8 text-black/70 md:text-lg">
+          <p className="max-w-2xl text-base font-normal leading-8 text-black/95 md:text-lg">
             Informationen zur Verarbeitung personenbezogener Daten auf der
             Website von LIGNORAE Atelier.
           </p>
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1100px] px-9 pb-28">
+      <section className="mx-auto w-full max-w-[1100px] flex-1 px-9 pb-28">
         <div className="space-y-6">
           {sections.map((section) => (
             <section
@@ -151,7 +152,7 @@ export default function PrivacyPolicyPage() {
                 {section.title}
               </h2>
 
-              <div className="space-y-4 text-base font-light leading-8 text-black/70">
+              <div className="space-y-4 text-base font-normal leading-8 text-black/95">
                 {section.body.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
@@ -160,13 +161,16 @@ export default function PrivacyPolicyPage() {
           ))}
         </div>
 
-        <div className="mt-8 border border-black/15 bg-[#fbfaf7] p-6 text-sm leading-7 text-black/65 md:p-8">
+        <div className="mt-8 border border-black/15 bg-[#fbfaf7] p-6 text-sm font-normal leading-7 text-black/95 md:p-8">
           <p>
-            This legal information is provided in German, as the legally binding version for Germany.
-	    
-	    Stand: Mai 2026. Diese Datenschutzerklärung muss vor Veröffentlichung
-            mit den finalen Unternehmensdaten und der tatsächlichen technischen
-            Infrastruktur abgeglichen werden.
+            Diese rechtlichen Informationen werden in deutscher Sprache bereitgestellt
+            und bilden die maßgebliche Fassung für Deutschland.
+            <br />
+            <br />
+            Stand: Mai 2026. Diese Datenschutzerklärung wurde für den aktuellen
+            technischen Stand der Website von LIGNORAE Atelier erstellt. Bei
+            Änderungen der technischen Infrastruktur, eingesetzter Dienste oder
+            rechtlicher Anforderungen wird diese Erklärung entsprechend aktualisiert.
           </p>
         </div>
       </section>
