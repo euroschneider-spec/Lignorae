@@ -84,7 +84,7 @@ export default function WithdrawalPage() {
             </h1>
           </div>
 
-          <p className="max-w-2xl text-base font-normal leading-8 text-black/95 md:text-lg">
+          <p className="max-w-2xl text-base font-medium leading-8 text-black/95 md:text-lg">
             Informationen zum gesetzlichen Widerrufsrecht für Verbraucherinnen
             und Verbraucher sowie zu möglichen Ausschlüssen bei individuellen
             Anfertigungen.
@@ -103,7 +103,7 @@ export default function WithdrawalPage() {
                 {section.title}
               </h2>
 
-              <div className="space-y-4 text-base font-normal leading-8 text-black/95">
+              <div className="space-y-4 text-base font-medium leading-8 text-black/95">
                 {section.body.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
@@ -112,7 +112,7 @@ export default function WithdrawalPage() {
           ))}
         </div>
 
-        <div className="mt-8 border border-black/15 bg-[#fbfaf7] p-6 text-sm font-normal leading-7 text-black/95 md:p-8">
+        <div className="mt-8 border border-black/15 bg-[#fbfaf7] p-6 text-sm font-medium leading-7 text-black/95 md:p-8">
           <p>
             Stand: Mai 2026. Diese Widerrufsbelehrung wurde für den aktuellen
             Stand von LIGNORAE Atelier erstellt. Bei Änderungen des Angebots-,

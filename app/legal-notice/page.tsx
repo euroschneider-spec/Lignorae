@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+text-sm font-medium leading-7 text-black/95import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 const sections = [
@@ -112,7 +112,7 @@ export default function LegalNoticePage() {
             </h1>
           </div>
 
-          <p className="max-w-2xl text-base font-normal leading-8 text-black/95 md:text-lg">
+          <p className="max-w-2xl text-base font-medium leading-8 text-black/95 md:text-lg">
             Anbieterkennzeichnung und rechtliche Pflichtangaben für die Website
             von LIGNORAE Atelier.
           </p>
@@ -127,7 +127,7 @@ export default function LegalNoticePage() {
                 {section.title}
               </h2>
 
-              <div className="space-y-4 text-base font-normal leading-8 text-black/95">
+              <div className="space-y-4 text-base font-medium leading-8 text-black/95">
                 {section.body.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
@@ -136,7 +136,7 @@ export default function LegalNoticePage() {
           ))}
         </div>
 
-        <div className="mt-8 border border-black/15 bg-[#fbfaf7] p-6 text-sm font-normal leading-7 text-black/95 md:p-8">
+        <div className="mt-8 border border-black/15 bg-[#fbfaf7] p-6 text-sm font-medium leading-7 text-black/95 md:p-8">
           <p>
             Stand: Mai 2026. Dieses Impressum wurde für den aktuellen Stand des
             LIGNORAE Ateliers erstellt. Bei Änderungen der Rechtsform, Kontaktdaten,

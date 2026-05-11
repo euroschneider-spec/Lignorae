@@ -38,14 +38,15 @@ export default async function NaturaPage() {
           </p>
         </div>
 
-        <div className="group relative mt-24 aspect-[16/9] overflow-hidden bg-[#eeeae2]">
+        <div className="group mt-24 overflow-hidden bg-[#eeeae2]">
           <Image
             src="/natura.jpg"
             alt="NATURA natural wood fountain pen"
-            fill
+            width={1500}
+            height={1000}
             priority
             sizes="(max-width: 1500px) 100vw, 1500px"
-            className="object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
+            className="h-auto w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
           />
         </div>
       </section>
