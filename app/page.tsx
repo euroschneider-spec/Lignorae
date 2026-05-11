@@ -31,6 +31,20 @@ export default function HomePage() {
             <p>Objects of Writing.</p>
 
             <div className="flex items-center gap-5 md:gap-9">
+              <div className="flex items-center gap-3 text-black/45">
+                <Link href="/" className="transition hover:text-black">
+                  EN
+                </Link>
+                <span>/</span>
+                <Link href="/de" className="transition hover:text-black">
+                  DE
+                </Link>
+                <span>/</span>
+                <Link href="/ro" className="transition hover:text-black">
+                  RO
+                </Link>
+              </div>
+
               <Link href="/legal-notice" className="hidden transition hover:text-black md:inline">
                 Legal
               </Link>
@@ -38,7 +52,7 @@ export default function HomePage() {
                 Privacy
               </Link>
               <Link href="/contact" className="hidden transition hover:text-black md:inline">
-                Care
+                Contact
               </Link>
               <Link
                 href="/collections"
