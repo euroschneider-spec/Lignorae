@@ -1,7 +1,5 @@
 import type { MetadataRoute } from "next";
 import { prisma } from "@/lib/prisma";
-
-
 const siteUrl = "https://www.lignorae.com";
 
 const legalRouteEndings = [
@@ -14,6 +12,8 @@ const legalRouteEndings = [
 
 function getStaticRoutePriority(route: string) {
   if (route === "") return 1;
+
+  if (route === "/de" || route === "/ro") return 0.6;
 
   if (legalRouteEndings.some((ending) => route.endsWith(ending))) {
     return 0.3;
@@ -56,7 +56,7 @@ const staticRoutes = [
   "/ro/collections/origins",
   "/ro/collections/natura",
   "/ro/journal",
-  "/ro/contact",	
+  "/ro/contact",
   "/ro/legal-notice",
   "/ro/privacy-policy",
   "/ro/terms",
