@@ -1,7 +1,26 @@
 import type { MetadataRoute } from "next";
 import { prisma } from "@/lib/prisma";
 
+
 const siteUrl = "https://www.lignorae.com";
+
+const legalRouteEndings = [
+  "/legal-notice",
+  "/privacy-policy",
+  "/terms",
+  "/withdrawal",
+  "/shipping",
+];
+
+function getStaticRoutePriority(route: string) {
+  if (route === "") return 1;
+
+  if (legalRouteEndings.some((ending) => route.endsWith(ending))) {
+    return 0.3;
+  }
+
+  return 0.7;
+}
 
 const staticRoutes = [
   "",
@@ -37,7 +56,7 @@ const staticRoutes = [
   "/ro/collections/origins",
   "/ro/collections/natura",
   "/ro/journal",
-  "/ro/contact",
+  "/ro/contact",	
   "/ro/legal-notice",
   "/ro/privacy-policy",
   "/ro/terms",
@@ -72,7 +91,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `${siteUrl}${route}`,
     lastModified: now,
     changeFrequency: "weekly",
-    priority: route === "" ? 1 : 0.7,
+    priority: getStaticRoutePriority(route),
   }));
 
   const pieceEntries: MetadataRoute.Sitemap = pieces.flatMap((piece) => [
