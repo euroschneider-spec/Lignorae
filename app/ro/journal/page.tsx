@@ -1,8 +1,46 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
+
+export const metadata: Metadata = {
+  title: "Jurnal — Note din atelierul LIGNORAE",
+  description:
+    "Citește note din atelierul LIGNORAE: studii de material, teste de suprafață, fragmente de proces și reflecții despre stilouri sculpturale.",
+  alternates: {
+    canonical: "/ro/journal",
+    languages: {
+      en: "/journal",
+      de: "/de/journal",
+      ro: "/ro/journal",
+      "x-default": "/journal",
+    },
+  },
+  openGraph: {
+    title: "Jurnal — Note din atelierul LIGNORAE",
+    description:
+      "Studii de material, teste de suprafață și fragmente de proces din realizarea stilourilor sculpturale.",
+    url: "/ro/journal",
+    type: "website",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Jurnalul atelierului LIGNORAE și studii de material",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Jurnal — Note din atelierul LIGNORAE",
+    description:
+      "Studii de material, teste de suprafață și fragmente de proces din realizarea stilourilor sculpturale.",
+    images: ["/og-image.jpg"],
+  },
+};
 
 export const dynamic = "force-dynamic";
 
@@ -66,13 +104,14 @@ export default async function RomanianJournalPage() {
                   className="group overflow-hidden border border-black/15 bg-[#fbfaf7] transition duration-500 hover:-translate-y-1 hover:border-black/35"
                 >
                   {post.coverImage && (
-                    <div className="relative aspect-[16/10] overflow-hidden bg-[#eeeae2]">
+                    <div className="overflow-hidden bg-[#eeeae2]">
                       <Image
                         src={post.coverImage}
                         alt={title}
-                        fill
+                        width={1000}
+                        height={650}
                         sizes="(max-width: 768px) 100vw, 50vw"
-                        className="object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
+                        className="h-auto w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
                       />
                     </div>
                   )}

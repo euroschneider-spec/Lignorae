@@ -1,8 +1,46 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
+
+export const metadata: Metadata = {
+  title: "ORIGINS — Expressive Wood Fountain Pens",
+  description:
+    "ORIGINS is the expressive wood collection by LIGNORAE: refined fountain pens shaped from exotic grain, natural depth and material character in Munich.",
+  alternates: {
+    canonical: "/collections/origins",
+    languages: {
+      en: "/collections/origins",
+      de: "/de/collections/origins",
+      ro: "/ro/collections/origins",
+      "x-default": "/collections/origins",
+    },
+  },
+  openGraph: {
+    title: "ORIGINS — Expressive Wood Fountain Pens by LIGNORAE",
+    description:
+      "Refined fountain pens shaped from exotic grain, natural depth and material character in Munich.",
+    url: "/collections/origins",
+    type: "website",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "ORIGINS expressive wood fountain pen by LIGNORAE",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ORIGINS — Expressive Wood Fountain Pens by LIGNORAE",
+    description:
+      "Refined fountain pens shaped from exotic grain, natural depth and material character in Munich.",
+    images: ["/og-image.jpg"],
+  },
+};
 
 export const dynamic = "force-dynamic";
 
@@ -125,7 +163,7 @@ export default async function OriginsPage() {
                 href={`/pieces/${piece.slug}`}
                 className="group overflow-hidden border border-black/10 bg-[#fbfaf7] transition duration-500 hover:-translate-y-1 hover:border-black/25"
               >
-                <div className="relative overflow-hidden bg-[#eeeae2]">
+                <div className="overflow-hidden bg-[#eeeae2]">
                   <Image
                     src={piece.image}
                     alt={piece.title}

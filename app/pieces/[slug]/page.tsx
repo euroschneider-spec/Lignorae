@@ -1,11 +1,75 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
+import { ProductSchema } from "@/components/structured-data";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+
+  const piece = await prisma.piece.findUnique({
+    where: {
+      slug,
+    },
+  });
+
+  if (!piece || piece.status === "draft" || piece.status === "archived") {
+    return {
+      title: "Writing Object Not Found",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  const canonical = `/pieces/${piece.slug}`;
+  const description = piece.shortDescription.slice(0, 155);
+  const image = piece.detailImage || piece.image || "/og-image.jpg";
+
+  return {
+    title: `${piece.title} — ${piece.collection} Writing Object`,
+    description,
+    alternates: {
+      canonical,
+      languages: {
+        en: canonical,
+        de: `/de/pieces/${piece.slug}`,
+        ro: `/ro/pieces/${piece.slug}`,
+        "x-default": canonical,
+      },
+    },
+    openGraph: {
+      title: `${piece.title} — LIGNORAE ${piece.collection}`,
+      description,
+      url: canonical,
+      type: "website",
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: piece.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${piece.title} — LIGNORAE ${piece.collection}`,
+      description,
+      images: [image],
+    },
+  };
+}
 
 function getStatusLabel(status: string) {
   const normalizedStatus = status.toLowerCase();
@@ -58,6 +122,22 @@ export default async function PieceDetailPage({
   return (
     <main className="flex min-h-screen flex-col bg-[#f7f5f0] text-[#111111]">
       <Header />
+      <ProductSchema
+        piece={{
+          name: piece.title,
+          slug: piece.slug,
+          shortDescription: piece.shortDescription,
+          woodSpecies: piece.material,
+          collection: piece.collection,
+          status: piece.status,
+          images: [
+            { url: piece.image, alt: piece.title },
+            ...(piece.detailImage
+              ? [{ url: piece.detailImage, alt: `${piece.title} detail` }]
+              : []),
+          ],
+        }}
+      />
 
       <section className="mx-auto w-full max-w-[1500px] flex-1 px-9 pb-24 pt-40">
         <Link

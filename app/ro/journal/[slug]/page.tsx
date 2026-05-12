@@ -1,11 +1,87 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
+import { ArticleSchema } from "@/components/structured-data";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+
+  const post = await prisma.journalPost.findUnique({
+    where: {
+      slug,
+    },
+    include: {
+      translations: {
+        where: {
+          locale: "RO",
+        },
+      },
+    },
+  });
+
+  if (!post || !post.published) {
+    return {
+      title: "Articol de jurnal negăsit",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  const translation = post.translations[0];
+  const title = translation?.title || post.title;
+  const excerpt = translation?.excerpt || post.excerpt;
+  const description = excerpt.slice(0, 155);
+  const canonical = `/ro/journal/${post.slug}`;
+  const image = post.coverImage || "/og-image.jpg";
+
+  return {
+    title: `${title} — Jurnal`,
+    description,
+    alternates: {
+      canonical,
+      languages: {
+        en: `/journal/${post.slug}`,
+        de: `/de/journal/${post.slug}`,
+        ro: canonical,
+        "x-default": `/journal/${post.slug}`,
+      },
+    },
+    openGraph: {
+      title: `${title} — Jurnal LIGNORAE`,
+      description,
+      url: canonical,
+      type: "article",
+      publishedTime: post.createdAt.toISOString(),
+      modifiedTime: post.updatedAt.toISOString(),
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} — Jurnal LIGNORAE`,
+      description,
+      images: [image],
+    },
+  };
+}
 
 export default async function RomanianJournalPostPage({
   params,
@@ -40,6 +116,17 @@ export default async function RomanianJournalPostPage({
     <main className="flex min-h-screen flex-col bg-[#f7f5f0] text-[#111111]">
       <Header />
 
+      <ArticleSchema
+        entry={{
+          title,
+          slug: post.slug,
+          excerpt,
+          publishedAt: post.createdAt.toISOString(),
+          updatedAt: post.updatedAt.toISOString(),
+          coverImage: post.coverImage ? { url: post.coverImage } : null,
+        }}
+      />
+
       <article className="mx-auto w-full max-w-[1500px] flex-1 px-9 pb-28 pt-40">
         <Link
           href="/ro/journal"
@@ -73,15 +160,18 @@ export default async function RomanianJournalPostPage({
         </div>
 
         {post.coverImage && (
-          <div className="group relative mt-24 aspect-[16/9] overflow-hidden bg-[#eeeae2]">
-            <Image
-              src={post.coverImage}
-              alt={title}
-              fill
-              priority
-              sizes="(max-width: 1500px) 100vw, 1500px"
-              className="object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
-            />
+          <div className="mt-24 flex justify-center">
+            <div className="group inline-flex overflow-hidden bg-[#eeeae2]">
+              <Image
+                src={post.coverImage}
+                alt={title}
+                width={1500}
+                height={1000}
+                priority
+                sizes="(max-width: 1200px) 100vw, 1200px"
+                className="h-auto max-h-[820px] w-auto max-w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
+              />
+            </div>
           </div>
         )}
 

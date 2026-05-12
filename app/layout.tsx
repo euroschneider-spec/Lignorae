@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import CookieBanner from "@/components/CookieBanner";
+import { OrganizationSchema } from "@/components/structured-data";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://lignorae.com"),
+  metadataBase: new URL("https://www.lignorae.com"),
   title: {
     default: "LIGNORAE — Objects of Writing",
     template: "%s | LIGNORAE",
@@ -30,6 +31,7 @@ export const metadata: Metadata = {
       en: "/",
       de: "/de",
       ro: "/ro",
+      "x-default": "/",
     },
   },
   icons: {
@@ -37,10 +39,10 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
-    title: "LIGNORAE — Objects of Writing",
+    title: "LIGNORAE Atelier",
     description:
       "Sculptural objects of writing, handcrafted in Munich from wood, fire and form.",
-    url: "https://lignorae.com",
+    url: "https://www.lignorae.com",
     siteName: "LIGNORAE",
     type: "website",
     locale: "en_GB",
@@ -81,6 +83,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <OrganizationSchema />
         {children}
         <CookieBanner />
       </body>

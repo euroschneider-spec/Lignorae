@@ -1,8 +1,46 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
+
+export const metadata: Metadata = {
+  title: "NATURA — Natural Wood Fountain Pens",
+  description:
+    "NATURA is the most direct LIGNORAE collection: local woods, honest surfaces and tactile fountain pens shaped for daily use in Munich.",
+  alternates: {
+    canonical: "/collections/natura",
+    languages: {
+      en: "/collections/natura",
+      de: "/de/collections/natura",
+      ro: "/ro/collections/natura",
+      "x-default": "/collections/natura",
+    },
+  },
+  openGraph: {
+    title: "NATURA — Natural Wood Fountain Pens by LIGNORAE",
+    description:
+      "Local woods, honest surfaces and tactile fountain pens shaped for daily use in Munich.",
+    url: "/collections/natura",
+    type: "website",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "NATURA natural wood fountain pen by LIGNORAE",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "NATURA — Natural Wood Fountain Pens by LIGNORAE",
+    description:
+      "Local woods, honest surfaces and tactile fountain pens shaped for daily use in Munich.",
+    images: ["/og-image.jpg"],
+  },
+};
 
 export const dynamic = "force-dynamic";
 
@@ -39,7 +77,7 @@ export default async function NaturaPage() {
         </div>
 
         <div className="mt-24 flex justify-center">
-          <div className="group overflow-hidden bg-[#eeeae2]">
+          <div className="group inline-flex overflow-hidden bg-[#eeeae2]">
             <Image
               src="/natura.jpg"
               alt="NATURA natural wood fountain pen"

@@ -1,8 +1,46 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
+
+export const metadata: Metadata = {
+  title: "Journal — Notizen aus dem LIGNORAE Atelier",
+  description:
+    "Lesen Sie Notizen aus dem LIGNORAE Atelier: Materialstudien, Oberflächentests, Prozessfragmente und Gedanken zu skulpturalen Füllfederhaltern.",
+  alternates: {
+    canonical: "/de/journal",
+    languages: {
+      en: "/journal",
+      de: "/de/journal",
+      ro: "/ro/journal",
+      "x-default": "/journal",
+    },
+  },
+  openGraph: {
+    title: "Journal — Notizen aus dem LIGNORAE Atelier",
+    description:
+      "Materialstudien, Oberflächentests und Prozessfragmente aus der Entstehung skulpturaler Füllfederhalter.",
+    url: "/de/journal",
+    type: "website",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "LIGNORAE Atelierjournal und Materialstudien",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Journal — Notizen aus dem LIGNORAE Atelier",
+    description:
+      "Materialstudien, Oberflächentests und Prozessfragmente aus der Entstehung skulpturaler Füllfederhalter.",
+    images: ["/og-image.jpg"],
+  },
+};
 
 export const dynamic = "force-dynamic";
 
@@ -66,13 +104,14 @@ export default async function GermanJournalPage() {
                   className="group overflow-hidden border border-black/15 bg-[#fbfaf7] transition duration-500 hover:-translate-y-1 hover:border-black/35"
                 >
                   {post.coverImage && (
-                    <div className="relative aspect-[16/10] overflow-hidden bg-[#eeeae2]">
+                    <div className="overflow-hidden bg-[#eeeae2]">
                       <Image
                         src={post.coverImage}
                         alt={title}
-                        fill
+                        width={1000}
+                        height={650}
                         sizes="(max-width: 768px) 100vw, 50vw"
-                        className="object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
+                        className="h-auto w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
                       />
                     </div>
                   )}

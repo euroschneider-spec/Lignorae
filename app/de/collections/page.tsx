@@ -1,8 +1,46 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
+
+export const metadata: Metadata = {
+  title: "Kollektionen — FORMA, ORIGINS und NATURA",
+  description:
+    "Entdecken Sie die LIGNORAE Kollektionen FORMA, ORIGINS und NATURA: drei Materialsprachen für skulpturale Füllfederhalter aus München.",
+  alternates: {
+    canonical: "/de/collections",
+    languages: {
+      en: "/collections",
+      de: "/de/collections",
+      ro: "/ro/collections",
+      "x-default": "/collections",
+    },
+  },
+  openGraph: {
+    title: "LIGNORAE Kollektionen — FORMA, ORIGINS und NATURA",
+    description:
+      "Drei Materialsprachen für skulpturale Füllfederhalter, handgefertigt in München.",
+    url: "/de/collections",
+    type: "website",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "LIGNORAE Kollektionen in einer galerieartigen Präsentation",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "LIGNORAE Kollektionen — FORMA, ORIGINS und NATURA",
+    description:
+      "Drei Materialsprachen für skulpturale Füllfederhalter, handgefertigt in München.",
+    images: ["/og-image.jpg"],
+  },
+};
 
 export const dynamic = "force-dynamic";
 
@@ -148,7 +186,7 @@ export default async function GermanCollectionsPage() {
         <div className="mx-auto grid max-w-[1500px] gap-14 md:grid-cols-[0.75fr_1.25fr] md:items-center">
           <div>
             <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
-              Künftige limitierte Linien
+              Künftige limitierte Serien
             </p>
             <h2 className="max-w-xl text-4xl font-light leading-tight tracking-[-0.05em] md:text-6xl">
               Reserviert für Arbeiten mit dokumentierter Herkunft.
@@ -210,13 +248,14 @@ export default async function GermanCollectionsPage() {
                   href={`/de/pieces/${piece.slug}`}
                   className="group overflow-hidden border border-black/15 bg-[#fbfaf7] transition duration-500 hover:-translate-y-1 hover:border-black/35"
                 >
-                  <div className="relative aspect-[4/5] overflow-hidden bg-[#eeeae2]">
+                  <div className="overflow-hidden bg-[#eeeae2]">
                     <Image
                       src={piece.image}
                       alt={title}
-                      fill
+                      width={900}
+                      height={700}
                       sizes="(max-width: 768px) 100vw, 33vw"
-                      className="object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
+                      className="h-auto w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
                     />
                   </div>
 
@@ -233,8 +272,7 @@ export default async function GermanCollectionsPage() {
                     <h3 className="mb-4 text-3xl font-light tracking-[-0.04em] text-black">
                       {title}
                     </h3>
-
-                    <p className="mb-7 text-sm font-light leading-7 text-black/95">
+                    <p className="mb-7 text-sm font-normal leading-7 text-black/95">
                       {shortDescription}
                     </p>
 

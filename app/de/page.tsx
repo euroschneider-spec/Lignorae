@@ -1,11 +1,49 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
+export const metadata: Metadata = {
+  title: "LIGNORAE — Skulpturale Füllfederhalter aus München",
+  description:
+    "LIGNORAE fertigt skulpturale Füllfederhalter und Schreibobjekte in München, geprägt von Holz, Feuer, Form und ruhiger Handwerkskunst.",
+  alternates: {
+    canonical: "/de",
+    languages: {
+      en: "/",
+      de: "/de",
+      ro: "/ro",
+      "x-default": "/",
+    },
+  },
+  openGraph: {
+    title: "LIGNORAE — Skulpturale Füllfederhalter aus München",
+    description:
+      "Füllfederhalter aus Holz, Feuer und Form, handgefertigt im Münchner Atelier.",
+    url: "/de",
+    type: "website",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "LIGNORAE skulpturaler Füllfederhalter in einer galerieartigen Präsentation",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "LIGNORAE — Skulpturale Füllfederhalter aus München",
+    description:
+      "Füllfederhalter aus Holz, Feuer und Form, handgefertigt im Münchner Atelier.",
+    images: ["/og-image.jpg"],
+  },
+};
+
 export default function GermanHomePage() {
   return (
-    <main className="min-h-screen bg-[#f7f5f0] text-[#111111]">
+    <main className="flex min-h-screen flex-col bg-[#f7f5f0] text-[#111111]">
       <Header />
 
       <section className="relative min-h-[100svh] overflow-hidden pt-20">
@@ -21,7 +59,7 @@ export default function GermanHomePage() {
 
           <Link
             href="/de/collections"
-            className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 border border-black/20 bg-[#f7f5f0]/80 px-6 py-3 text-[10px] uppercase tracking-[0.35em] text-black/65 backdrop-blur-xl transition hover:border-black hover:text-black md:bottom-10"
+            className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 border border-black/35 bg-[#f7f5f0]/85 px-6 py-3 text-[10px] uppercase tracking-[0.35em] text-black/95 backdrop-blur-xl transition hover:border-black hover:text-black md:bottom-10"
           >
             Kollektionen erkunden
           </Link>
@@ -29,11 +67,11 @@ export default function GermanHomePage() {
 
         <footer className="absolute inset-x-0 bottom-0 z-10 border-t border-black/10 bg-[#f7f5f0]/94 backdrop-blur-xl">
           <div className="mx-auto flex h-20 max-w-[1500px] items-center justify-between px-6 md:px-9">
-            <p className="text-[10px] uppercase tracking-[0.34em] text-black/45 md:text-[11px] md:tracking-[0.48em]">
+            <p className="text-[10px] uppercase tracking-[0.34em] text-black/95 md:text-[11px] md:tracking-[0.48em]">
               Objects of writing
             </p>
 
-            <div className="flex items-center gap-7 text-[10px] uppercase tracking-[0.32em] text-black/55 md:gap-10 md:tracking-[0.42em]">
+            <div className="flex items-center gap-7 text-[10px] uppercase tracking-[0.32em] text-black/95 md:gap-10 md:tracking-[0.42em]">
               <Link href="/de/legal-notice" className="hidden transition hover:text-black md:inline">
                 Impressum
               </Link>
@@ -46,7 +84,7 @@ export default function GermanHomePage() {
               <Link
                 href="/de/collections"
                 aria-label="Kollektionen erkunden"
-                className="flex h-7 w-7 items-center justify-center rounded-full border border-black/55 text-[11px] text-black/70 transition hover:border-black hover:text-black"
+                className="flex h-7 w-7 items-center justify-center rounded-full border border-black/55 text-[11px] text-black/95 transition hover:border-black hover:text-black"
               >
                 +
               </Link>

@@ -1,8 +1,46 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
+
+export const metadata: Metadata = {
+  title: "Colecții — FORMA, ORIGINS și NATURA",
+  description:
+    "Explorează colecțiile LIGNORAE: FORMA, ORIGINS și NATURA, trei limbaje materiale pentru stilouri sculpturale realizate în München.",
+  alternates: {
+    canonical: "/ro/collections",
+    languages: {
+      en: "/collections",
+      de: "/de/collections",
+      ro: "/ro/collections",
+      "x-default": "/collections",
+    },
+  },
+  openGraph: {
+    title: "Colecțiile LIGNORAE — FORMA, ORIGINS și NATURA",
+    description:
+      "Trei limbaje materiale pentru stilouri sculpturale realizate manual în München.",
+    url: "/ro/collections",
+    type: "website",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Colecțiile LIGNORAE prezentate într-un limbaj vizual de galerie",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Colecțiile LIGNORAE — FORMA, ORIGINS și NATURA",
+    description:
+      "Trei limbaje materiale pentru stilouri sculpturale realizate manual în München.",
+    images: ["/og-image.jpg"],
+  },
+};
 
 export const dynamic = "force-dynamic";
 
@@ -23,14 +61,14 @@ const collections = [
     eyebrow: "Lemn expresiv",
     statement: "Textura exotică, profunzime și caracter material.",
     description:
-      "ORIGINS pornește de la lemn selectat pentru desen, culoare și densitate, oferind fiecărui obiect propriul ritm vizual.",
+      "ORIGINS pornește de la lemn selectat pentru coloratură, culoare și densitate, oferind fiecărui obiect propriul ritm vizual.",
   },
   {
     title: "NATURA",
     href: "/ro/collections/natura",
     image: "/natura.jpg",
     eyebrow: "Material esențial",
-    statement: "Căldură brută. Intervenție minimă. Textură sinceră.",
+    statement: "Căldură brută. Intervenție minimă. Textură unică.",
     description:
       "NATURA păstrează lucrul direct: lemn local, suprafețe tactile și o expresie mai accesibilă a limbajului LIGNORAE.",
   },
@@ -148,7 +186,7 @@ export default async function RomanianCollectionsPage() {
         <div className="mx-auto grid max-w-[1500px] gap-14 md:grid-cols-[0.75fr_1.25fr] md:items-center">
           <div>
             <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
-              Linii limitate viitoare
+              Serii viitoare limitate
             </p>
             <h2 className="max-w-xl text-4xl font-light leading-tight tracking-[-0.05em] md:text-6xl">
               Rezervate pentru lucrări cu proveniență documentată.
@@ -210,13 +248,14 @@ export default async function RomanianCollectionsPage() {
                   href={`/ro/pieces/${piece.slug}`}
                   className="group overflow-hidden border border-black/15 bg-[#fbfaf7] transition duration-500 hover:-translate-y-1 hover:border-black/35"
                 >
-                  <div className="relative aspect-[4/5] overflow-hidden bg-[#eeeae2]">
+                  <div className="overflow-hidden bg-[#eeeae2]">
                     <Image
                       src={piece.image}
                       alt={title}
-                      fill
+                      width={900}
+                      height={700}
                       sizes="(max-width: 768px) 100vw, 33vw"
-                      className="object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
+                      className="h-auto w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
                     />
                   </div>
 

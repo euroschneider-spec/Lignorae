@@ -1,8 +1,46 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
+
+export const metadata: Metadata = {
+  title: "Journal — Notes from the LIGNORAE Atelier",
+  description:
+    "Read notes from the LIGNORAE atelier: material studies, surface decisions, process fragments and reflections on sculptural fountain pens.",
+  alternates: {
+    canonical: "/journal",
+    languages: {
+      en: "/journal",
+      de: "/de/journal",
+      ro: "/ro/journal",
+      "x-default": "/journal",
+    },
+  },
+  openGraph: {
+    title: "Journal — Notes from the LIGNORAE Atelier",
+    description:
+      "Material studies, surface decisions and quiet process fragments from the making of sculptural fountain pens.",
+    url: "/journal",
+    type: "website",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "LIGNORAE atelier journal and material studies",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Journal — Notes from the LIGNORAE Atelier",
+    description:
+      "Material studies, surface decisions and quiet process fragments from the making of sculptural fountain pens.",
+    images: ["/og-image.jpg"],
+  },
+};
 
 export const dynamic = "force-dynamic";
 
@@ -33,7 +71,7 @@ export default async function JournalPage() {
 
           <p className="max-w-2xl text-base font-normal leading-8 text-black/95 md:text-lg">
             Experiments, material studies, surface decisions and quiet fragments
-            from the making of LIGNORAE objects.
+            from the making of LIGNORAE fountain pens.
           </p>
         </div>
       </section>
@@ -54,13 +92,14 @@ export default async function JournalPage() {
                 className="group block overflow-hidden border border-black/15 bg-[#fbfaf7] transition duration-500 hover:-translate-y-1 hover:border-black/35"
               >
                 {post.coverImage && (
-                  <div className="relative aspect-[16/10] overflow-hidden bg-[#eeeae2]">
+                  <div className="overflow-hidden bg-[#eeeae2]">
                     <Image
                       src={post.coverImage}
                       alt={post.title}
-                      fill
+                      width={1000}
+                      height={650}
                       sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
+                      className="h-auto w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
                     />
                   </div>
                 )}

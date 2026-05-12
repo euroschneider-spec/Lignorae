@@ -1,11 +1,86 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
+import { ProductSchema } from "@/components/structured-data";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+
+  const piece = await prisma.piece.findUnique({
+    where: {
+      slug,
+    },
+    include: {
+      translations: {
+        where: {
+          locale: "RO",
+        },
+      },
+    },
+  });
+
+  if (!piece || piece.status === "draft" || piece.status === "archived") {
+    return {
+      title: "Obiect de scris negăsit",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  const translation = piece.translations[0];
+  const title = translation?.title || piece.title;
+  const collection = translation?.collection || piece.collection;
+  const shortDescription = translation?.shortDescription || piece.shortDescription;
+  const description = shortDescription.slice(0, 155);
+  const canonical = `/ro/pieces/${piece.slug}`;
+  const image = piece.detailImage || piece.image || "/og-image.jpg";
+
+  return {
+    title: `${title} — obiect de scris ${collection}`,
+    description,
+    alternates: {
+      canonical,
+      languages: {
+        en: `/pieces/${piece.slug}`,
+        de: `/de/pieces/${piece.slug}`,
+        ro: canonical,
+        "x-default": `/pieces/${piece.slug}`,
+      },
+    },
+    openGraph: {
+      title: `${title} — LIGNORAE ${collection}`,
+      description,
+      url: canonical,
+      type: "website",
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} — LIGNORAE ${collection}`,
+      description,
+      images: [image],
+    },
+  };
+}
 
 function getStatusLabel(status: string) {
   const normalizedStatus = status.toLowerCase();
@@ -73,6 +148,23 @@ export default async function RomanianPiecePage({
     <main className="flex min-h-screen flex-col bg-[#f7f5f0] text-[#111111]">
       <Header />
 
+      <ProductSchema
+        piece={{
+          name: title,
+          slug: piece.slug,
+          shortDescription,
+          woodSpecies: material,
+          collection,
+          status: piece.status,
+          images: [
+            { url: piece.image, alt: title },
+            ...(piece.detailImage
+              ? [{ url: piece.detailImage, alt: `${title} detaliu` }]
+              : []),
+          ],
+        }}
+      />
+
       <section className="mx-auto w-full max-w-[1500px] flex-1 px-9 pb-24 pt-40">
         <Link
           href={`/ro/collections/${collectionSlug}`}
@@ -82,14 +174,15 @@ export default async function RomanianPiecePage({
         </Link>
 
         <div className="grid gap-16 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
-          <div className="group relative aspect-[4/5] overflow-hidden bg-[#eeeae2] lg:sticky lg:top-28">
+          <div className="group overflow-hidden bg-[#eeeae2] lg:sticky lg:top-28">
             <Image
               src={piece.detailImage || piece.image}
               alt={title}
-              fill
+              width={1400}
+              height={1000}
               priority
               sizes="(max-width: 1024px) 100vw, 760px"
-              className="object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
+              className="h-auto w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
             />
           </div>
 
@@ -122,14 +215,14 @@ export default async function RomanianPiecePage({
             <div className="mt-12 flex flex-col gap-4 sm:flex-row">
               <Link
                 href="/ro/contact"
-                className="inline-flex justify-center border border-black/35 bg-transparent px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-black/95 transition hover:border-black hover:bg-black hover:text-white"
+                className="inline-flex justify-center border border-black/35 bg-transparent px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-black/95 transition hover:border-black hover:bg-transparent hover:text-black"
               >
                 Solicită disponibilitatea
               </Link>
 
               <Link
                 href="/ro/collections"
-                className="inline-flex justify-center border border-black/35 px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-black/95 transition hover:border-black hover:bg-black hover:text-white"
+                className="inline-flex justify-center border border-black/35 bg-transparent px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-black/95 transition hover:border-black hover:bg-transparent hover:text-black"
               >
                 Vezi colecțiile
               </Link>

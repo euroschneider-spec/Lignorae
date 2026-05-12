@@ -1,11 +1,86 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
+import { ProductSchema } from "@/components/structured-data";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+
+  const piece = await prisma.piece.findUnique({
+    where: {
+      slug,
+    },
+    include: {
+      translations: {
+        where: {
+          locale: "DE",
+        },
+      },
+    },
+  });
+
+  if (!piece || piece.status === "draft" || piece.status === "archived") {
+    return {
+      title: "Schreibobjekt nicht gefunden",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  const translation = piece.translations[0];
+  const title = translation?.title || piece.title;
+  const collection = translation?.collection || piece.collection;
+  const shortDescription = translation?.shortDescription || piece.shortDescription;
+  const description = shortDescription.slice(0, 155);
+  const canonical = `/de/pieces/${piece.slug}`;
+  const image = piece.detailImage || piece.image || "/og-image.jpg";
+
+  return {
+    title: `${title} — ${collection} Schreibobjekt`,
+    description,
+    alternates: {
+      canonical,
+      languages: {
+        en: `/pieces/${piece.slug}`,
+        de: canonical,
+        ro: `/ro/pieces/${piece.slug}`,
+        "x-default": `/pieces/${piece.slug}`,
+      },
+    },
+    openGraph: {
+      title: `${title} — LIGNORAE ${collection}`,
+      description,
+      url: canonical,
+      type: "website",
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${title} — LIGNORAE ${collection}`,
+      description,
+      images: [image],
+    },
+  };
+}
 
 function getStatusLabel(status: string) {
   const normalizedStatus = status.toLowerCase();
@@ -72,6 +147,22 @@ export default async function GermanPiecePage({
   return (
     <main className="flex min-h-screen flex-col bg-[#f7f5f0] text-[#111111]">
       <Header />
+      <ProductSchema
+        piece={{
+          name: title,
+          slug: piece.slug,
+          shortDescription,
+          woodSpecies: material,
+          collection,
+          status: piece.status,
+          images: [
+            { url: piece.image, alt: title },
+            ...(piece.detailImage
+              ? [{ url: piece.detailImage, alt: `${title} Detail` }]
+              : []),
+          ],
+        }}
+      />
 
       <section className="mx-auto w-full max-w-[1500px] flex-1 px-9 pb-24 pt-40">
         <Link

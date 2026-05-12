@@ -1,8 +1,46 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
+
+export const metadata: Metadata = {
+  title: "Collections — FORMA, ORIGINS and NATURA",
+  description:
+    "Explore the LIGNORAE collections: FORMA, ORIGINS and NATURA, three material languages for sculptural fountain pens handcrafted in Munich.",
+  alternates: {
+    canonical: "/collections",
+    languages: {
+      en: "/collections",
+      de: "/de/collections",
+      ro: "/ro/collections",
+      "x-default": "/collections",
+    },
+  },
+  openGraph: {
+    title: "LIGNORAE Collections — FORMA, ORIGINS and NATURA",
+    description:
+      "Three material languages for sculptural fountain pens handcrafted in Munich.",
+    url: "/collections",
+    type: "website",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "LIGNORAE collections presented in a gallery-like visual language",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "LIGNORAE Collections — FORMA, ORIGINS and NATURA",
+    description:
+      "Three material languages for sculptural fountain pens handcrafted in Munich.",
+    images: ["/og-image.jpg"],
+  },
+};
 
 export const dynamic = "force-dynamic";
 
@@ -197,13 +235,14 @@ export default async function CollectionsPage() {
                 href={`/pieces/${piece.slug}`}
                 className="group overflow-hidden border border-black/15 bg-[#fbfaf7] transition duration-500 hover:-translate-y-1 hover:border-black/35"
               >
-                <div className="relative aspect-[4/5] overflow-hidden bg-[#eeeae2]">
+                <div className="overflow-hidden bg-[#eeeae2]">
                   <Image
                     src={piece.image}
                     alt={piece.title}
-                    fill
+                    width={900}
+                    height={700}
                     sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
+                    className="h-auto w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
                   />
                 </div>
 
@@ -221,7 +260,7 @@ export default async function CollectionsPage() {
                     {piece.title}
                   </h3>
 
-                  <p className="mb-7 text-sm font-light leading-7 text-black/95">
+                  <p className="mb-7 text-sm font-normal leading-7 text-black/95">
                     {piece.shortDescription}
                   </p>
 
