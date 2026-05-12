@@ -38,16 +38,18 @@ export default async function NaturaPage() {
           </p>
         </div>
 
-        <div className="group mx-auto mt-24 max-w-[1200px] overflow-hidden bg-[#eeeae2]">
-          <Image
-            src="/natura.jpg"
-            alt="NATURA natural wood fountain pen"
-            width={1500}
-            height={1000}
-            priority
-            sizes="(max-width: 1200px) 100vw, 1200px"
-            className="mx-auto max-h-[720px] w-auto max-w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
-          />
+        <div className="mt-24 flex justify-center">
+          <div className="group overflow-hidden bg-[#eeeae2]">
+            <Image
+              src="/natura.jpg"
+              alt="NATURA natural wood fountain pen"
+              width={1500}
+              height={1000}
+              priority
+              sizes="(max-width: 900px) 100vw, 900px"
+              className="h-auto max-h-[820px] w-auto max-w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
+            />
+          </div>
         </div>
       </section>
 
@@ -125,13 +127,14 @@ export default async function NaturaPage() {
                 href={`/pieces/${piece.slug}`}
                 className="group overflow-hidden border border-black/15 bg-[#fbfaf7] transition duration-500 hover:-translate-y-1 hover:border-black/35"
               >
-                <div className="relative aspect-[4/5] overflow-hidden bg-[#eeeae2]">
+                <div className="overflow-hidden bg-[#eeeae2]">
                   <Image
                     src={piece.image}
                     alt={piece.title}
-                    fill
+                    width={900}
+                    height={700}
                     sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
+                    className="h-auto w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
                   />
                 </div>
 
