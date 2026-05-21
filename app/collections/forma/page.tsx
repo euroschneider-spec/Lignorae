@@ -83,16 +83,18 @@ export default async function FormaPage() {
           </p>
         </div>
 
-        <div className="group mx-auto mt-24 max-w-[1200px] overflow-hidden bg-[#eeeae2]">
-          <Image
-            src={heroImage}
-            alt={heroAlt}
-            width={1500}
-            height={1000}
-            priority
-            sizes="(max-width: 1200px) 100vw, 1200px"
-            className="h-auto w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
-          />
+        <div className="group mx-auto mt-24 max-w-[900px] overflow-hidden bg-[#eeeae2]">
+          <div className="relative max-h-[600px] overflow-hidden">
+            <Image
+              src={heroImage}
+              alt={heroAlt}
+              width={1500}
+              height={1000}
+              priority
+              sizes="(max-width: 900px) 100vw, 900px"
+              className="h-auto max-h-[600px] w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
+            />
+          </div>
         </div>
       </section>
 
