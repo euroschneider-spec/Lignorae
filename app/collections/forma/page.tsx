@@ -45,14 +45,21 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function FormaPage() {
-  const pieces = await prisma.piece.findMany({
-    where: {
-      collection: "FORMA",
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+  const [pieces, latestPiece] = await Promise.all([
+    prisma.piece.findMany({
+      where: { collection: { equals: "FORMA", mode: "insensitive" } },
+      orderBy: { createdAt: "desc" },
+    }),
+    prisma.piece.findFirst({
+      where: { collection: { equals: "FORMA", mode: "insensitive" } },
+      orderBy: { createdAt: "desc" },
+    }),
+  ]);
+
+  const heroImage = latestPiece?.image ?? "/gallery_landing.jpg";
+  const heroAlt = latestPiece?.title
+    ? `${latestPiece.title} — FORMA sculptural writing object`
+    : "FORMA sculptural writing object";
 
   return (
     <main className="flex min-h-screen flex-col bg-[#f7f5f0] text-[#111111]">
@@ -78,8 +85,8 @@ export default async function FormaPage() {
 
         <div className="group mx-auto mt-24 max-w-[1200px] overflow-hidden bg-[#eeeae2]">
           <Image
-            src="/gallery_landing.jpg"
-            alt="FORMA sculptural writing object"
+            src={heroImage}
+            alt={heroAlt}
             width={1500}
             height={1000}
             priority
