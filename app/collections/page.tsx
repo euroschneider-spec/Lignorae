@@ -44,36 +44,6 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-const collections = [
-  {
-    title: "FORMA",
-    href: "/collections/forma",
-    image: "/gallery_landing.jpg",
-    eyebrow: "Flagship collection",
-    statement: "Blackened surfaces. Sculptural stillness. Cocoon forms.",
-    description:
-      "FORMA is the defining LIGNORAE language: yakisugi surfaces, reduced silhouettes and a museum-like presence shaped around the act of writing.",
-  },
-  {
-    title: "ORIGINS",
-    href: "/collections/origins",
-    image: "/origin.jpg",
-    eyebrow: "Expressive woods",
-    statement: "Exotic grain, depth and material character.",
-    description:
-      "ORIGINS is built around selected woods whose figure, colour and density give each object its own visual rhythm.",
-  },
-  {
-    title: "NATURA",
-    href: "/collections/natura",
-    image: "/natura.jpg",
-    eyebrow: "Essential material",
-    statement: "Raw warmth. Minimal intervention. Honest texture.",
-    description:
-      "NATURA keeps the work direct: local woods, tactile surfaces and a more accessible expression of the LIGNORAE object language.",
-  },
-];
-
 function getStatusLabel(status: string) {
   const normalizedStatus = status.toLowerCase();
 
@@ -97,12 +67,55 @@ function getCollectionLabel(collection: string) {
 }
 
 export default async function CollectionsPage() {
-  const latestPieces = await prisma.piece.findMany({
-    orderBy: {
-      createdAt: "desc",
+  const [latestPieces, formaLatest, originsLatest, naturaLatest] =
+    await Promise.all([
+      prisma.piece.findMany({
+        orderBy: { createdAt: "desc" },
+        take: 6,
+      }),
+      prisma.piece.findFirst({
+        where: { collection: { equals: "FORMA", mode: "insensitive" } },
+        orderBy: { createdAt: "desc" },
+      }),
+      prisma.piece.findFirst({
+        where: { collection: { equals: "ORIGINS", mode: "insensitive" } },
+        orderBy: { createdAt: "desc" },
+      }),
+      prisma.piece.findFirst({
+        where: { collection: { equals: "NATURA", mode: "insensitive" } },
+        orderBy: { createdAt: "desc" },
+      }),
+    ]);
+
+  const collections = [
+    {
+      title: "FORMA",
+      href: "/collections/forma",
+      image: formaLatest?.image ?? "/gallery_landing.jpg",
+      eyebrow: "Flagship collection",
+      statement: "Blackened surfaces. Sculptural stillness. Cocoon forms.",
+      description:
+        "FORMA is the defining LIGNORAE language: yakisugi surfaces, reduced silhouettes and a museum-like presence shaped around the act of writing.",
     },
-    take: 6,
-  });
+    {
+      title: "ORIGINS",
+      href: "/collections/origins",
+      image: originsLatest?.image ?? "/origin.jpg",
+      eyebrow: "Expressive woods",
+      statement: "Exotic grain, depth and material character.",
+      description:
+        "ORIGINS is built around selected woods whose figure, colour and density give each object its own visual rhythm.",
+    },
+    {
+      title: "NATURA",
+      href: "/collections/natura",
+      image: naturaLatest?.image ?? "/natura.jpg",
+      eyebrow: "Essential material",
+      statement: "Raw warmth. Minimal intervention. Honest texture.",
+      description:
+        "NATURA keeps the work direct: local woods, tactile surfaces and a more accessible expression of the LIGNORAE object language.",
+    },
+  ];
 
   return (
     <main className="flex min-h-screen flex-col bg-[#f7f5f0] text-[#111111]">
