@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import CookieBanner from "@/components/CookieBanner";
 import { OrganizationSchema } from "@/components/structured-data";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.lignorae.com"),
@@ -86,6 +87,7 @@ export default function RootLayout({
         <OrganizationSchema />
         {children}
         <CookieBanner />
+        <Analytics />
       </body>
     </html>
   );
