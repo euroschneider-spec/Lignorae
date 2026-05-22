@@ -8,7 +8,7 @@ import { prisma } from "@/lib/prisma";
 export const metadata: Metadata = {
   title: "ORIGINS — Expressive Wood Fountain Pens",
   description:
-    "ORIGINS is the expressive wood collection by LIGNORAE: refined fountain pens shaped from exotic grain, natural depth and material character in Munich.",
+    "ORIGINS is the expressive, most sensitive wood collection by LIGNORAE: refined fountain pens shaped from exotic grain, natural depth and material character in Munich.",
   alternates: {
     canonical: "/collections/origins",
     languages: {
@@ -45,14 +45,21 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function OriginsPage() {
-  const pieces = await prisma.piece.findMany({
-    where: {
-      collection: "ORIGINS",
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+  const [pieces, latestPiece] = await Promise.all([
+    prisma.piece.findMany({
+      where: { collection: "ORIGINS" },
+      orderBy: { createdAt: "desc" },
+    }),
+    prisma.piece.findFirst({
+      where: { collection: "ORIGINS" },
+      orderBy: { createdAt: "desc" },
+    }),
+  ]);
+
+  const heroImage = latestPiece?.image ?? "/origin.jpg";
+  const heroAlt = latestPiece
+    ? `${latestPiece.title} — ORIGINS by LIGNORAE`
+    : "ORIGINS exotic wood writing object";
 
   return (
     <main className="flex min-h-screen flex-col bg-[#f7f5f0] text-[#111111]">
@@ -78,13 +85,13 @@ export default async function OriginsPage() {
 
         <div className="group mx-auto mt-24 max-w-[1200px] overflow-hidden bg-[#eeeae2]">
           <Image
-            src="/origin.jpg"
-            alt="ORIGINS exotic wood writing object"
+            src={heroImage}
+            alt={heroAlt}
             width={1500}
             height={1000}
             priority
             sizes="(max-width: 1200px) 100vw, 1200px"
-            className="h-auto w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
+            className="h-auto max-h-[620px] w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
           />
         </div>
       </section>
