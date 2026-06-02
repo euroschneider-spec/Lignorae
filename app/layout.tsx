@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import CookieBanner from "@/components/CookieBanner";
 import { OrganizationSchema } from "@/components/structured-data";
@@ -86,6 +87,7 @@ export default function RootLayout({
         <OrganizationSchema />
         {children}
         <CookieBanner />
+        <Analytics />
       </body>
     </html>
   );
