@@ -5,22 +5,23 @@ const sections = [
   {
     title: "Lieferung und Versand",
     body: [
-      "LIGNORAE Atelier fertigt und verpackt Schreibobjekte in kleinen Stückzahlen. Versandbedingungen, Lieferzeiten und Versandkosten werden vor Vertragsschluss individuell mitgeteilt oder im jeweiligen Angebot angegeben.",
-      "Eine Anfrage über die Website stellt noch keine verbindliche Bestellung dar. Versanddetails werden erst im Rahmen eines konkreten Angebots oder einer bestätigten Bestellung verbindlich festgelegt.",
+      "LIGNORAE Atelier fertigt und versendet handgefertigte Schreibobjekte, Holzobjekte und Präsentationsformen in kleinen Stückzahlen.",
+      "Lieferzeiten, Versandkosten und Versandart werden vor Vertragsschluss individuell mitgeteilt oder im jeweiligen Angebot angegeben.",
+      "Eine Anfrage über die Website stellt noch keine verbindliche Bestellung dar. Ein Vertrag kommt erst zustande, wenn ein individuelles Angebot ausdrücklich angenommen und von LIGNORAE Atelier bestätigt wurde.",
     ],
   },
   {
     title: "Bearbeitungs- und Vorbereitungszeit",
     body: [
-      "Verfügbare Objekte werden nach Zahlungseingang, finaler Prüfung und sorgfältiger Verpackung versandbereit gemacht.",
-      "Bei handgefertigten Objekten, Sonderanfertigungen, Oberflächenveredelungen, Gravuren, Präsentationsformen oder Materialprüfungen können zusätzliche Vorbereitungszeiten entstehen.",
+      "Verfügbare Objekte werden nach Zahlungseingang, finaler Qualitätsprüfung und sorgfältiger Verpackung versandbereit gemacht.",
+      "Bei handgefertigten Objekten, Sonderanfertigungen, Gravuren, Oberflächenveredelungen, Präsentationsformen, Cocoon-Boxen oder Materialprüfungen können zusätzliche Vorbereitungszeiten entstehen.",
       "Angegebene Liefer- oder Bearbeitungszeiten sind nur dann verbindlich, wenn sie ausdrücklich als verbindlich bestätigt wurden.",
     ],
   },
   {
     title: "Versandart und Versicherung",
     body: [
-      "Hochwertige Schreibobjekte werden grundsätzlich sorgfältig verpackt und, soweit sinnvoll und verfügbar, mit Sendungsverfolgung und angemessener Versicherung versendet.",
+      "Hochwertige Schreibobjekte werden sorgfältig verpackt und, soweit sinnvoll und verfügbar, mit Sendungsverfolgung und angemessener Transportversicherung versendet.",
       "Je nach Warenwert, Bestimmungsort und Versanddienstleister kann eine persönliche Übergabe, Empfangsbestätigung oder Unterschrift erforderlich sein.",
       "Der konkrete Versanddienstleister wird nach Zielort, Versicherbarkeit, Zuverlässigkeit und Objektwert ausgewählt.",
     ],
@@ -29,23 +30,23 @@ const sections = [
     title: "Verpackung",
     body: [
       "Die Verpackung wird dem jeweiligen Objekt, seiner Oberfläche, Präsentationsform und dem Versandweg angepasst.",
-      "Präsentationsformen, Cocoon-Boxen, empfindliche Holzoberflächen, Schreibsysteme und Zubehör werden so vorbereitet, dass ein angemessener Schutz während des Transports gewährleistet ist.",
+      "Schreibobjekte, Cocoon-Boxen, empfindliche Holzoberflächen, Schreibsysteme, Zertifikate und Zubehör werden so vorbereitet, dass ein angemessener Schutz während des Transports gewährleistet ist.",
       "Verpackungen können sich je nach Objekt, Edition, Zielort und Versandanforderung unterscheiden.",
     ],
   },
   {
-    title: "Versand innerhalb Deutschlands und der EU",
+    title: "Versand innerhalb Deutschlands und der Europäischen Union",
     body: [
-      "Versand innerhalb Deutschlands und in ausgewählte EU-Länder ist grundsätzlich möglich, sofern keine rechtlichen, logistischen oder versicherungstechnischen Gründe entgegenstehen.",
-      "Versandkosten und voraussichtliche Laufzeiten werden vor Vertragsschluss individuell mitgeteilt.",
+      "Versand innerhalb Deutschlands und in ausgewählte Länder der Europäischen Union ist grundsätzlich möglich, sofern keine rechtlichen, logistischen oder versicherungstechnischen Gründe entgegenstehen.",
+      "Versandkosten, voraussichtliche Laufzeiten und Versicherungsoptionen werden vor Vertragsschluss individuell mitgeteilt.",
     ],
   },
   {
     title: "Internationaler Versand",
     body: [
       "Internationaler Versand außerhalb der Europäischen Union kann nach individueller Prüfung möglich sein.",
-      "Zölle, Einfuhrabgaben, lokale Steuern, Gebühren und Verzögerungen durch Zollbehörden liegen außerhalb des Einflussbereichs von LIGNORAE Atelier und sind, soweit nicht anders vereinbart, von der Kundin oder dem Kunden zu tragen.",
-      "LIGNORAE Atelier übernimmt keine Verantwortung für Verzögerungen, die durch Zollabfertigung, unvollständige Empfängerangaben, lokale Behörden oder ausländische Versanddienstleister entstehen.",
+      "Zölle, Einfuhrabgaben, lokale Steuern, Gebühren und Verzögerungen durch Zollbehörden liegen außerhalb des Einflussbereichs von LIGNORAE Atelier und sind, soweit nicht ausdrücklich anders vereinbart, von der Kundin oder dem Kunden zu tragen.",
+      "LIGNORAE Atelier übernimmt keine Verantwortung für Verzögerungen, die durch Zollabfertigung, unvollständige oder fehlerhafte Empfängerangaben, lokale Behörden oder ausländische Versanddienstleister entstehen.",
     ],
   },
   {
@@ -60,7 +61,14 @@ const sections = [
     title: "Unzustellbare Sendungen",
     body: [
       "Kann eine Sendung wegen unvollständiger, fehlerhafter oder nicht zustellbarer Adressangaben nicht zugestellt werden, können zusätzliche Versandkosten für erneuten Versand oder Rücksendung entstehen.",
-      "Bitte prüfen Sie Lieferadresse, Namen, Hausnummer, Postleitzahl und Kontaktinformationen vor Bestätigung einer Bestellung sorgfältig.",
+      "Bitte prüfen Sie Lieferadresse, Namen, Hausnummer, Postleitzahl, Land und Kontaktinformationen vor Bestätigung einer Bestellung sorgfältig.",
+    ],
+  },
+  {
+    title: "Abholung und persönliche Übergabe",
+    body: [
+      "Eine persönliche Übergabe oder Abholung kann im Einzelfall vereinbart werden.",
+      "Ort, Zeitpunkt und Ablauf einer persönlichen Übergabe werden individuell abgestimmt und sind nur verbindlich, wenn sie ausdrücklich bestätigt wurden.",
     ],
   },
 ];
@@ -83,7 +91,7 @@ export default function ShippingPage() {
 
           <p className="max-w-2xl text-base font-medium leading-8 text-black/95 md:text-lg">
             Versandinformationen für handgefertigte Schreibobjekte,
-            Präsentationsformen und individuelle LIGNORAE Anfragen.
+            Präsentationsformen und individuelle LIGNORAE Atelier Anfragen.
           </p>
         </div>
       </section>
@@ -110,7 +118,7 @@ export default function ShippingPage() {
 
         <div className="mt-8 border border-black/15 bg-[#fbfaf7] p-6 text-sm font-medium leading-7 text-black/95 md:p-8">
           <p>
-            Stand: Mai 2026. Diese Versandinformationen wurden für den aktuellen
+            Stand: Juni 2026. Diese Versandinformationen wurden für den aktuellen
             Stand von LIGNORAE Atelier erstellt. Versandbedingungen,
             Versicherungsmöglichkeiten und internationale Lieferoptionen können
             je nach Objekt, Zielort und logistischer Situation angepasst werden.
