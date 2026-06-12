@@ -6,7 +6,7 @@ import ContactForm from "@/components/ContactForm";
 export const metadata: Metadata = {
   title: "Contact — Availability, Commissions and B2B Enquiries",
   description:
-    "Contact LIGNORAE Atelier in Munich for fountain pen availability, commissions, collector enquiries, collaborations and retail or B2B conversations.",
+    "Contact LIGNORAE Atelier in Munich for writing instrument availability, commissions, collector enquiries, collaborations and retail or B2B conversations.",
   alternates: {
     canonical: "/contact",
     languages: {
@@ -69,7 +69,7 @@ export default function ContactPage() {
 
         <aside className="border border-black/15 bg-[#fbfaf7] p-6 md:p-8">
           <p className="mb-4 text-[10px] uppercase tracking-[0.35em] text-black/95">
-            Direct email
+            Direct contact
           </p>
 
           <a
@@ -79,15 +79,25 @@ export default function ContactPage() {
             info@lignorae.com
           </a>
 
+          <div className="mt-6">
+            <a
+              href="tel:+4917631176610"
+              className="text-xl font-light tracking-[-0.03em] text-black transition hover:opacity-60 md:text-2xl"
+            >
+              +49 176 31176610
+            </a>
+          </div>
+
           <div className="mt-12 border-t border-black/15 pt-8">
             <p className="mb-4 text-[10px] uppercase tracking-[0.35em] text-black/95">
               Objects
             </p>
 
             <p className="text-base font-normal leading-8 text-black/95">
-              LIGNORAE fountain pens are prepared in small series. Details on
-              material, availability, pricing, delivery and possible commissions
-              are discussed before any order is confirmed.
+              LIGNORAE writing instruments and presentation objects are prepared
+              in small series or as individual pieces. Details on material,
+              availability, pricing, delivery and possible commissions are
+              discussed before any order is confirmed.
             </p>
           </div>
 
