@@ -7,17 +7,19 @@ const sections = [
     body: [
       "Verantwortlich für die Datenverarbeitung auf dieser Website ist:",
       "LIGNORAE Atelier",
-      "Paul Daniel Schneider",
-      "München",
+      "Inhaber: Paul Daniel Schneider",
+      "Hohenlindener Straße 1",
+      "81677 München",
       "Deutschland",
       "E-Mail: info@lignorae.com",
+      "Telefon: +49 176 31176610",
     ],
   },
   {
     title: "2. Allgemeine Hinweise zur Datenverarbeitung",
     body: [
-      "Der Schutz personenbezogener Daten hat für LIGNORAE einen hohen Stellenwert. Personenbezogene Daten werden vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung behandelt.",
-      "Die Nutzung dieser Website ist grundsätzlich ohne aktive Angabe personenbezogener Daten möglich. Sofern personenbezogene Daten erhoben werden, erfolgt dies – soweit möglich – stets auf freiwilliger Basis.",
+      "Der Schutz personenbezogener Daten hat für LIGNORAE Atelier einen hohen Stellenwert. Personenbezogene Daten werden vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung behandelt.",
+      "Die Nutzung dieser Website ist grundsätzlich ohne aktive Angabe personenbezogener Daten möglich. Sofern personenbezogene Daten erhoben werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis.",
       "Es wird darauf hingewiesen, dass die Datenübertragung im Internet Sicherheitslücken aufweisen kann. Ein vollständiger Schutz der Daten vor dem Zugriff durch Dritte ist technisch nicht möglich.",
     ],
   },
@@ -27,21 +29,21 @@ const sections = [
       "Diese Website wird über die Infrastruktur von Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA gehostet.",
       "Beim Aufruf der Website werden durch den Hostinganbieter technisch notwendige Informationen verarbeitet. Dazu können insbesondere IP-Adresse, Browsertyp, Betriebssystem, Referrer-URL, Datum und Uhrzeit des Zugriffs sowie angeforderte Dateien gehören.",
       "Die Verarbeitung erfolgt zur Gewährleistung von Stabilität, Sicherheit, Fehleranalyse und technischer Bereitstellung der Website gemäß Art. 6 Abs. 1 lit. f DSGVO.",
-      "Es kann nicht ausgeschlossen werden, dass hierbei Daten auf Servern außerhalb der Europäischen Union verarbeitet werden. Vercel verwendet nach eigenen Angaben geeignete Garantien gemäß Art. 46 DSGVO, insbesondere Standardvertragsklauseln der Europäischen Kommission.",
+      "Es kann nicht ausgeschlossen werden, dass hierbei Daten auf Servern außerhalb der Europäischen Union verarbeitet werden. Vercel stellt nach eigenen Angaben ein Data Processing Addendum bereit und verwendet geeignete Garantien für internationale Datenübermittlungen, insbesondere Standardvertragsklauseln.",
     ],
   },
   {
     title: "4. Datenbank und Speicherung",
     body: [
       "Zur Speicherung strukturierter Inhalte und Website-Daten kann die Datenbankinfrastruktur von Neon verwendet werden.",
-      "Die Verarbeitung erfolgt ausschließlich zur technischen Bereitstellung der Website, Verwaltung von Inhalten sowie Bearbeitung von Anfragen.",
+      "Die Verarbeitung erfolgt zur technischen Bereitstellung der Website, Verwaltung von Inhalten sowie, soweit erforderlich, zur Bearbeitung von Anfragen.",
       "Es werden angemessene technische und organisatorische Maßnahmen getroffen, um gespeicherte Daten vor Verlust, Manipulation oder unberechtigtem Zugriff zu schützen.",
     ],
   },
   {
     title: "5. Kontaktformular und Kommunikation",
     body: [
-      "Wenn Sie LIGNORAE über das Kontaktformular oder per E-Mail kontaktieren, werden die von Ihnen übermittelten Daten zur Bearbeitung der Anfrage verarbeitet.",
+      "Wenn Sie LIGNORAE Atelier über das Kontaktformular oder per E-Mail kontaktieren, werden die von Ihnen übermittelten Daten zur Bearbeitung der Anfrage verarbeitet.",
       "Hierzu können insbesondere Name, E-Mail-Adresse, Inhalt der Nachricht sowie freiwillig übermittelte Informationen gehören.",
       "Die Verarbeitung erfolgt gemäß Art. 6 Abs. 1 lit. b DSGVO zur Durchführung vorvertraglicher Maßnahmen beziehungsweise gemäß Art. 6 Abs. 1 lit. f DSGVO auf Grundlage des berechtigten Interesses an professioneller Kommunikation.",
       "Die Daten werden nicht ohne ausdrückliche Zustimmung an Dritte weitergegeben, sofern keine gesetzliche Verpflichtung hierzu besteht.",
@@ -52,8 +54,8 @@ const sections = [
     body: [
       "Diese Website verwendet derzeit keine Marketing-, Tracking- oder Analyse-Cookies.",
       "Es werden nur technisch notwendige Cookies beziehungsweise lokale Speichermechanismen verwendet, die für die ordnungsgemäße Funktion, Sicherheit und grundlegende Bedienbarkeit der Website erforderlich sind.",
-      "Hierzu kann insbesondere die lokale Speicherung der Cookie-Hinweis-Bestätigung gehören.",
-      "Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO beziehungsweise, soweit erforderlich, auf Grundlage der einschlägigen Vorschriften des TTDSG.",
+      "Hierzu kann insbesondere die lokale Speicherung einer Cookie-Hinweis-Bestätigung gehören.",
+      "Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO sowie, soweit einschlägig, auf Grundlage des Telekommunikation-Digitale-Dienste-Datenschutz-Gesetzes (TDDDG).",
       "Sollten künftig optionale Analyse-, Marketing- oder Drittanbieter-Dienste eingesetzt werden, werden diese nicht ohne vorherige Einwilligung geladen.",
     ],
   },
@@ -70,14 +72,14 @@ const sections = [
     title: "8. Externe Links und Instagram",
     body: [
       "Diese Website kann Links zu externen Plattformen oder Diensten enthalten, insbesondere zu Instagram.",
-      "Beim Anklicken solcher Links verlassen Sie die Website von LIGNORAE. Für die Verarbeitung personenbezogener Daten auf externen Plattformen sind ausschließlich die jeweiligen Betreiber verantwortlich.",
+      "Beim Anklicken solcher Links verlassen Sie die Website von LIGNORAE Atelier. Für die Verarbeitung personenbezogener Daten auf externen Plattformen sind ausschließlich die jeweiligen Betreiber verantwortlich.",
       "Es wird empfohlen, die Datenschutzhinweise der jeweiligen Plattformen zu beachten.",
     ],
   },
   {
     title: "9. Keine Analyse- oder Werbedienste",
     body: [
-      "LIGNORAE verzichtet derzeit bewusst auf klassische Webanalyse-, Tracking- oder Werbedienste wie Google Analytics, Meta Pixel oder vergleichbare Marketingtechnologien.",
+      "LIGNORAE Atelier verzichtet derzeit bewusst auf klassische Webanalyse-, Tracking- oder Werbedienste wie Google Analytics, Meta Pixel oder vergleichbare Marketingtechnologien.",
       "Die Website verfolgt aktuell keinen werblichen Profiling-Ansatz und verwendet keine personalisierte Nutzeranalyse.",
     ],
   },
@@ -92,13 +94,13 @@ const sections = [
     title: "11. Rechte betroffener Personen",
     body: [
       "Betroffene Personen haben im Rahmen der gesetzlichen Bestimmungen insbesondere folgende Rechte:",
-      "– Recht auf Auskunft gemäß Art. 15 DSGVO",
-      "– Recht auf Berichtigung gemäß Art. 16 DSGVO",
-      "– Recht auf Löschung gemäß Art. 17 DSGVO",
-      "– Recht auf Einschränkung der Verarbeitung gemäß Art. 18 DSGVO",
-      "– Recht auf Datenübertragbarkeit gemäß Art. 20 DSGVO",
-      "– Recht auf Widerspruch gemäß Art. 21 DSGVO",
-      "– Recht auf Beschwerde bei einer Datenschutzaufsichtsbehörde gemäß Art. 77 DSGVO",
+      "Recht auf Auskunft gemäß Art. 15 DSGVO",
+      "Recht auf Berichtigung gemäß Art. 16 DSGVO",
+      "Recht auf Löschung gemäß Art. 17 DSGVO",
+      "Recht auf Einschränkung der Verarbeitung gemäß Art. 18 DSGVO",
+      "Recht auf Datenübertragbarkeit gemäß Art. 20 DSGVO",
+      "Recht auf Widerspruch gemäß Art. 21 DSGVO",
+      "Recht auf Beschwerde bei einer Datenschutzaufsichtsbehörde gemäß Art. 77 DSGVO",
       "Zur Ausübung dieser Rechte genügt eine formlose Mitteilung an die im Impressum beziehungsweise in dieser Datenschutzerklärung angegebene Kontaktadresse.",
     ],
   },
@@ -112,8 +114,9 @@ const sections = [
   {
     title: "13. Änderungen dieser Datenschutzerklärung",
     body: [
-      "LIGNORAE behält sich vor, diese Datenschutzerklärung anzupassen, sobald technische, rechtliche oder organisatorische Änderungen dies erforderlich machen.",
+      "LIGNORAE Atelier behält sich vor, diese Datenschutzerklärung anzupassen, sobald technische, rechtliche oder organisatorische Änderungen dies erforderlich machen.",
       "Es gilt jeweils die zum Zeitpunkt des Besuchs aktuelle Fassung der Datenschutzerklärung.",
+      "Stand: Juni 2026.",
     ],
   },
 ];
@@ -167,7 +170,7 @@ export default function PrivacyPolicyPage() {
             und bilden die maßgebliche Fassung für Deutschland.
             <br />
             <br />
-            Stand: Mai 2026. Diese Datenschutzerklärung wurde für den aktuellen
+            Stand: Juni 2026. Diese Datenschutzerklärung wurde für den aktuellen
             technischen Stand der Website von LIGNORAE Atelier erstellt. Bei
             Änderungen der technischen Infrastruktur, eingesetzter Dienste oder
             rechtlicher Anforderungen wird diese Erklärung entsprechend aktualisiert.
