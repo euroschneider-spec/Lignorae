@@ -16,7 +16,8 @@ const sections = [
       "Die Erklärung kann per E-Mail oder postalisch erfolgen.",
       "LIGNORAE Atelier",
       "Paul Daniel Schneider",
-      "München",
+      "Hohenlindener Straße 1",
+      "81677 München",
       "Deutschland",
       "E-Mail: info@lignorae.com",
     ],
@@ -27,13 +28,13 @@ const sections = [
       "Wenn Sie diesen Vertrag widerrufen, erstatten wir Ihnen alle Zahlungen, die wir von Ihnen erhalten haben, einschließlich der Lieferkosten, mit Ausnahme zusätzlicher Kosten, die sich daraus ergeben, dass Sie eine andere Art der Lieferung als die von uns angebotene günstigste Standardlieferung gewählt haben.",
       "Die Rückzahlung erfolgt unverzüglich und spätestens binnen vierzehn Tagen ab dem Tag, an dem die Mitteilung über Ihren Widerruf bei uns eingegangen ist.",
       "Für die Rückzahlung verwenden wir dasselbe Zahlungsmittel, das Sie bei der ursprünglichen Transaktion eingesetzt haben, sofern nicht ausdrücklich etwas anderes vereinbart wurde. Für die Rückzahlung werden keine Entgelte berechnet.",
-      "Wir können die Rückzahlung verweigern, bis wir die Ware zurückerhalten haben.",
+      "Wir können die Rückzahlung verweigern, bis wir die Ware zurückerhalten haben oder bis Sie den Nachweis erbracht haben, dass Sie die Ware zurückgesandt haben, je nachdem, welches der frühere Zeitpunkt ist.",
     ],
   },
   {
     title: "Rücksendung der Ware",
     body: [
-      "Sie haben die Ware unverzüglich und in jedem Fall spätestens binnen vierzehn Tagen ab dem Tag, an dem Sie uns über den Widerruf unterrichten, an LIGNORAE Atelier zurückzusenden oder zu übergeben.",
+      "Sie haben die Ware unverzüglich und in jedem Fall spätestens binnen vierzehn Tagen ab dem Tag, an dem Sie uns über den Widerruf dieses Vertrags unterrichten, an LIGNORAE Atelier zurückzusenden oder zu übergeben.",
       "Die Frist ist gewahrt, wenn Sie die Ware vor Ablauf der Frist von vierzehn Tagen absenden.",
       "Sie tragen die unmittelbaren Kosten der Rücksendung der Ware, sofern nicht ausdrücklich etwas anderes vereinbart wurde.",
     ],
@@ -46,18 +47,18 @@ const sections = [
     ],
   },
   {
-    title: "Ausschluss oder vorzeitiges Erlöschen des Widerrufsrechts",
+    title: "Ausschluss des Widerrufsrechts bei individuellen Anfertigungen",
     body: [
-      "Das Widerrufsrecht besteht nicht bei Verträgen zur Lieferung von Waren, die nicht vorgefertigt sind und für deren Herstellung eine individuelle Auswahl oder Bestimmung durch die Verbraucherin oder den Verbraucher maßgeblich ist oder die eindeutig auf persönliche Bedürfnisse zugeschnitten sind.",
-      "Dies kann insbesondere für individuell angefertigte Schreibobjekte, Sonderanfertigungen, Gravuren, Materialwünsche, personalisierte Präsentationsformen oder ausdrücklich kundenspezifisch hergestellte Objekte gelten.",
-      "Ob ein Widerrufsrecht besteht oder ausgeschlossen ist, wird im jeweiligen Angebot oder im Bestellprozess entsprechend berücksichtigt.",
+      "Das Widerrufsrecht besteht nicht bei Verträgen zur Lieferung von Waren, die nicht vorgefertigt sind und für deren Herstellung eine individuelle Auswahl oder Bestimmung durch die Verbraucherin oder den Verbraucher maßgeblich ist oder die eindeutig auf die persönlichen Bedürfnisse der Verbraucherin oder des Verbrauchers zugeschnitten sind.",
+      "Dies kann insbesondere für individuell angefertigte Schreibobjekte, Sonderanfertigungen, Gravuren, kundenspezifische Materialauswahl, personalisierte Präsentationsformen oder ausdrücklich nach Kundenvorgaben hergestellte Objekte gelten.",
+      "Sofern ein Widerrufsrecht aufgrund individueller Anfertigung ausgeschlossen ist, wird dies im jeweiligen Angebot oder vor Vertragsschluss entsprechend berücksichtigt.",
     ],
   },
   {
     title: "Muster-Widerrufsformular",
     body: [
       "Wenn Sie den Vertrag widerrufen möchten, können Sie das folgende Muster verwenden. Die Verwendung dieses Formulars ist nicht vorgeschrieben.",
-      "An LIGNORAE Atelier, Paul Daniel Schneider, München, Deutschland, E-Mail: info@lignorae.com",
+      "An LIGNORAE Atelier, Paul Daniel Schneider, Hohenlindener Straße 1, 81677 München, Deutschland, E-Mail: info@lignorae.com",
       "Hiermit widerrufe ich den von mir abgeschlossenen Vertrag über den Kauf der folgenden Ware:",
       "Bestellt am / erhalten am:",
       "Name der Verbraucherin / des Verbrauchers:",
@@ -114,7 +115,7 @@ export default function WithdrawalPage() {
 
         <div className="mt-8 border border-black/15 bg-[#fbfaf7] p-6 text-sm font-medium leading-7 text-black/95 md:p-8">
           <p>
-            Stand: Mai 2026. Diese Widerrufsbelehrung wurde für den aktuellen
+            Stand: Juni 2026. Diese Widerrufsbelehrung wurde für den aktuellen
             Stand von LIGNORAE Atelier erstellt. Bei Änderungen des Angebots-,
             Bestell- oder Verkaufsprozesses wird diese Seite entsprechend
             aktualisiert.
