@@ -141,9 +141,9 @@ const sections = [
     body: [
       "Sollten einzelne Bestimmungen dieser Allgemeinen Geschäftsbedingungen ganz oder teilweise unwirksam sein oder werden, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt.",
       "An die Stelle unwirksamer Bestimmungen treten die gesetzlichen Vorschriften.",
-      "Stand: Juni 2026.
-      Diese Allgemeinen Geschäftsbedingungen wurden für den aktuellen Stand von LIGNORAE Atelier erstellt. 
-      Bei Änderungen der Rechtsform, steuerlichen Situation, Zahlungsabwicklung oder tatsächlichen Verkaufsprozesse werden diese Bedingungen entsprechend aktualisiert."
+      "Stand: Juni 2026.",
+      "Diese Allgemeinen Geschäftsbedingungen wurden für den aktuellen Stand von LIGNORAE Atelier erstellt.",
+      "Bei Änderungen der Rechtsform, steuerlichen Situation, Zahlungsabwicklung oder tatsächlichen Verkaufsprozesse werden diese Bedingungen entsprechend aktualisiert.",
     ],
   },
 ];
