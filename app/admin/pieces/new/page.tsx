@@ -1,7 +1,12 @@
 import Link from "next/link";
 import PieceForm from "./PieceForm";
+import { createAdminUploadToken } from "@/lib/admin-upload-token";
+
+export const dynamic = "force-dynamic";
 
 export default function NewPiecePage() {
+  const uploadAuthorizationToken = createAdminUploadToken();
+
   return (
     <main className="min-h-screen bg-[#f7f5f0] px-6 py-10 text-[#111111]">
       <section className="mx-auto max-w-5xl">
@@ -24,7 +29,7 @@ export default function NewPiecePage() {
         </div>
 
         <div className="border border-black/15 bg-[#fbfaf7] p-6 md:p-8">
-          <PieceForm />
+          <PieceForm uploadAuthorizationToken={uploadAuthorizationToken} />
         </div>
       </section>
     </main>

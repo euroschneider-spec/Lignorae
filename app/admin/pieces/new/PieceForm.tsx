@@ -25,7 +25,11 @@ function createSafeFileName(file: File, prefix: string) {
   return `pieces/${safePrefix || "piece"}-${Date.now()}.${extension}`;
 }
 
-export default function PieceForm() {
+export default function PieceForm({
+  uploadAuthorizationToken,
+}: {
+  uploadAuthorizationToken: string;
+}) {
   const formRef = useRef<HTMLFormElement>(null);
   const mainImageRef = useRef<HTMLInputElement>(null);
   const detailImageRef = useRef<HTMLInputElement>(null);
@@ -47,6 +51,13 @@ export default function PieceForm() {
       const title = String(formData.get("title") || "piece");
       const mainImageFile = mainImageRef.current?.files?.[0];
       const detailImageFile = detailImageRef.current?.files?.[0];
+      const uploadOptions = {
+        access: "public" as const,
+        handleUploadUrl: "/api/blob/upload",
+        headers: {
+          "x-lignorae-admin-upload-token": uploadAuthorizationToken,
+        },
+      };
 
       if (!mainImageFile) {
         throw new Error("Please choose a main image before saving the piece.");
@@ -55,10 +66,7 @@ export default function PieceForm() {
       const mainBlob = await upload(
         createSafeFileName(mainImageFile, title),
         mainImageFile,
-        {
-          access: "public",
-          handleUploadUrl: "/api/blob/upload",
-        }
+        uploadOptions
       );
 
       formData.set("image", mainBlob.url);
@@ -67,10 +75,7 @@ export default function PieceForm() {
         const detailBlob = await upload(
           createSafeFileName(detailImageFile, `${title}-detail`),
           detailImageFile,
-          {
-            access: "public",
-            handleUploadUrl: "/api/blob/upload",
-          }
+          uploadOptions
         );
 
         formData.set("detailImage", detailBlob.url);
