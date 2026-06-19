@@ -8,6 +8,7 @@ import { prisma } from "@/lib/prisma";
 import { isPiecePublic } from "@/lib/catalogue";
 import { formatMoney } from "@/lib/money";
 import { ProductSchema } from "@/components/structured-data";
+import { startPieceCheckout } from "@/app/pieces/checkout/actions";
 
 export const dynamic = "force-dynamic";
 
@@ -234,13 +235,16 @@ export default async function RomanianPiecePage({
 
             <div className="mt-12 flex flex-col gap-4 sm:flex-row">
               {canShowBuyButton && (
-                <button
-                  type="button"
-                  disabled
-                  className="inline-flex cursor-not-allowed justify-center border border-black bg-black px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-white opacity-60"
-                >
-                  Cumpără această piesă
-                </button>
+                <form action={startPieceCheckout}>
+                  <input type="hidden" name="slug" value={piece.slug} />
+                  <input type="hidden" name="locale" value="RO" />
+                  <button
+                    type="submit"
+                    className="inline-flex justify-center border border-black bg-black px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-white transition hover:bg-transparent hover:text-black"
+                  >
+                    Cumpără această piesă
+                  </button>
+                </form>
               )}
 
               <Link
