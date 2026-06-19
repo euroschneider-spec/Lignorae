@@ -4,6 +4,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
+import { publicPieceWhere } from "@/lib/catalogue";
 
 export const metadata: Metadata = {
   title: "ORIGINS — Expressive Wood Fountain Pens",
@@ -47,11 +48,11 @@ export const dynamic = "force-dynamic";
 export default async function OriginsPage() {
   const [pieces, latestPiece] = await Promise.all([
     prisma.piece.findMany({
-      where: { collection: "ORIGINS" },
+      where: publicPieceWhere({ collection: "ORIGINS" }),
       orderBy: { createdAt: "desc" },
     }),
     prisma.piece.findFirst({
-      where: { collection: "ORIGINS" },
+      where: publicPieceWhere({ collection: "ORIGINS" }),
       orderBy: { createdAt: "desc" },
     }),
   ]);

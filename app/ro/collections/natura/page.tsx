@@ -4,6 +4,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
+import { publicPieceWhere } from "@/lib/catalogue";
 
 export const metadata: Metadata = {
   title: "NATURA — Stilouri din lemn natural",
@@ -59,15 +60,12 @@ function getStatusLabel(status: string) {
 
 export default async function RomanianNaturaPage() {
   const pieces = await prisma.piece.findMany({
-    where: {
+    where: publicPieceWhere({
       collection: {
         equals: "NATURA",
         mode: "insensitive",
       },
-      status: {
-        notIn: ["draft", "archived"],
-      },
-    },
+    }),
     include: {
       translations: {
         where: {

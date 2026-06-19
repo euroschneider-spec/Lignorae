@@ -1,10 +1,20 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { isAdminAuthorizationValid } from "@/lib/admin-auth";
 import { translateJournalContent } from "@/lib/translations";
 import { put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+
+async function requireAdminAction() {
+  const authorization = (await headers()).get("authorization");
+
+  if (!isAdminAuthorizationValid(authorization)) {
+    throw new Error("Unauthorized.");
+  }
+}
 
 function createSlug(value: string) {
   return value
@@ -127,12 +137,17 @@ async function generateJournalTranslations(input: {
 }
 
 export async function createJournalPost(formData: FormData) {
+  await requireAdminAction();
   const title = String(formData.get("title") || "").trim();
   const slugInput = String(formData.get("slug") || "").trim();
   const excerpt = String(formData.get("excerpt") || "").trim();
   const content = String(formData.get("content") || "").trim();
   const coverImageFile = formData.get("coverImageFile");
   const published = formData.get("published") === "on";
+  const manualTranslations = [
+    getOptionalTranslation(formData, "DE"),
+    getOptionalTranslation(formData, "RO"),
+  ].filter((translation) => translation !== null);
 
   const slug = slugInput || createSlug(title);
 
@@ -164,7 +179,9 @@ export async function createJournalPost(formData: FormData) {
   let savedTranslations = 0;
 
   try {
-    savedTranslations = await generateJournalTranslations({
+    await upsertManualJournalTranslations(post.id, manualTranslations);
+    savedTranslations = manualTranslations.length;
+    savedTranslations += await generateJournalTranslations({
       journalPostId: post.id,
       title,
       excerpt,
@@ -192,6 +209,7 @@ export async function createJournalPost(formData: FormData) {
 }
 
 export async function updateJournalPost(formData: FormData) {
+  await requireAdminAction();
   const postId = String(formData.get("postId") || "").trim();
   const title = String(formData.get("title") || "").trim();
   const slugInput = String(formData.get("slug") || "").trim();
@@ -293,6 +311,7 @@ export async function updateJournalPost(formData: FormData) {
 }
 
 export async function archiveJournalPost(formData: FormData) {
+  await requireAdminAction();
   const postId = String(formData.get("postId") || "").trim();
 
   if (!postId) {
@@ -318,6 +337,7 @@ export async function archiveJournalPost(formData: FormData) {
 }
 
 export async function publishJournalPost(formData: FormData) {
+  await requireAdminAction();
   const postId = String(formData.get("postId") || "").trim();
 
   if (!postId) {
@@ -346,6 +366,7 @@ export async function publishJournalPost(formData: FormData) {
 }
 
 export async function deleteJournalPost(formData: FormData) {
+  await requireAdminAction();
   const postId = String(formData.get("postId") || "").trim();
 
   if (!postId) {
@@ -368,6 +389,7 @@ export async function deleteJournalPost(formData: FormData) {
 }
 
 export async function generateMissingJournalTranslations() {
+  await requireAdminAction();
   const posts = await prisma.journalPost.findMany({
     orderBy: {
       createdAt: "desc",

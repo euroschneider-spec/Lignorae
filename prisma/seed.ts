@@ -7,7 +7,7 @@ async function main() {
     data: [
       {
         title: "ORIGIN No. 1",
-        collection: "origin",
+        collection: "ORIGINS",
         slug: "origin-no-1",
         status: "prototype-archive",
         year: "2026",
@@ -21,7 +21,7 @@ async function main() {
 
       {
         title: "ORIGIN No. 2",
-        collection: "origin",
+        collection: "ORIGINS",
         slug: "origin-no-2",
         status: "prototype-archive",
         year: "2026",
@@ -35,7 +35,7 @@ async function main() {
 
       {
         title: "ORIGIN No. 3",
-        collection: "origin",
+        collection: "ORIGINS",
         slug: "origin-no-3",
         status: "prototype-archive",
         year: "2026",
@@ -49,7 +49,7 @@ async function main() {
 
       {
         title: "ORIGIN No. 4",
-        collection: "origin",
+        collection: "ORIGINS",
         slug: "origin-no-4",
         status: "prototype-archive",
         year: "2026",

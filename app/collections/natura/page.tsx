@@ -4,6 +4,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
+import { publicPieceWhere } from "@/lib/catalogue";
 
 export const metadata: Metadata = {
   title: "NATURA — Natural Wood Fountain Pens",
@@ -46,9 +47,7 @@ export const dynamic = "force-dynamic";
 
 export default async function NaturaPage() {
   const pieces = await prisma.piece.findMany({
-    where: {
-      collection: "NATURA",
-    },
+    where: publicPieceWhere({ collection: "NATURA" }),
     orderBy: {
       createdAt: "desc",
     },

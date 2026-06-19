@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { prisma } from "@/lib/prisma";
+import { publicPieceWhere } from "@/lib/catalogue";
 const siteUrl = "https://www.lignorae.com";
 
 const legalRouteEndings = [
@@ -68,9 +69,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
   const pieces = await prisma.piece.findMany({
-    where: {
-      NOT: [{ status: "draft" }, { status: "archived" }],
-    },
+    where: publicPieceWhere(),
     select: {
       slug: true,
       updatedAt: true,

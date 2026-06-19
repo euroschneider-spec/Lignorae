@@ -4,6 +4,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
+import { publicPieceWhere } from "@/lib/catalogue";
 
 export const metadata: Metadata = {
   title: "Colecții — FORMA, ORIGINS și NATURA",
@@ -98,6 +99,7 @@ function getCollectionLabel(collection: string) {
 
 export default async function RomanianCollectionsPage() {
   const latestPieces = await prisma.piece.findMany({
+    where: publicPieceWhere(),
     include: {
       translations: true,
     },

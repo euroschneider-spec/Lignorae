@@ -4,6 +4,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
+import { publicPieceWhere } from "@/lib/catalogue";
 
 export const dynamic = "force-dynamic";
 
@@ -21,12 +22,12 @@ function getStatusLabel(status: string) {
 
 export default async function SacraPage() {
   const sacraPieces = await prisma.piece.findMany({
-    where: {
+    where: publicPieceWhere({
       collection: {
         equals: "Sacra",
         mode: "insensitive",
       },
-    },
+    }),
     orderBy: {
       createdAt: "desc",
     },

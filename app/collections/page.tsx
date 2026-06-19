@@ -4,6 +4,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
+import { publicPieceWhere } from "@/lib/catalogue";
 
 export const metadata: Metadata = {
   title: "Collections — FORMA, ORIGINS and NATURA",
@@ -70,19 +71,26 @@ export default async function CollectionsPage() {
   const [latestPieces, formaLatest, originsLatest, naturaLatest] =
     await Promise.all([
       prisma.piece.findMany({
+        where: publicPieceWhere(),
         orderBy: { createdAt: "desc" },
         take: 6,
       }),
       prisma.piece.findFirst({
-        where: { collection: { equals: "FORMA", mode: "insensitive" } },
+        where: publicPieceWhere({
+          collection: { equals: "FORMA", mode: "insensitive" },
+        }),
         orderBy: { createdAt: "desc" },
       }),
       prisma.piece.findFirst({
-        where: { collection: { equals: "ORIGINS", mode: "insensitive" } },
+        where: publicPieceWhere({
+          collection: { equals: "ORIGINS", mode: "insensitive" },
+        }),
         orderBy: { createdAt: "desc" },
       }),
       prisma.piece.findFirst({
-        where: { collection: { equals: "NATURA", mode: "insensitive" } },
+        where: publicPieceWhere({
+          collection: { equals: "NATURA", mode: "insensitive" },
+        }),
         orderBy: { createdAt: "desc" },
       }),
     ]);

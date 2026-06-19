@@ -1,4 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import {
+  adminCredentialsAreConfigured,
+  isAdminAuthorizationValid,
+} from "@/lib/admin-auth";
 
 const PUBLIC_FILE = /\.(.*)$/;
 
@@ -7,22 +11,15 @@ export function proxy(request: NextRequest) {
 
   if (pathname.startsWith("/admin")) {
     const basicAuth = request.headers.get("authorization");
-    const username = process.env.ADMIN_USERNAME;
-    const password = process.env.ADMIN_PASSWORD;
 
-    if (!username || !password) {
+    if (!adminCredentialsAreConfigured()) {
       return new NextResponse("Admin credentials are not configured.", {
         status: 500,
       });
     }
 
-    if (basicAuth) {
-      const authValue = basicAuth.split(" ")[1];
-      const [user, pass] = atob(authValue).split(":");
-
-      if (user === username && pass === password) {
-        return NextResponse.next();
-      }
+    if (isAdminAuthorizationValid(basicAuth)) {
+      return NextResponse.next();
     }
 
     return new NextResponse("Authentication required.", {

@@ -4,6 +4,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
+import { publicPieceWhere } from "@/lib/catalogue";
 
 export const metadata: Metadata = {
   title: "FORMA — Sculptural Black Fountain Pens",
@@ -47,11 +48,15 @@ export const dynamic = "force-dynamic";
 export default async function FormaPage() {
   const [pieces, latestPiece] = await Promise.all([
     prisma.piece.findMany({
-      where: { collection: { equals: "FORMA", mode: "insensitive" } },
+      where: publicPieceWhere({
+        collection: { equals: "FORMA", mode: "insensitive" },
+      }),
       orderBy: { createdAt: "desc" },
     }),
     prisma.piece.findFirst({
-      where: { collection: { equals: "FORMA", mode: "insensitive" } },
+      where: publicPieceWhere({
+        collection: { equals: "FORMA", mode: "insensitive" },
+      }),
       orderBy: { createdAt: "desc" },
     }),
   ]);

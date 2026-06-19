@@ -1,10 +1,21 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { isAdminAuthorizationValid } from "@/lib/admin-auth";
+import { parsePieceCollection, parsePieceStatus } from "@/lib/catalogue";
 import { generateOpenAIText, parseJsonResponse } from "@/lib/openai";
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { put } from "@vercel/blob";
+
+async function requireAdminAction() {
+  const authorization = (await headers()).get("authorization");
+
+  if (!isAdminAuthorizationValid(authorization)) {
+    throw new Error("Unauthorized.");
+  }
+}
 
 function refreshPieces() {
   revalidatePath("/");
@@ -65,16 +76,21 @@ function getPieceData(formData: FormData) {
   const title = asString(formData.get("title"));
   const slugFromForm = asString(formData.get("slug"));
   const slug = slugFromForm || slugify(title);
+  const shortDescription = asString(formData.get("shortDescription"));
+
+  if (!title || !slug || !shortDescription) {
+    throw new Error("Missing required piece fields.");
+  }
 
   return {
     title,
     slug,
-    collection: asString(formData.get("collection")),
-    status: asString(formData.get("status")),
+    collection: parsePieceCollection(asString(formData.get("collection"))),
+    status: parsePieceStatus(asString(formData.get("status"))),
     year: asNullableString(formData.get("year")),
     material: asNullableString(formData.get("material")),
     atelier: asNullableString(formData.get("atelier")),
-    shortDescription: asString(formData.get("shortDescription")),
+    shortDescription,
     story: asNullableString(formData.get("story")),
     image: asString(formData.get("image")),
     detailImage: asNullableString(formData.get("detailImage")),
@@ -112,6 +128,49 @@ type PieceTranslationPayload = {
   material: string | null;
   atelier: string | null;
 };
+
+function getManualPieceTranslation(
+  formData: FormData,
+  locale: "DE" | "RO",
+  fallback: PieceTranslationPayload
+) {
+  const prefix = locale.toLowerCase();
+  const values = {
+    title: asString(formData.get(`${prefix}Title`)),
+    collection: asString(formData.get(`${prefix}Collection`)),
+    shortDescription: asString(formData.get(`${prefix}ShortDescription`)),
+    story: asNullableString(formData.get(`${prefix}Story`)),
+    material: asNullableString(formData.get(`${prefix}Material`)),
+    atelier: asNullableString(formData.get(`${prefix}Atelier`)),
+  };
+
+  if (!Object.values(values).some(Boolean)) return null;
+
+  return {
+    locale,
+    title: values.title || fallback.title,
+    collection: values.collection || fallback.collection,
+    shortDescription: values.shortDescription || fallback.shortDescription,
+    story: values.story ?? fallback.story,
+    material: values.material ?? fallback.material,
+    atelier: values.atelier ?? fallback.atelier,
+  };
+}
+
+async function upsertManualPieceTranslations(
+  pieceId: string,
+  translations: Array<PieceTranslationPayload & { locale: "DE" | "RO" }>
+) {
+  for (const translation of translations) {
+    const { locale, ...content } = translation;
+
+    await prisma.pieceTranslation.upsert({
+      where: { pieceId_locale: { pieceId, locale } },
+      update: content,
+      create: { pieceId, locale, ...content },
+    });
+  }
+}
 
 type PieceForTranslation = {
   id: string;
@@ -201,6 +260,7 @@ async function createMissingTranslationsForPiece(pieceId: string) {
 }
 
 export async function createPiece(formData: FormData) {
+  await requireAdminAction();
   const data = await getPieceDataWithImages(formData);
 
   if (!data.image) {
@@ -224,6 +284,7 @@ export async function createPiece(formData: FormData) {
 }
 
 export async function updatePiece(formData: FormData) {
+  await requireAdminAction();
   const id = getId(formData);
 
   if (!id) {
@@ -232,16 +293,38 @@ export async function updatePiece(formData: FormData) {
 
   const data = await getPieceDataWithImages(formData);
 
+  const translationFallback: PieceTranslationPayload = {
+    title: data.title,
+    collection: data.collection,
+    shortDescription: data.shortDescription,
+    story: data.story,
+    material: data.material,
+    atelier: data.atelier,
+  };
+
+  const manualTranslations = (["DE", "RO"] as const)
+    .map((locale) =>
+      getManualPieceTranslation(formData, locale, translationFallback)
+    )
+    .filter(
+      (translation): translation is PieceTranslationPayload & {
+        locale: "DE" | "RO";
+      } => translation !== null
+    );
+
   await prisma.piece.update({
     where: { id },
     data,
   });
+
+  await upsertManualPieceTranslations(id, manualTranslations);
 
   refreshPieces();
   redirect("/admin?success=piece-updated");
 }
 
 export async function archivePiece(formData: FormData) {
+  await requireAdminAction();
   const id = getId(formData);
 
   if (!id) {
@@ -258,6 +341,7 @@ export async function archivePiece(formData: FormData) {
 }
 
 export async function deletePiece(formData: FormData) {
+  await requireAdminAction();
   const id = getId(formData);
 
   if (!id) {
@@ -273,6 +357,7 @@ export async function deletePiece(formData: FormData) {
 }
 
 export async function generateMissingPieceTranslations() {
+  await requireAdminAction();
   const pieces = await prisma.piece.findMany({
     select: { id: true },
   });

@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
+import { isPiecePublic } from "@/lib/catalogue";
 import { ProductSchema } from "@/components/structured-data";
 
 export const dynamic = "force-dynamic";
@@ -29,7 +30,7 @@ export async function generateMetadata({
     },
   });
 
-  if (!piece || piece.status === "draft" || piece.status === "archived") {
+  if (!piece || !isPiecePublic(piece.status)) {
     return {
       title: "Obiect de scris negăsit",
       robots: {
@@ -124,7 +125,7 @@ export default async function RomanianPiecePage({
     },
   });
 
-  if (!piece || piece.status === "draft" || piece.status === "archived") {
+  if (!piece || !isPiecePublic(piece.status)) {
     notFound();
   }
 
