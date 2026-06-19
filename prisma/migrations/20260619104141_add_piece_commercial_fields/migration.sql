@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "Piece"
+ADD COLUMN "priceCents" INTEGER,
+ADD COLUMN "currency" TEXT NOT NULL DEFAULT 'EUR',
+ADD COLUMN "isPurchasable" BOOLEAN NOT NULL DEFAULT false;

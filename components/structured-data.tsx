@@ -7,7 +7,9 @@ type PieceForSchema = {
   woodSpecies?: string | null;
   collection: string;
   status: string;
-  priceEur?: number | null;
+  priceCents?: number | null;
+  currency?: string;
+  isPurchasable?: boolean;
   images: Array<{ url: string; alt?: string | null }>;
 };
 
@@ -62,6 +64,22 @@ export function ProductSchema({ piece }: { piece: PieceForSchema }) {
         ? "https://schema.org/PreOrder"
         : "https://schema.org/SoldOut";
 
+  const offer =
+    piece.isPurchasable &&
+    piece.priceCents !== null &&
+    piece.priceCents !== undefined
+      ? {
+          "@type": "Offer",
+          availability,
+          priceCurrency: piece.currency || "EUR",
+          price: (piece.priceCents / 100).toFixed(2),
+          seller: {
+            "@type": "Organization",
+            name: "LIGNORAE",
+          },
+        }
+      : null;
+
   const schema = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -85,16 +103,7 @@ export function ProductSchema({ piece }: { piece: PieceForSchema }) {
     },
     image: piece.images.map((image) => image.url),
     ...(piece.woodSpecies ? { material: piece.woodSpecies } : {}),
-    offers: {
-      "@type": "Offer",
-      availability,
-      priceCurrency: "EUR",
-      ...(piece.priceEur ? { price: piece.priceEur } : {}),
-      seller: {
-        "@type": "Organization",
-        name: "LIGNORAE",
-      },
-    },
+    ...(offer ? { offers: offer } : {}),
   };
 
   return (

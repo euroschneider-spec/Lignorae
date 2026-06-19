@@ -200,6 +200,40 @@ export default function PieceForm() {
         </label>
       </div>
 
+      <div className="grid gap-6 md:grid-cols-3">
+        <label className={labelClass}>
+          <span className={labelTextClass}>Price in euros</span>
+          <input
+            name="priceEuros"
+            type="number"
+            inputMode="decimal"
+            min="0"
+            step="0.01"
+            placeholder="750.00"
+            className={fieldClass}
+          />
+        </label>
+
+        <label className={labelClass}>
+          <span className={labelTextClass}>Currency</span>
+          <input
+            name="currency"
+            defaultValue="EUR"
+            maxLength={3}
+            className={fieldClass}
+          />
+        </label>
+
+        <label className="flex items-center gap-3 border border-black/15 bg-[#f7f5f0] px-4 py-3 text-sm text-black/75 md:self-end">
+          <input
+            name="isPurchasable"
+            type="checkbox"
+            className="h-4 w-4 accent-black"
+          />
+          <span>Purchasable</span>
+        </label>
+      </div>
+
       <label className={labelClass}>
         <span className={labelTextClass}>
           Short description

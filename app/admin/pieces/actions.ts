@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/prisma";
 import { isAdminAuthorizationValid } from "@/lib/admin-auth";
 import { parsePieceCollection, parsePieceStatus } from "@/lib/catalogue";
+import { parseEuroPriceToCents } from "@/lib/money";
 import { generateOpenAIText, parseJsonResponse } from "@/lib/openai";
 import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
@@ -45,6 +46,16 @@ function asString(value: FormDataEntryValue | null) {
 function asNullableString(value: FormDataEntryValue | null) {
   const text = asString(value);
   return text.length > 0 ? text : null;
+}
+
+function parseCurrency(value: FormDataEntryValue | null) {
+  const currency = asString(value).toUpperCase() || "EUR";
+
+  if (!/^[A-Z]{3}$/.test(currency)) {
+    throw new Error("Currency must be a three-letter code.");
+  }
+
+  return currency;
 }
 
 function slugify(value: string) {
@@ -94,6 +105,11 @@ function getPieceData(formData: FormData) {
     story: asNullableString(formData.get("story")),
     image: asString(formData.get("image")),
     detailImage: asNullableString(formData.get("detailImage")),
+    priceCents: parseEuroPriceToCents(
+      asString(formData.get("priceEuros"))
+    ),
+    currency: parseCurrency(formData.get("currency")),
+    isPurchasable: formData.get("isPurchasable") === "on",
   };
 }
 

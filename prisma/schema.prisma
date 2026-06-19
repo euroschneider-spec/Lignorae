@@ -32,6 +32,10 @@ model Piece {
   image            String
   detailImage      String?
 
+  priceCents       Int?
+  currency         String   @default("EUR")
+  isPurchasable    Boolean  @default(false)
+
   translations     PieceTranslation[]
 
   createdAt        DateTime @default(now())

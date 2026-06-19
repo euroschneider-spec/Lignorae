@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
 import { isPiecePublic } from "@/lib/catalogue";
+import { formatMoney } from "@/lib/money";
 import { ProductSchema } from "@/components/structured-data";
 
 export const dynamic = "force-dynamic";
@@ -112,9 +113,21 @@ export default async function PieceDetailPage({
 
   const collectionSlug = getCollectionSlug(piece.collection);
   const mainImage = piece.detailImage || piece.image;
+  const canShowBuyButton =
+    piece.isPurchasable &&
+    piece.priceCents !== null &&
+    piece.status.toLowerCase() === "available";
 
   const specs = [
     { label: "Status", value: getStatusLabel(piece.status) },
+    {
+      label: "Price",
+      value:
+        piece.priceCents === null
+          ? "On request"
+          : formatMoney(piece.priceCents, piece.currency, "en-DE"),
+    },
+    { label: "Purchasable", value: piece.isPurchasable ? "Yes" : "No" },
     piece.year ? { label: "Year", value: String(piece.year) } : null,
     piece.material ? { label: "Material", value: piece.material } : null,
     piece.atelier ? { label: "Atelier", value: piece.atelier } : null,
@@ -131,6 +144,9 @@ export default async function PieceDetailPage({
           woodSpecies: piece.material,
           collection: piece.collection,
           status: piece.status,
+          priceCents: piece.priceCents,
+          currency: piece.currency,
+          isPurchasable: piece.isPurchasable,
           images: [
             { url: piece.image, alt: piece.title },
             ...(piece.detailImage
@@ -188,6 +204,16 @@ export default async function PieceDetailPage({
             </div>
 
             <div className="mt-12 flex flex-col gap-4 sm:flex-row">
+              {canShowBuyButton && (
+                <button
+                  type="button"
+                  disabled
+                  className="inline-flex cursor-not-allowed justify-center border border-black bg-black px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-white opacity-60"
+                >
+                  Buy this piece
+                </button>
+              )}
+
               <Link
                 href="/contact"
                 className="inline-flex justify-center border border-black/35 bg-transparent px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-black/95 transition hover:border-black hover:bg-transparent hover:text-black"

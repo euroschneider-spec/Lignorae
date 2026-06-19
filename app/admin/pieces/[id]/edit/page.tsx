@@ -155,6 +155,46 @@ export default async function EditPiecePage({
             </label>
           </div>
 
+          <div className="grid gap-5 md:grid-cols-3">
+            <label className="space-y-2">
+              <span className={labelClass}>Price in euros</span>
+              <input
+                name="priceEuros"
+                type="number"
+                inputMode="decimal"
+                min="0"
+                step="0.01"
+                defaultValue={
+                  piece.priceCents === null
+                    ? ""
+                    : (piece.priceCents / 100).toFixed(2)
+                }
+                placeholder="750.00"
+                className={inputClass}
+              />
+            </label>
+
+            <label className="space-y-2">
+              <span className={labelClass}>Currency</span>
+              <input
+                name="currency"
+                defaultValue={piece.currency}
+                maxLength={3}
+                className={inputClass}
+              />
+            </label>
+
+            <label className="flex items-center gap-3 border border-black/15 bg-[#f7f5f0] px-4 py-3 text-sm text-black/75 md:self-end">
+              <input
+                name="isPurchasable"
+                type="checkbox"
+                defaultChecked={piece.isPurchasable}
+                className="h-4 w-4 accent-black"
+              />
+              <span>Purchasable</span>
+            </label>
+          </div>
+
           <label className="block space-y-2">
             <span className={labelClass}>Short description</span>
             <textarea
