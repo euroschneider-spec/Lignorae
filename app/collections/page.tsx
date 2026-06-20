@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
 import { publicPieceWhere } from "@/lib/catalogue";
+import { formatMoney } from "@/lib/money";
 
 export const metadata: Metadata = {
   title: "The First One Hundred — LIGNORAE",
@@ -60,9 +61,11 @@ function getStatusLabel(status: string) {
 function getCollectionLabel(collection: string) {
   const normalizedCollection = collection.toLowerCase().trim();
 
-  if (normalizedCollection === "basics") return "THE FIRST ONE HUNDRED";
-  if (normalizedCollection === "basic") return "THE FIRST ONE HUNDRED";
-  if (normalizedCollection === "the first one hundred") {
+  if (
+    normalizedCollection === "basics" ||
+    normalizedCollection === "basic" ||
+    normalizedCollection === "the first one hundred"
+  ) {
     return "THE FIRST ONE HUNDRED";
   }
 
@@ -71,6 +74,30 @@ function getCollectionLabel(collection: string) {
   if (normalizedCollection === "natura") return "NATURA";
 
   return "LIGNORAE";
+}
+
+function getCommercialLabel(piece: {
+  status: string;
+  isPurchasable: boolean;
+  priceCents: number | null;
+}) {
+  if (piece.status.toLowerCase() === "sold") return "Sold";
+  if (piece.status.toLowerCase() === "reserved") return "Reserved";
+
+  if (piece.isPurchasable && piece.priceCents !== null) {
+    return "Available to purchase";
+  }
+
+  return "On request";
+}
+
+function getPriceLabel(piece: {
+  priceCents: number | null;
+  currency: string;
+}) {
+  if (piece.priceCents === null) return "On request";
+
+  return formatMoney(piece.priceCents, piece.currency, "en-DE");
 }
 
 export default async function CollectionsPage() {
@@ -89,7 +116,7 @@ export default async function CollectionsPage() {
         ],
       }),
       orderBy: { createdAt: "desc" },
-      take: 12,
+      take: 100,
     }),
     prisma.piece.findFirst({
       where: publicPieceWhere({
@@ -107,6 +134,9 @@ export default async function CollectionsPage() {
       orderBy: { createdAt: "desc" },
     }),
   ]);
+
+  const releasedCount = latestPieces.length;
+  const remainingCount = Math.max(0, 100 - releasedCount);
 
   const futureCollections = [
     {
@@ -180,7 +210,7 @@ export default async function CollectionsPage() {
               </p>
 
               <h2 className="mb-8 text-5xl font-light leading-[0.9] tracking-[-0.06em] text-black md:text-7xl">
-                LIGNORAE - the first one hundred
+                LIGNORAE — The First One Hundred
               </h2>
 
               <p className="max-w-xl text-2xl font-light leading-tight tracking-[-0.04em] text-black md:text-3xl">
@@ -195,6 +225,18 @@ export default async function CollectionsPage() {
                 exists to open the atelier's first chapter, not to replace the
                 future collections.
               </p>
+
+              <div className="mt-8 flex flex-wrap gap-3 text-[10px] uppercase tracking-[0.28em] text-black/95">
+                <span className="border border-black/15 px-3 py-1">
+                  {releasedCount} released
+                </span>
+                <span className="border border-black/15 px-3 py-1">
+                  {remainingCount} remaining
+                </span>
+                <span className="border border-black/15 px-3 py-1">
+                  100 total
+                </span>
+              </div>
 
               <p className="mt-8 text-[10px] uppercase tracking-[0.35em] text-black/95 transition group-hover:text-black">
                 View available pieces →
@@ -254,8 +296,8 @@ export default async function CollectionsPage() {
           </div>
 
           <p className="max-w-xl text-base font-normal leading-8 text-black/95">
-            Each piece may receive its own archive page with photographs,
-            material notes, specifications, availability and registry details.
+            Each piece receives its own archive page with photographs, material
+            notes, specifications, availability and registry details.
           </p>
         </div>
 
@@ -302,6 +344,21 @@ export default async function CollectionsPage() {
                   <p className="mb-7 text-sm font-normal leading-7 text-black/95">
                     {piece.shortDescription}
                   </p>
+
+                  <div className="mb-7 grid gap-px overflow-hidden border border-black/15 bg-black/15 text-sm">
+                    <div className="flex items-center justify-between gap-4 bg-[#fbfaf7] px-4 py-3">
+                      <span className="text-black/70">Price</span>
+                      <span className="text-black">
+                        {getPriceLabel(piece)}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between gap-4 bg-[#fbfaf7] px-4 py-3">
+                      <span className="text-black/70">Availability</span>
+                      <span className="text-black">
+                        {getCommercialLabel(piece)}
+                      </span>
+                    </div>
+                  </div>
 
                   <p className="text-[10px] uppercase tracking-[0.35em] text-black/95 transition group-hover:text-black">
                     View object →
