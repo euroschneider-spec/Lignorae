@@ -180,7 +180,7 @@ export default async function CollectionsPage() {
               </p>
 
               <h2 className="mb-8 text-5xl font-light leading-[0.9] tracking-[-0.06em] text-black md:text-7xl">
-                LIGNORAE Basics
+                LIGNORAE - the first 100
               </h2>
 
               <p className="max-w-xl text-2xl font-light leading-tight tracking-[-0.04em] text-black md:text-3xl">
@@ -190,7 +190,7 @@ export default async function CollectionsPage() {
 
             <div className="mt-14">
               <p className="max-w-xl text-base font-normal leading-8 text-black/95">
-                Created as the first accessible LIGNORAE edition, each piece is
+                Created as the first ever LIGNORAE edition, each piece is
                 handcrafted, individually inspected and registered. The series
                 exists to open the atelier's first chapter, not to replace the
                 future collections.
