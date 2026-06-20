@@ -7,9 +7,9 @@ import { prisma } from "@/lib/prisma";
 import { publicPieceWhere } from "@/lib/catalogue";
 
 export const metadata: Metadata = {
-  title: "Collections — FORMA, ORIGINS and NATURA",
+  title: "The First One Hundred — LIGNORAE",
   description:
-    "Explore the LIGNORAE collections: FORMA, ORIGINS and NATURA, three material languages for sculptural fountain pens handcrafted in Munich.",
+    "Explore The First One Hundred, the founding LIGNORAE edition: one hundred individually registered writing instruments handcrafted in Munich.",
   alternates: {
     canonical: "/collections",
     languages: {
@@ -20,9 +20,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "LIGNORAE Collections — FORMA, ORIGINS and NATURA",
+    title: "The First One Hundred — LIGNORAE",
     description:
-      "Three material languages for sculptural fountain pens handcrafted in Munich.",
+      "The founding LIGNORAE edition: one hundred individually registered writing instruments handcrafted in Munich.",
     url: "/collections",
     type: "website",
     images: [
@@ -30,15 +30,15 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "LIGNORAE collections presented in a gallery-like visual language",
+        alt: "LIGNORAE The First One Hundred founding edition",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "LIGNORAE Collections — FORMA, ORIGINS and NATURA",
+    title: "The First One Hundred — LIGNORAE",
     description:
-      "Three material languages for sculptural fountain pens handcrafted in Munich.",
+      "The founding LIGNORAE edition: one hundred individually registered writing instruments handcrafted in Munich.",
     images: ["/og-image.jpg"],
   },
 };
@@ -60,70 +60,79 @@ function getStatusLabel(status: string) {
 function getCollectionLabel(collection: string) {
   const normalizedCollection = collection.toLowerCase().trim();
 
+  if (normalizedCollection === "basics") return "THE FIRST ONE HUNDRED";
+  if (normalizedCollection === "basic") return "THE FIRST ONE HUNDRED";
+  if (normalizedCollection === "the first one hundred") {
+    return "THE FIRST ONE HUNDRED";
+  }
+
   if (normalizedCollection === "forma") return "FORMA";
   if (normalizedCollection === "origins") return "ORIGINS";
   if (normalizedCollection === "natura") return "NATURA";
 
-  return "UNASSIGNED";
+  return "LIGNORAE";
 }
 
 export default async function CollectionsPage() {
-  const [latestPieces, formaLatest, originsLatest, naturaLatest] =
-    await Promise.all([
-      prisma.piece.findMany({
-        where: publicPieceWhere(),
-        orderBy: { createdAt: "desc" },
-        take: 6,
+  const [latestPieces, basicsLatest] = await Promise.all([
+    prisma.piece.findMany({
+      where: publicPieceWhere({
+        OR: [
+          { collection: { equals: "BASICS", mode: "insensitive" } },
+          { collection: { equals: "BASIC", mode: "insensitive" } },
+          {
+            collection: {
+              equals: "THE FIRST ONE HUNDRED",
+              mode: "insensitive",
+            },
+          },
+        ],
       }),
-      prisma.piece.findFirst({
-        where: publicPieceWhere({
-          collection: { equals: "FORMA", mode: "insensitive" },
-        }),
-        orderBy: { createdAt: "desc" },
+      orderBy: { createdAt: "desc" },
+      take: 12,
+    }),
+    prisma.piece.findFirst({
+      where: publicPieceWhere({
+        OR: [
+          { collection: { equals: "BASICS", mode: "insensitive" } },
+          { collection: { equals: "BASIC", mode: "insensitive" } },
+          {
+            collection: {
+              equals: "THE FIRST ONE HUNDRED",
+              mode: "insensitive",
+            },
+          },
+        ],
       }),
-      prisma.piece.findFirst({
-        where: publicPieceWhere({
-          collection: { equals: "ORIGINS", mode: "insensitive" },
-        }),
-        orderBy: { createdAt: "desc" },
-      }),
-      prisma.piece.findFirst({
-        where: publicPieceWhere({
-          collection: { equals: "NATURA", mode: "insensitive" },
-        }),
-        orderBy: { createdAt: "desc" },
-      }),
-    ]);
+      orderBy: { createdAt: "desc" },
+    }),
+  ]);
 
-  const collections = [
-    {
-      title: "FORMA",
-      href: "/collections/forma",
-      image: formaLatest?.image ?? "/gallery_landing.jpg",
-      eyebrow: "Flagship collection",
-      statement: "Blackened surfaces. Sculptural stillness. Cocoon forms.",
-      description:
-        "FORMA is the defining LIGNORAE language: yakisugi surfaces, reduced silhouettes and a museum-like presence shaped around the act of writing.",
-    },
+  const futureCollections = [
     {
       title: "ORIGINS",
-      href: "/collections/origins",
-      image: originsLatest?.image ?? "/origin.jpg",
-      eyebrow: "Expressive woods",
-      statement: "Exotic grain, depth and material character.",
+      eyebrow: "Future collection",
+      statement: "Rare woods, provenance and expressive material depth.",
       description:
-        "ORIGINS is built around selected woods whose figure, colour and density give each object its own visual rhythm.",
+        "ORIGINS will return as a provenance-led collection for exceptional woods and documented material histories.",
     },
     {
       title: "NATURA",
-      href: "/collections/natura",
-      image: naturaLatest?.image ?? "/natura.jpg",
-      eyebrow: "Essential material",
-      statement: "Raw warmth. Minimal intervention. Honest texture.",
+      eyebrow: "Future collection",
+      statement: "Natural woods, direct tactility and quiet restraint.",
       description:
-        "NATURA keeps the work direct: local woods, tactile surfaces and a more accessible expression of the LIGNORAE object language.",
+        "NATURA remains reserved for work centred on honest surfaces, selected woods and a calmer material language.",
+    },
+    {
+      title: "FORMA",
+      eyebrow: "Future collection",
+      statement: "Blackened surfaces, sculptural stillness and stronger forms.",
+      description:
+        "FORMA remains the intended home for the more sculptural LIGNORAE language, including carbonised surfaces and reduced silhouettes.",
     },
   ];
+
+  const heroImage = basicsLatest?.image ?? "/gallery_landing.jpg";
 
   return (
     <main className="flex min-h-screen flex-col bg-[#f7f5f0] text-[#111111]">
@@ -133,119 +142,128 @@ export default async function CollectionsPage() {
         <div className="grid gap-14 md:grid-cols-[0.9fr_1.1fr] md:items-end">
           <div>
             <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
-              Collections
+              Founding edition
             </p>
             <h1 className="max-w-4xl text-5xl font-light leading-[0.95] tracking-[-0.06em] text-black md:text-7xl">
-              Three material languages.
+              The First One Hundred.
             </h1>
           </div>
 
           <p className="max-w-2xl text-base font-normal leading-8 text-black/95 md:text-lg">
-            LIGNORAE is organised around three clear expressions: the sculptural
-            black language of FORMA, the expressive woods of ORIGINS and the
-            direct material honesty of NATURA.
+            One hundred individually registered writing instruments created to
+            establish the foundation of the atelier. This first edition will not
+            be extended once the hundred pieces have been completed.
           </p>
         </div>
       </section>
 
       <section className="mx-auto w-full max-w-[1500px] px-9 pb-28">
-        <div className="grid gap-10">
-          {collections.map((collection, index) => (
-            <Link
-              key={collection.title}
-              href={collection.href}
-              className="group grid overflow-hidden border border-black/15 bg-[#fbfaf7] transition duration-500 hover:-translate-y-1 hover:border-black/35 md:grid-cols-[1.05fr_0.95fr]"
-            >
-              <div
-                className={`relative min-h-[420px] overflow-hidden bg-[#eeeae2] ${
-                  index % 2 === 1 ? "md:order-2" : ""
-                }`}
-              >
-                <Image
-                  src={collection.image}
-                  alt={`${collection.title} collection`}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
-                />
-              </div>
+        <Link
+          href="#available-pieces"
+          className="group grid overflow-hidden border border-black/15 bg-[#fbfaf7] transition duration-500 hover:-translate-y-1 hover:border-black/35 md:grid-cols-[1.05fr_0.95fr]"
+        >
+          <div className="relative min-h-[480px] overflow-hidden bg-[#eeeae2]">
+            <Image
+              src={heroImage}
+              alt="The First One Hundred founding edition"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
+              priority
+            />
+          </div>
 
-              <div className="flex min-h-[420px] flex-col justify-between p-8 md:p-12">
-                <div>
-                  <p className="mb-8 text-[10px] uppercase tracking-[0.35em] text-black/95">
-                    {collection.eyebrow}
-                  </p>
+          <div className="flex min-h-[480px] flex-col justify-between p-8 md:p-12">
+            <div>
+              <p className="mb-8 text-[10px] uppercase tracking-[0.35em] text-black/95">
+                Limited to 100 pieces
+              </p>
 
-                  <h2 className="mb-8 text-5xl font-light leading-[0.9] tracking-[-0.06em] text-black md:text-7xl">
-                    {collection.title}
-                  </h2>
+              <h2 className="mb-8 text-5xl font-light leading-[0.9] tracking-[-0.06em] text-black md:text-7xl">
+                LIGNORAE Basics
+              </h2>
 
-                  <p className="max-w-xl text-2xl font-light leading-tight tracking-[-0.04em] text-black md:text-3xl">
-                    {collection.statement}
-                  </p>
-                </div>
+              <p className="max-w-xl text-2xl font-light leading-tight tracking-[-0.04em] text-black md:text-3xl">
+                The founding edition of the atelier.
+              </p>
+            </div>
 
-                <div className="mt-14">
-                  <p className="max-w-xl text-base font-normal leading-8 text-black/95">
-                    {collection.description}
-                  </p>
+            <div className="mt-14">
+              <p className="max-w-xl text-base font-normal leading-8 text-black/95">
+                Created as the first accessible LIGNORAE edition, each piece is
+                handcrafted, individually inspected and registered. The series
+                exists to open the atelier's first chapter, not to replace the
+                future collections.
+              </p>
 
-                  <p className="mt-8 text-[10px] uppercase tracking-[0.35em] text-black/95 transition group-hover:text-black">
-                    View collection →
-                  </p>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+              <p className="mt-8 text-[10px] uppercase tracking-[0.35em] text-black/95 transition group-hover:text-black">
+                View available pieces →
+              </p>
+            </div>
+          </div>
+        </Link>
       </section>
 
       <section className="border-y border-black/15 bg-[#fbfaf7] px-9 py-24">
-        <div className="mx-auto grid max-w-[1500px] gap-14 md:grid-cols-[0.75fr_1.25fr] md:items-center">
+        <div className="mx-auto grid max-w-[1500px] gap-14 md:grid-cols-[0.75fr_1.25fr] md:items-start">
           <div>
             <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
-              Future limited lines
+              Future collections
             </p>
             <h2 className="max-w-xl text-4xl font-light leading-tight tracking-[-0.05em] md:text-6xl">
-              Reserved for provenance-based work.
+              The original collection structure remains in development.
             </h2>
           </div>
 
-          <div className="space-y-7 text-base font-normal leading-8 text-black/95 md:text-lg">
-            <p>
-              SONORA and SACRA remain reserved for future limited work, once
-              suitable musical or sacred historical woods are sourced and
-              documented properly.
-            </p>
-            <p>
-              Until then, the active LIGNORAE structure remains deliberately
-              focused: FORMA, ORIGINS and NATURA.
-            </p>
+          <div className="grid gap-5">
+            {futureCollections.map((collection) => (
+              <div
+                key={collection.title}
+                className="border border-black/15 bg-[#f7f5f0] p-7"
+              >
+                <p className="mb-4 text-[10px] uppercase tracking-[0.35em] text-black/80">
+                  {collection.eyebrow}
+                </p>
+                <h3 className="mb-4 text-3xl font-light tracking-[-0.04em] text-black">
+                  {collection.title}
+                </h3>
+                <p className="mb-4 text-lg font-light leading-tight tracking-[-0.03em] text-black">
+                  {collection.statement}
+                </p>
+                <p className="text-sm font-normal leading-7 text-black/90">
+                  {collection.description}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-[1500px] flex-1 px-9 py-28">
+      <section
+        id="available-pieces"
+        className="mx-auto w-full max-w-[1500px] flex-1 px-9 py-28"
+      >
         <div className="mb-14 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="mb-4 text-[11px] uppercase tracking-[0.48em] text-black/95">
-              Individual objects
+              Available pieces
             </p>
             <h2 className="text-4xl font-light tracking-[-0.05em] text-black md:text-6xl">
-              Pieces from the atelier
+              From The First One Hundred
             </h2>
           </div>
 
           <p className="max-w-xl text-base font-normal leading-8 text-black/95">
-            Each object may receive its own archive page with material notes,
-            photographs, specifications and availability.
+            Each piece may receive its own archive page with photographs,
+            material notes, specifications, availability and registry details.
           </p>
         </div>
 
         {latestPieces.length === 0 ? (
           <div className="border border-black/15 bg-[#fbfaf7] p-10 text-center">
             <p className="text-base font-normal leading-7 text-black/95">
-              No individual objects have been added to the archive yet.
+              The first pieces of this edition are being prepared for the
+              archive.
             </p>
           </div>
         ) : (
