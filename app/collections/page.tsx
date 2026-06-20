@@ -180,7 +180,7 @@ export default async function CollectionsPage() {
               </p>
 
               <h2 className="mb-8 text-5xl font-light leading-[0.9] tracking-[-0.06em] text-black md:text-7xl">
-                LIGNORAE - the first 100
+                LIGNORAE - the first one hundred
               </h2>
 
               <p className="max-w-xl text-2xl font-light leading-tight tracking-[-0.04em] text-black md:text-3xl">
