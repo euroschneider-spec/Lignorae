@@ -10,6 +10,8 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { put } from "@vercel/blob";
 
+const MAX_GALLERY_IMAGES = 10;
+
 async function requireAdminAction() {
   const authorization = (await headers()).get("authorization");
 
@@ -95,6 +97,14 @@ async function uploadPieceImage(file: FormDataEntryValue | null, prefix: string)
   });
 
   return blob.url;
+}
+
+function getGalleryImageUrls(formData: FormData) {
+  return formData
+    .getAll("galleryImages")
+    .map((value) => asString(value))
+    .filter(Boolean)
+    .slice(0, MAX_GALLERY_IMAGES);
 }
 
 function getPieceData(formData: FormData) {
@@ -289,14 +299,28 @@ async function createMissingTranslationsForPiece(pieceId: string) {
 
 export async function createPiece(formData: FormData) {
   await requireAdminAction();
+
   const data = await getPieceDataWithImages(formData);
+  const galleryImageUrls = getGalleryImageUrls(formData);
 
   if (!data.image) {
     throw new Error("Main image is required.");
   }
 
   const piece = await prisma.piece.create({
-    data,
+    data: {
+      ...data,
+      galleryImages:
+        galleryImageUrls.length > 0
+          ? {
+              create: galleryImageUrls.map((imageUrl, index) => ({
+                imageUrl,
+                altText: `${data.title} image ${index + 1}`,
+                sortOrder: index,
+              })),
+            }
+          : undefined,
+    },
   });
 
   try {
@@ -320,6 +344,7 @@ export async function updatePiece(formData: FormData) {
   }
 
   const data = await getPieceDataWithImages(formData);
+  const galleryImageUrls = getGalleryImageUrls(formData);
 
   const translationFallback: PieceTranslationPayload = {
     title: data.title,
@@ -340,9 +365,26 @@ export async function updatePiece(formData: FormData) {
       } => translation !== null
     );
 
-  await prisma.piece.update({
-    where: { id },
-    data,
+  await prisma.$transaction(async (tx) => {
+    await tx.piece.update({
+      where: { id },
+      data,
+    });
+
+    if (galleryImageUrls.length > 0) {
+      await tx.pieceImage.deleteMany({
+        where: { pieceId: id },
+      });
+
+      await tx.pieceImage.createMany({
+        data: galleryImageUrls.map((imageUrl, index) => ({
+          pieceId: id,
+          imageUrl,
+          altText: `${data.title} image ${index + 1}`,
+          sortOrder: index,
+        })),
+      });
+    }
   });
 
   await upsertManualPieceTranslations(id, manualTranslations);
