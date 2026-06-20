@@ -1,6 +1,12 @@
 import type { Prisma } from "@prisma/client";
 
-export const PIECE_COLLECTIONS = ["FORMA", "ORIGINS", "NATURA"] as const;
+export const PIECE_COLLECTIONS = [
+  "BASICS",
+  "FORMA",
+  "ORIGINS",
+  "NATURA",
+] as const;
+
 export type PieceCollection = (typeof PIECE_COLLECTIONS)[number];
 
 export const PIECE_STATUSES = [
@@ -11,6 +17,7 @@ export const PIECE_STATUSES = [
   "sold",
   "archived",
 ] as const;
+
 export type PieceStatus = (typeof PIECE_STATUSES)[number];
 
 const PUBLIC_PIECE_STATUSES: PieceStatus[] = [
@@ -22,7 +29,13 @@ const PUBLIC_PIECE_STATUSES: PieceStatus[] = [
 
 export function parsePieceCollection(value: string): PieceCollection {
   const normalized = value.trim().toUpperCase();
-  const canonical = normalized === "ORIGIN" ? "ORIGINS" : normalized;
+
+  const canonical =
+    normalized === "BASIC" || normalized === "THE FIRST ONE HUNDRED"
+      ? "BASICS"
+      : normalized === "ORIGIN"
+        ? "ORIGINS"
+        : normalized;
 
   if (PIECE_COLLECTIONS.includes(canonical as PieceCollection)) {
     return canonical as PieceCollection;
