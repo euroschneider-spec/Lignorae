@@ -6,6 +6,8 @@ import { createPiece } from "../actions";
 
 type UploadState = "idle" | "uploading" | "saving" | "error";
 
+const MAX_GALLERY_IMAGES = 10;
+
 const fieldClass =
   "w-full border border-black/15 bg-[#f7f5f0] px-4 py-3 text-sm font-normal text-black outline-none transition placeholder:text-black/60 focus:border-black";
 
@@ -14,7 +16,7 @@ const labelClass = "block space-y-2";
 const labelTextClass =
   "block text-xs uppercase tracking-[0.2em] text-black/95";
 
-function createSafeFileName(file: File, prefix: string) {
+function createSafeFileName(file: File, prefix: string, index?: number) {
   const extension = file.name.split(".").pop() || "jpg";
   const safePrefix = prefix
     .toLowerCase()
@@ -22,7 +24,9 @@ function createSafeFileName(file: File, prefix: string) {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "");
 
-  return `pieces/${safePrefix || "piece"}-${Date.now()}.${extension}`;
+  const suffix = typeof index === "number" ? `-${String(index + 1).padStart(2, "0")}` : "";
+
+  return `pieces/${safePrefix || "piece"}${suffix}-${Date.now()}.${extension}`;
 }
 
 export default function PieceForm({
@@ -33,8 +37,10 @@ export default function PieceForm({
   const formRef = useRef<HTMLFormElement>(null);
   const mainImageRef = useRef<HTMLInputElement>(null);
   const detailImageRef = useRef<HTMLInputElement>(null);
+  const galleryImagesRef = useRef<HTMLInputElement>(null);
   const [state, setState] = useState<UploadState>("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [uploadMessage, setUploadMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -45,12 +51,14 @@ export default function PieceForm({
 
     setState("uploading");
     setErrorMessage(null);
+    setUploadMessage(null);
 
     try {
       const formData = new FormData(form);
       const title = String(formData.get("title") || "piece");
       const mainImageFile = mainImageRef.current?.files?.[0];
       const detailImageFile = detailImageRef.current?.files?.[0];
+      const galleryFiles = Array.from(galleryImagesRef.current?.files || []);
 
       const uploadOptions = {
         access: "public" as const,
@@ -64,6 +72,12 @@ export default function PieceForm({
         throw new Error("Please choose a main image before saving the piece.");
       }
 
+      if (galleryFiles.length > MAX_GALLERY_IMAGES) {
+        throw new Error(`Please choose no more than ${MAX_GALLERY_IMAGES} gallery images.`);
+      }
+
+      setUploadMessage("Uploading main image...");
+
       const mainBlob = await upload(
         createSafeFileName(mainImageFile, title),
         mainImageFile,
@@ -73,6 +87,8 @@ export default function PieceForm({
       formData.set("image", mainBlob.url);
 
       if (detailImageFile) {
+        setUploadMessage("Uploading detail image...");
+
         const detailBlob = await upload(
           createSafeFileName(detailImageFile, `${title}-detail`),
           detailImageFile,
@@ -86,14 +102,32 @@ export default function PieceForm({
 
       formData.delete("imageFile");
       formData.delete("detailImageFile");
+      formData.delete("galleryImageFiles");
+      formData.delete("galleryImages");
+
+      for (const [index, file] of galleryFiles.entries()) {
+        setUploadMessage(
+          `Uploading gallery image ${index + 1} of ${galleryFiles.length}...`
+        );
+
+        const galleryBlob = await upload(
+          createSafeFileName(file, `${title}-gallery`, index),
+          file,
+          uploadOptions
+        );
+
+        formData.append("galleryImages", galleryBlob.url);
+      }
 
       setState("saving");
+      setUploadMessage("Saving piece and gallery...");
 
       startTransition(() => {
         createPiece(formData);
       });
     } catch (error) {
       setState("error");
+      setUploadMessage(null);
       setErrorMessage(
         error instanceof Error ? error.message : "The piece could not be saved."
       );
@@ -266,11 +300,21 @@ export default function PieceForm({
         </label>
       </div>
 
+      <label className={labelClass}>
+        <span className={labelTextClass}>Gallery images</span>
+        <input
+          ref={galleryImagesRef}
+          name="galleryImageFiles"
+          type="file"
+          accept="image/*"
+          multiple
+          className="w-full border border-black/15 bg-[#f7f5f0] px-4 py-3 text-sm font-normal text-black file:mr-4 file:border-0 file:bg-black file:px-4 file:py-2 file:text-xs file:font-semibold file:uppercase file:tracking-[0.18em] file:text-white hover:file:bg-black/80"
+        />
+      </label>
+
       <div className="border border-black/15 bg-white p-4 text-sm font-normal leading-relaxed text-black/95">
-        Current upload supports one main image and one detail image. The
-        multi-image gallery should be added next with a dedicated PieceImage
-        model, so each pen can later hold up to 10 images without replacing the
-        current structure.
+        Upload one main image, one optional detail image and up to 10 additional
+        gallery images. Gallery images are saved in the selected order.
       </div>
 
       {errorMessage && (
@@ -281,10 +325,11 @@ export default function PieceForm({
 
       <div className="flex items-center justify-between gap-4 pt-4">
         <p className="text-sm font-normal text-black/95">
-          {state === "uploading" && "Uploading images..."}
-          {state === "saving" && "Saving piece and generating translations..."}
-          {state === "idle" && "Ready to save."}
-          {state === "error" && "Please check the error above."}
+          {uploadMessage ||
+            (state === "uploading" && "Uploading images...") ||
+            (state === "saving" && "Saving piece and generating translations...") ||
+            (state === "idle" && "Ready to save.") ||
+            (state === "error" && "Please check the error above.")}
         </p>
 
         <button
