@@ -23,6 +23,13 @@ export async function generateMetadata({
     where: {
       slug,
     },
+    include: {
+      galleryImages: {
+        orderBy: {
+          sortOrder: "asc",
+        },
+      },
+    },
   });
 
   if (!piece || !isPiecePublic(piece.status)) {
@@ -37,7 +44,11 @@ export async function generateMetadata({
 
   const canonical = `/pieces/${piece.slug}`;
   const description = piece.shortDescription.slice(0, 155);
-  const image = piece.detailImage || piece.image || "/og-image.jpg";
+  const image =
+    piece.galleryImages[0]?.imageUrl ||
+    piece.detailImage ||
+    piece.image ||
+    "/og-image.jpg";
 
   return {
     title: `${piece.title} — ${piece.collection} Writing Object`,
@@ -88,11 +99,33 @@ function getStatusLabel(status: string) {
 function getCollectionSlug(collection: string) {
   const normalizedCollection = collection.toLowerCase().trim();
 
+  if (
+    normalizedCollection === "basics" ||
+    normalizedCollection === "basic" ||
+    normalizedCollection === "the first one hundred"
+  ) {
+    return "";
+  }
+
   if (normalizedCollection === "forma") return "forma";
   if (normalizedCollection === "origins") return "origins";
   if (normalizedCollection === "natura") return "natura";
 
-  return "collections";
+  return "";
+}
+
+function getCollectionLabel(collection: string) {
+  const normalizedCollection = collection.toLowerCase().trim();
+
+  if (
+    normalizedCollection === "basics" ||
+    normalizedCollection === "basic" ||
+    normalizedCollection === "the first one hundred"
+  ) {
+    return "The First One Hundred";
+  }
+
+  return collection;
 }
 
 export default async function PieceDetailPage({
@@ -106,6 +139,13 @@ export default async function PieceDetailPage({
     where: {
       slug,
     },
+    include: {
+      galleryImages: {
+        orderBy: {
+          sortOrder: "asc",
+        },
+      },
+    },
   });
 
   if (!piece || !isPiecePublic(piece.status)) {
@@ -113,7 +153,28 @@ export default async function PieceDetailPage({
   }
 
   const collectionSlug = getCollectionSlug(piece.collection);
-  const mainImage = piece.detailImage || piece.image;
+  const collectionHref = collectionSlug
+    ? `/collections/${collectionSlug}`
+    : "/collections";
+
+  const galleryImages = [
+    { url: piece.image, alt: piece.title },
+    ...(piece.detailImage
+      ? [{ url: piece.detailImage, alt: `${piece.title} detail` }]
+      : []),
+    ...piece.galleryImages.map((image, index) => ({
+      url: image.imageUrl,
+      alt: image.altText || `${piece.title} gallery image ${index + 1}`,
+    })),
+  ];
+
+  const uniqueGalleryImages = galleryImages.filter(
+    (image, index, images) =>
+      images.findIndex((candidate) => candidate.url === image.url) === index
+  );
+
+  const mainImage = uniqueGalleryImages[0]?.url || piece.detailImage || piece.image;
+
   const canShowBuyButton =
     piece.isPurchasable &&
     piece.priceCents !== null &&
@@ -148,39 +209,56 @@ export default async function PieceDetailPage({
           priceCents: piece.priceCents,
           currency: piece.currency,
           isPurchasable: piece.isPurchasable,
-          images: [
-            { url: piece.image, alt: piece.title },
-            ...(piece.detailImage
-              ? [{ url: piece.detailImage, alt: `${piece.title} detail` }]
-              : []),
-          ],
+          images: uniqueGalleryImages,
         }}
       />
 
       <section className="mx-auto w-full max-w-[1500px] flex-1 px-9 pb-24 pt-40">
         <Link
-          href={`/collections/${collectionSlug}`}
+          href={collectionHref}
           className="mb-14 inline-block text-[10px] uppercase tracking-[0.35em] text-black/95 transition hover:text-black"
         >
           ← Back to collection
         </Link>
 
         <div className="grid gap-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
-          <div className="group overflow-hidden bg-[#eeeae2] lg:sticky lg:top-28">
-            <Image
-              src={mainImage}
-              alt={piece.title}
-              width={1400}
-              height={1000}
-              priority
-              sizes="(max-width: 1024px) 100vw, 760px"
-              className="h-auto w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
-            />
+          <div className="lg:sticky lg:top-28">
+            <div className="group overflow-hidden bg-[#eeeae2]">
+              <Image
+                src={mainImage}
+                alt={piece.title}
+                width={1400}
+                height={1000}
+                priority
+                sizes="(max-width: 1024px) 100vw, 760px"
+                className="h-auto w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
+              />
+            </div>
+
+            {uniqueGalleryImages.length > 1 && (
+              <div className="mt-5 grid grid-cols-2 gap-5">
+                {uniqueGalleryImages.slice(1).map((image, index) => (
+                  <div
+                    key={`${image.url}-${index}`}
+                    className="overflow-hidden bg-[#eeeae2]"
+                  >
+                    <Image
+                      src={image.url}
+                      alt={image.alt}
+                      width={900}
+                      height={700}
+                      sizes="(max-width: 1024px) 50vw, 360px"
+                      className="h-auto w-full object-contain object-center"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="lg:pt-8">
             <p className="mb-8 text-[11px] uppercase tracking-[0.42em] text-black/95">
-              {piece.collection}
+              {getCollectionLabel(piece.collection)}
             </p>
 
             <h1 className="max-w-3xl text-5xl font-light leading-[0.92] tracking-[-0.06em] text-black md:text-7xl">
@@ -229,7 +307,7 @@ export default async function PieceDetailPage({
                 href="/collections"
                 className="inline-flex justify-center border border-black/35 bg-transparent px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-black/95 transition hover:border-black hover:bg-transparent hover:text-black"
               >
-                View collections
+                View edition
               </Link>
             </div>
           </div>
