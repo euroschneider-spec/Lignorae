@@ -15,27 +15,27 @@ export default function Header() {
 
   const labels = isGerman
     ? {
-        collections: "Collections",
+        edition: "Edition",
         about: "Über",
         journal: "Journal",
         contact: "Kontakt",
       }
     : isRomanian
       ? {
-          collections: "Collections",
+          edition: "Ediție",
           about: "Despre",
           journal: "Jurnal",
           contact: "Contact",
         }
       : {
-          collections: "Collections",
+          edition: "Edition",
           about: "About",
           journal: "Journal",
           contact: "Contact",
         };
 
   const links = [
-    { href: `${prefix}/collections`, label: labels.collections },
+    { href: `${prefix}/collections`, label: labels.edition },
     { href: `${prefix}/about`, label: labels.about },
     { href: `${prefix}/journal`, label: labels.journal },
     { href: `${prefix}/contact`, label: labels.contact },
@@ -61,7 +61,11 @@ export default function Header() {
 
         <nav className="hidden items-center gap-12 text-[10px] uppercase tracking-[0.42em] text-black/58 md:flex">
           {links.map((link) => (
-            <Link key={link.href} href={link.href} className="transition hover:text-black">
+            <Link
+              key={link.href}
+              href={link.href}
+              className="transition hover:text-black"
+            >
               {link.label}
             </Link>
           ))}
