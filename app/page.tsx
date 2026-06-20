@@ -46,22 +46,24 @@ export default function HomePage() {
       <Header />
 
       <section className="relative min-h-[100svh] overflow-hidden pt-20">
-        <div className="relative mx-auto flex h-[calc(100svh-160px)] min-h-[420px] w-full max-w-[1500px] items-center justify-center overflow-hidden bg-[#f7f5f0] md:min-h-[620px]">
-          <Image
-            src="/gallery_landing.jpg"
-            alt="LIGNORAE The First One Hundred founding edition"
-            fill
-            priority
-            sizes="(max-width: 1500px) 100vw, 1500px"
-            className="object-contain object-center px-4 md:px-0"
-          />
+        <div className="relative mx-auto flex min-h-[calc(100svh-160px)] w-full max-w-[1500px] flex-col items-center justify-center gap-8 overflow-hidden bg-[#f7f5f0] px-6 py-16 md:h-[calc(100svh-160px)] md:min-h-[620px] md:px-0 md:py-0">
+          <div className="relative h-[40vh] min-h-[240px] w-full max-w-[920px] overflow-hidden md:absolute md:inset-0 md:h-auto md:max-w-none md:min-h-0">
+            <Image
+              src="/gallery_landing.jpg"
+              alt="LIGNORAE The First One Hundred founding edition"
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 1500px"
+              className="object-contain object-center"
+            />
+          </div>
 
-          <div className="absolute inset-x-0 bottom-10 z-10 mx-auto flex max-w-[1500px] flex-col items-center gap-5 px-6 text-center md:bottom-12">
+          <div className="relative z-10 flex max-w-[760px] flex-col items-center gap-5 text-center md:absolute md:inset-x-0 md:bottom-12 md:mx-auto md:max-w-[1500px] md:px-6">
             <p className="text-[10px] uppercase tracking-[0.42em] text-black/95">
               Founding edition
             </p>
 
-            <h1 className="max-w-5xl text-5xl font-light leading-[0.9] tracking-[-0.06em] text-black md:text-8xl">
+            <h1 className="max-w-5xl text-4xl font-light leading-[0.92] tracking-[-0.06em] text-black sm:text-5xl md:text-8xl">
               The First One Hundred.
             </h1>
 
@@ -80,10 +82,10 @@ export default function HomePage() {
         </div>
 
         <footer className="absolute inset-x-0 bottom-0 z-10 border-t border-black/10 bg-[#f7f5f0]/94 backdrop-blur-xl">
-          <div className="mx-auto flex h-20 max-w-[1500px] items-center justify-between px-6 text-[10px] uppercase tracking-[0.36em] text-black/95 md:px-9 md:tracking-[0.42em]">
+          <div className="mx-auto flex h-20 max-w-[1500px] items-center justify-between px-6 text-[10px] uppercase tracking-[0.28em] text-black/95 md:px-9 md:tracking-[0.42em]">
             <p>Founding Edition.</p>
 
-            <div className="flex items-center gap-5 md:gap-9">
+            <div className="flex items-center gap-4 md:gap-9">
               <div className="flex items-center gap-3 text-black/95">
                 <Link href="/" className="transition hover:text-black">
                   EN
@@ -119,7 +121,7 @@ export default function HomePage() {
               <Link
                 href="/collections"
                 aria-label="Explore The First One Hundred"
-                className="flex h-7 w-7 items-center justify-center rounded-full border border-black/55 text-[11px] text-black/95 transition hover:border-black hover:text-black"
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-black/55 text-[11px] text-black/95 transition hover:border-black hover:text-black"
               >
                 +
               </Link>
