@@ -51,6 +51,7 @@ export default function PieceForm({
       const title = String(formData.get("title") || "piece");
       const mainImageFile = mainImageRef.current?.files?.[0];
       const detailImageFile = detailImageRef.current?.files?.[0];
+
       const uploadOptions = {
         access: "public" as const,
         handleUploadUrl: "/api/blob/upload",
@@ -112,21 +113,17 @@ export default function PieceForm({
 
       <div className="grid gap-6 md:grid-cols-2">
         <label className={labelClass}>
-          <span className={labelTextClass}>
-            Title
-          </span>
+          <span className={labelTextClass}>Title</span>
           <input
             name="title"
             required
-            placeholder="ORIGIN No. 1"
+            placeholder="BASICS No. 001"
             className={fieldClass}
           />
         </label>
 
         <label className={labelClass}>
-          <span className={labelTextClass}>
-            Slug
-          </span>
+          <span className={labelTextClass}>Slug</span>
           <input
             name="slug"
             placeholder="auto-generated if empty"
@@ -137,15 +134,14 @@ export default function PieceForm({
 
       <div className="grid gap-6 md:grid-cols-2">
         <label className={labelClass}>
-          <span className={labelTextClass}>
-            Collection
-          </span>
+          <span className={labelTextClass}>Collection</span>
           <select
             name="collection"
             required
-            defaultValue="FORMA"
+            defaultValue="BASICS"
             className={fieldClass}
           >
+            <option value="BASICS">BASICS</option>
             <option value="FORMA">FORMA</option>
             <option value="ORIGINS">ORIGINS</option>
             <option value="NATURA">NATURA</option>
@@ -153,53 +149,37 @@ export default function PieceForm({
         </label>
 
         <label className={labelClass}>
-          <span className={labelTextClass}>
-            Status
-          </span>
-          <select
-            name="status"
-            defaultValue="prototype-archive"
-            className={fieldClass}
-          >
-            <option value="prototype-archive">Prototype archive</option>
-            <option value="draft">Draft</option>
+          <span className={labelTextClass}>Status</span>
+          <select name="status" defaultValue="available" className={fieldClass}>
             <option value="available">Available</option>
             <option value="reserved">Reserved</option>
             <option value="sold">Sold</option>
+            <option value="draft">Draft</option>
+            <option value="prototype-archive">Prototype archive</option>
           </select>
         </label>
       </div>
 
       <div className="grid gap-6 md:grid-cols-3">
         <label className={labelClass}>
-          <span className={labelTextClass}>
-            Year
-          </span>
-          <input
-            name="year"
-            placeholder="2026"
-            className={fieldClass}
-          />
+          <span className={labelTextClass}>Year</span>
+          <input name="year" defaultValue="2026" className={fieldClass} />
         </label>
 
         <label className={labelClass}>
-          <span className={labelTextClass}>
-            Material
-          </span>
+          <span className={labelTextClass}>Material</span>
           <input
             name="material"
-            placeholder="Bog oak, walnut, ziricote..."
+            placeholder="Walnut, bog oak, maple..."
             className={fieldClass}
           />
         </label>
 
         <label className={labelClass}>
-          <span className={labelTextClass}>
-            Atelier
-          </span>
+          <span className={labelTextClass}>Atelier</span>
           <input
             name="atelier"
-            placeholder="Munich atelier"
+            defaultValue="Munich atelier"
             className={fieldClass}
           />
         </label>
@@ -214,7 +194,7 @@ export default function PieceForm({
             inputMode="decimal"
             min="0"
             step="0.01"
-            placeholder="750.00"
+            defaultValue="495.00"
             className={fieldClass}
           />
         </label>
@@ -233,6 +213,7 @@ export default function PieceForm({
           <input
             name="isPurchasable"
             type="checkbox"
+            defaultChecked
             className="h-4 w-4 accent-black"
           />
           <span>Purchasable</span>
@@ -240,35 +221,29 @@ export default function PieceForm({
       </div>
 
       <label className={labelClass}>
-        <span className={labelTextClass}>
-          Short description
-        </span>
+        <span className={labelTextClass}>Short description</span>
         <textarea
           name="shortDescription"
           required
           rows={4}
-          placeholder="Short story, material, provenance, atmosphere."
+          placeholder="A handcrafted writing instrument from The First One Hundred, the founding LIGNORAE edition."
           className={`${fieldClass} min-h-32 resize-y`}
         />
       </label>
 
       <label className={labelClass}>
-        <span className={labelTextClass}>
-          Story
-        </span>
+        <span className={labelTextClass}>Story</span>
         <textarea
           name="story"
           rows={7}
-          placeholder="Longer piece story, provenance, making process, character."
+          placeholder="Longer piece story, material character, making process and individual details."
           className={`${fieldClass} min-h-48 resize-y`}
         />
       </label>
 
       <div className="grid gap-6 md:grid-cols-2">
         <label className={labelClass}>
-          <span className={labelTextClass}>
-            Main image
-          </span>
+          <span className={labelTextClass}>Main image</span>
           <input
             ref={mainImageRef}
             name="imageFile"
@@ -280,9 +255,7 @@ export default function PieceForm({
         </label>
 
         <label className={labelClass}>
-          <span className={labelTextClass}>
-            Detail image
-          </span>
+          <span className={labelTextClass}>Detail image</span>
           <input
             ref={detailImageRef}
             name="detailImageFile"
@@ -294,8 +267,10 @@ export default function PieceForm({
       </div>
 
       <div className="border border-black/15 bg-white p-4 text-sm font-normal leading-relaxed text-black/95">
-        Images are uploaded directly to Vercel Blob from the browser. The server
-        action only saves the generated public URLs in Neon.
+        Current upload supports one main image and one detail image. The
+        multi-image gallery should be added next with a dedicated PieceImage
+        model, so each pen can later hold up to 10 images without replacing the
+        current structure.
       </div>
 
       {errorMessage && (
