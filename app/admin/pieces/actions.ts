@@ -48,6 +48,20 @@ function asNullableString(value: FormDataEntryValue | null) {
   return text.length > 0 ? text : null;
 }
 
+function parseLignoraePieceCollection(value: string) {
+  const normalized = value.trim().toUpperCase();
+
+  if (
+    normalized === "BASICS" ||
+    normalized === "BASIC" ||
+    normalized === "THE FIRST ONE HUNDRED"
+  ) {
+    return "BASICS";
+  }
+
+  return parsePieceCollection(value);
+}
+
 function parseCurrency(value: FormDataEntryValue | null) {
   const currency = asString(value).toUpperCase() || "EUR";
 
@@ -96,7 +110,7 @@ function getPieceData(formData: FormData) {
   return {
     title,
     slug,
-    collection: parsePieceCollection(asString(formData.get("collection"))),
+    collection: parseLignoraePieceCollection(asString(formData.get("collection"))),
     status: parsePieceStatus(asString(formData.get("status"))),
     year: asNullableString(formData.get("year")),
     material: asNullableString(formData.get("material")),
@@ -105,9 +119,7 @@ function getPieceData(formData: FormData) {
     story: asNullableString(formData.get("story")),
     image: asString(formData.get("image")),
     detailImage: asNullableString(formData.get("detailImage")),
-    priceCents: parseEuroPriceToCents(
-      asString(formData.get("priceEuros"))
-    ),
+    priceCents: parseEuroPriceToCents(asString(formData.get("priceEuros"))),
     currency: parseCurrency(formData.get("currency")),
     isPurchasable: formData.get("isPurchasable") === "on",
   };
