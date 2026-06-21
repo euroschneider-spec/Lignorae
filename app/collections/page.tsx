@@ -263,32 +263,38 @@ export default async function CollectionsPage() {
       </section>
 
       <section className="border-y border-black/15 bg-[#fbfaf7] px-9 py-28">
-        <div className="mx-auto grid max-w-[1500px] gap-16 md:grid-cols-[0.75fr_1.25fr] md:items-center">
-          <div>
+        <div className="mx-auto max-w-[1500px]">
+          <div className="mb-16 max-w-3xl">
             <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
               Future collections
             </p>
-            <h2 className="max-w-xl text-4xl font-light leading-tight tracking-[-0.05em] md:text-6xl">
+
+            <h2 className="text-4xl font-light leading-tight tracking-[-0.05em] md:text-6xl">
               The original collection structure remains in development.
             </h2>
           </div>
 
-          <div className="grid gap-5">
+          <div className="grid gap-5 md:grid-cols-3">
             {futureCollections.map((collection) => (
               <div
                 key={collection.title}
-                className="border border-black/15 bg-[#f7f5f0] p-8 md:p-9"
+                className="flex min-h-[260px] flex-col justify-between border border-black/15 bg-[#f7f5f0] p-8 md:p-9"
               >
-                <p className="mb-4 text-[10px] uppercase tracking-[0.35em] text-black/80">
-                  {collection.eyebrow}
-                </p>
-                <h3 className="mb-5 text-3xl font-light tracking-[-0.04em] text-black">
-                  {collection.title}
-                </h3>
-                <p className="mb-5 text-lg font-light leading-tight tracking-[-0.03em] text-black">
-                  {collection.statement}
-                </p>
-                <p className="text-sm font-normal leading-7 text-black/90">
+                <div>
+                  <p className="mb-5 text-[10px] uppercase tracking-[0.35em] text-black/80">
+                    {collection.eyebrow}
+                  </p>
+
+                  <h3 className="mb-6 text-3xl font-light tracking-[-0.04em] text-black">
+                    {collection.title}
+                  </h3>
+
+                  <p className="text-lg font-light leading-tight tracking-[-0.03em] text-black">
+                    {collection.statement}
+                  </p>
+                </div>
+
+                <p className="mt-10 text-sm font-normal leading-7 text-black/90">
                   {collection.description}
                 </p>
               </div>
