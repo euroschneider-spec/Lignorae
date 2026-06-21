@@ -101,8 +101,12 @@ function getCommercialLabel(piece: {
   if (status === "sold") return "Sold";
   if (status === "reserved") return "Reserved";
 
-  if (piece.isPurchasable && piece.priceCents !== null && status === "available") {
-    return "Available to purchase";
+  if (
+    piece.isPurchasable &&
+    piece.priceCents !== null &&
+    status === "available"
+  ) {
+    return "Available to acquire";
   }
 
   return "On request";
@@ -182,17 +186,16 @@ export default async function CollectionsPage() {
       <Header />
 
       <section className="mx-auto w-full max-w-[1500px] px-9 pb-24 pt-40">
-        <div className="grid gap-14 md:grid-cols-[0.9fr_1.1fr] md:items-end">
-          <div>
-            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
-              Founding edition
-            </p>
-            <h1 className="max-w-4xl text-5xl font-light leading-[0.95] tracking-[-0.06em] text-black md:text-7xl">
-              The First One Hundred.
-            </h1>
-          </div>
+        <div className="max-w-5xl">
+          <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
+            Founding edition
+          </p>
 
-          <p className="max-w-2xl text-base font-normal leading-8 text-black/95 md:text-lg">
+          <h1 className="max-w-4xl text-5xl font-light leading-[0.95] tracking-[-0.06em] text-black md:text-7xl">
+            The First One Hundred.
+          </h1>
+
+          <p className="mt-10 max-w-2xl text-base font-normal leading-8 text-black/95 md:text-lg">
             One hundred individually registered writing instruments created to
             establish the foundation of the atelier. This first edition will not
             be extended once the hundred pieces have been completed.
@@ -211,7 +214,7 @@ export default async function CollectionsPage() {
               alt="The First One Hundred founding edition"
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
+              className="object-cover object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
               priority
             />
           </div>
@@ -259,8 +262,8 @@ export default async function CollectionsPage() {
         </Link>
       </section>
 
-      <section className="border-y border-black/15 bg-[#fbfaf7] px-9 py-24">
-        <div className="mx-auto grid max-w-[1500px] gap-14 md:grid-cols-[0.75fr_1.25fr] md:items-start">
+      <section className="border-y border-black/15 bg-[#fbfaf7] px-9 py-28">
+        <div className="mx-auto grid max-w-[1500px] gap-16 md:grid-cols-[0.75fr_1.25fr] md:items-center">
           <div>
             <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
               Future collections
@@ -274,15 +277,15 @@ export default async function CollectionsPage() {
             {futureCollections.map((collection) => (
               <div
                 key={collection.title}
-                className="border border-black/15 bg-[#f7f5f0] p-7"
+                className="border border-black/15 bg-[#f7f5f0] p-8 md:p-9"
               >
                 <p className="mb-4 text-[10px] uppercase tracking-[0.35em] text-black/80">
                   {collection.eyebrow}
                 </p>
-                <h3 className="mb-4 text-3xl font-light tracking-[-0.04em] text-black">
+                <h3 className="mb-5 text-3xl font-light tracking-[-0.04em] text-black">
                   {collection.title}
                 </h3>
-                <p className="mb-4 text-lg font-light leading-tight tracking-[-0.03em] text-black">
+                <p className="mb-5 text-lg font-light leading-tight tracking-[-0.03em] text-black">
                   {collection.statement}
                 </p>
                 <p className="text-sm font-normal leading-7 text-black/90">
