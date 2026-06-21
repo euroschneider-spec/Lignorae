@@ -4,7 +4,6 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { prisma } from "@/lib/prisma";
-import { publicPieceWhere } from "@/lib/catalogue";
 import { formatMoney } from "@/lib/money";
 
 export const metadata: Metadata = {
@@ -46,6 +45,22 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
+const publicStatuses = [
+  "available",
+  "reserved",
+  "sold",
+  "prototype-archive",
+];
+
+const basicsCollections = [
+  "BASICS",
+  "BASIC",
+  "Basics",
+  "Basic",
+  "THE FIRST ONE HUNDRED",
+  "The First One Hundred",
+];
+
 function getStatusLabel(status: string) {
   const normalizedStatus = status.toLowerCase();
 
@@ -81,10 +96,12 @@ function getCommercialLabel(piece: {
   isPurchasable: boolean;
   priceCents: number | null;
 }) {
-  if (piece.status.toLowerCase() === "sold") return "Sold";
-  if (piece.status.toLowerCase() === "reserved") return "Reserved";
+  const status = piece.status.toLowerCase();
 
-  if (piece.isPurchasable && piece.priceCents !== null) {
+  if (status === "sold") return "Sold";
+  if (status === "reserved") return "Reserved";
+
+  if (piece.isPurchasable && piece.priceCents !== null && status === "available") {
     return "Available to purchase";
   }
 
@@ -103,34 +120,30 @@ function getPriceLabel(piece: {
 export default async function CollectionsPage() {
   const [latestPieces, basicsLatest] = await Promise.all([
     prisma.piece.findMany({
-      where: publicPieceWhere({
-        OR: [
-          { collection: { equals: "BASICS", mode: "insensitive" } },
-          { collection: { equals: "BASIC", mode: "insensitive" } },
-          {
-            collection: {
-              equals: "THE FIRST ONE HUNDRED",
-              mode: "insensitive",
-            },
-          },
-        ],
-      }),
+      where: {
+        status: {
+          in: publicStatuses,
+          mode: "insensitive",
+        },
+        collection: {
+          in: basicsCollections,
+          mode: "insensitive",
+        },
+      },
       orderBy: { createdAt: "desc" },
       take: 100,
     }),
     prisma.piece.findFirst({
-      where: publicPieceWhere({
-        OR: [
-          { collection: { equals: "BASICS", mode: "insensitive" } },
-          { collection: { equals: "BASIC", mode: "insensitive" } },
-          {
-            collection: {
-              equals: "THE FIRST ONE HUNDRED",
-              mode: "insensitive",
-            },
-          },
-        ],
-      }),
+      where: {
+        status: {
+          in: publicStatuses,
+          mode: "insensitive",
+        },
+        collection: {
+          in: basicsCollections,
+          mode: "insensitive",
+        },
+      },
       orderBy: { createdAt: "desc" },
     }),
   ]);
@@ -222,8 +235,8 @@ export default async function CollectionsPage() {
               <p className="max-w-xl text-base font-normal leading-8 text-black/95">
                 Created as the first ever LIGNORAE edition, each piece is
                 handcrafted, individually inspected and registered. The series
-                exists to open the atelier's first chapter, not to replace the
-                future collections.
+                exists to open the atelier&apos;s first chapter, not to replace
+                the future collections.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3 text-[10px] uppercase tracking-[0.28em] text-black/95">
@@ -348,9 +361,7 @@ export default async function CollectionsPage() {
                   <div className="mb-7 grid gap-px overflow-hidden border border-black/15 bg-black/15 text-sm">
                     <div className="flex items-center justify-between gap-4 bg-[#fbfaf7] px-4 py-3">
                       <span className="text-black/70">Price</span>
-                      <span className="text-black">
-                        {getPriceLabel(piece)}
-                      </span>
+                      <span className="text-black">{getPriceLabel(piece)}</span>
                     </div>
                     <div className="flex items-center justify-between gap-4 bg-[#fbfaf7] px-4 py-3">
                       <span className="text-black/70">Availability</span>
