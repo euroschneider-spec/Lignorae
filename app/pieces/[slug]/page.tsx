@@ -20,14 +20,10 @@ export async function generateMetadata({
   const { slug } = await params;
 
   const piece = await prisma.piece.findUnique({
-    where: {
-      slug,
-    },
+    where: { slug },
     include: {
       galleryImages: {
-        orderBy: {
-          sortOrder: "asc",
-        },
+        orderBy: { sortOrder: "asc" },
       },
     },
   });
@@ -136,14 +132,10 @@ export default async function PieceDetailPage({
   const { slug } = await params;
 
   const piece = await prisma.piece.findUnique({
-    where: {
-      slug,
-    },
+    where: { slug },
     include: {
       galleryImages: {
-        orderBy: {
-          sortOrder: "asc",
-        },
+        orderBy: { sortOrder: "asc" },
       },
     },
   });
@@ -173,10 +165,18 @@ export default async function PieceDetailPage({
       images.findIndex((candidate) => candidate.url === image.url) === index
   );
 
-  const canShowBuyButton =
-    piece.isPurchasable &&
-    piece.priceCents !== null &&
-    piece.status.toLowerCase() === "available";
+  const status = piece.status.toLowerCase();
+  const hasPrice = piece.priceCents !== null;
+  const canBuy = piece.isPurchasable && hasPrice && status === "available";
+  const isReserved = status === "reserved";
+  const isSold = status === "sold";
+  const shouldShowEnquiry = !canBuy && !isReserved && !isSold;
+
+  const contactLabel = isReserved
+    ? "Request availability"
+    : isSold
+      ? "Request similar piece"
+      : "Enquire";
 
   const specs = [
     { label: "Status", value: getStatusLabel(piece.status) },
@@ -187,7 +187,6 @@ export default async function PieceDetailPage({
           ? "On request"
           : formatMoney(piece.priceCents, piece.currency, "en-DE"),
     },
-    { label: "Purchasable", value: piece.isPurchasable ? "Yes" : "No" },
     piece.year ? { label: "Year", value: String(piece.year) } : null,
     piece.material ? { label: "Material", value: piece.material } : null,
     piece.atelier ? { label: "Atelier", value: piece.atelier } : null,
@@ -252,7 +251,7 @@ export default async function PieceDetailPage({
             </div>
 
             <div className="mt-12 flex flex-col gap-4 sm:flex-row">
-              {canShowBuyButton && (
+              {canBuy && (
                 <form action={startPieceCheckout}>
                   <input type="hidden" name="slug" value={piece.slug} />
                   <input type="hidden" name="locale" value="EN" />
@@ -265,12 +264,14 @@ export default async function PieceDetailPage({
                 </form>
               )}
 
-              <Link
-                href="/contact"
-                className="inline-flex justify-center border border-black/35 bg-transparent px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-black/95 transition hover:border-black hover:bg-transparent hover:text-black"
-              >
-                Request availability
-              </Link>
+              {(isReserved || isSold || shouldShowEnquiry) && (
+                <Link
+                  href="/contact"
+                  className="inline-flex justify-center border border-black/35 bg-transparent px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-black/95 transition hover:border-black hover:bg-transparent hover:text-black"
+                >
+                  {contactLabel}
+                </Link>
+              )}
 
               <Link
                 href="/collections"
