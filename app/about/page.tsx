@@ -1,184 +1,157 @@
-import type { Metadata } from "next";
-import Image from "next/image";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+<section className="mx-auto w-full max-w-[1500px] px-9 pb-24 pt-40">
+  <div className="max-w-5xl">
+    <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
+      About the atelier
+    </p>
 
-export const metadata: Metadata = {
-  title: "About — A Munich Atelier for Sculptural Fountain Pens",
-  description:
-    "Learn about LIGNORAE, a Munich atelier creating sculptural fountain pens through wood, fire, material restraint and small-series craftsmanship.",
-  alternates: {
-    canonical: "/about",
-    languages: {
-      en: "/about",
-      de: "/de/about",
-      ro: "/ro/about",
-      "x-default": "/about",
-    },
-  },
-  openGraph: {
-    title: "About LIGNORAE — A Munich Atelier for Sculptural Fountain Pens",
-    description:
-      "A small Munich atelier creating sculptural fountain pens through wood, fire, material restraint and small-series craftsmanship.",
-    url: "/about",
-    type: "website",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "LIGNORAE atelier and sculptural fountain pen presentation",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "About LIGNORAE — A Munich Atelier for Sculptural Fountain Pens",
-    description:
-      "A small Munich atelier creating sculptural fountain pens through wood, fire, material restraint and small-series craftsmanship.",
-    images: ["/og-image.jpg"],
-  },
-};
+    <h1 className="max-w-5xl text-5xl font-light leading-[0.95] tracking-[-0.06em] text-black md:text-7xl">
+      A small Munich atelier dedicated to writing objects.
+    </h1>
 
-const principles = [
-  {
-    label: "01",
-    title: "Art, not accessories",
-    text: "LIGNORAE treats the fountain pen as a small sculptural object: functional, tactile and visually quiet.",
-  },
-  {
-    label: "02",
-    title: "Small numbers",
-    text: "Pieces are made slowly, in limited series, without pretending to be industrial or endlessly repeatable.",
-  },
-  {
-    label: "03",
-    title: "Material language",
-    text: "Wood, fire, grain and proportion define the work more than ornament, excess or forced storytelling.",
-  },
-];
+    <p className="mt-10 max-w-3xl text-lg leading-9 text-black/95">
+      Founded in Munich in 2026, LIGNORAE was created around a simple idea:
+      that writing by hand remains one of the few elegant forms of resistance
+      against an increasingly accelerated world.
+    </p>
+  </div>
+</section>
 
-export default function AboutPage() {
-  return (
-    <main className="flex min-h-screen flex-col bg-[#f7f5f0] text-[#111111]">
-      <Header />
+<section className="border-y border-black/10 bg-[#fbfaf7] px-9 py-28">
+  <div className="mx-auto grid max-w-[1500px] gap-16 md:grid-cols-[0.8fr_1.2fr]">
+    <div>
+      <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
+        Founder
+      </p>
 
-      <section className="mx-auto w-full max-w-[1500px] px-9 pb-24 pt-40">
-        <div className="grid gap-14 md:grid-cols-[0.9fr_1.1fr] md:items-end">
-          <div>
-            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
-              About LIGNORAE
-            </p>
-            <h1 className="max-w-4xl text-5xl font-light leading-[0.95] tracking-[-0.06em] text-black md:text-7xl">
-              A Munich atelier for sculptural fountain pens.
-            </h1>
-          </div>
+      <h2 className="text-4xl font-light tracking-[-0.05em] md:text-6xl">
+        Daniel
+      </h2>
+    </div>
 
-          <p className="max-w-2xl text-base font-normal leading-8 text-black/95 md:text-lg">
-            LIGNORAE is built around a simple idea: a fountain pen can be
-            more than a tool, but it does not need to become loud. It can carry
-            presence through material, proportion and restraint.
-          </p>
-        </div>
+    <div className="max-w-3xl space-y-8 text-lg leading-9 text-black/95">
+      <p>
+        Before founding LIGNORAE, Daniel spent fifteen years leading logistics
+        operations, including seven years in site management. The profession
+        demanded structure, discipline and constant movement.
+      </p>
 
-        <div className="group mx-auto mt-24 max-w-[1200px] overflow-hidden bg-[#eeeae2]">
-          <Image
-            src="/gallery_landing.jpg"
-            alt="LIGNORAE sculptural writing object in a gallery space"
-            width={1500}
-            height={1000}
-            priority
-            sizes="(max-width: 1200px) 100vw, 1200px"
-            className="h-auto w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
-          />
-        </div>
-      </section>
+      <p>
+        LIGNORAE emerged as a deliberate counterbalance. A return to slower
+        work, enduring materials and the simple act of writing by hand.
+      </p>
 
-      <section className="border-y border-black/15 bg-[#fbfaf7] px-9 py-28">
-        <div className="mx-auto grid max-w-[1500px] gap-16 md:grid-cols-[0.75fr_1.25fr]">
-          <div>
-            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
-              Philosophy
-            </p>
-            <h2 className="max-w-xl text-4xl font-light leading-tight tracking-[-0.05em] md:text-6xl">
-              Quiet form. Natural material. Precise restraint.
-            </h2>
-          </div>
+      <p>
+        For Daniel, LIGNORAE represents the result of a lifetime of experiences
+        expressed through the elegance of wood, the precision of a gold nib and
+        the fluidity of ink.
+      </p>
+    </div>
+  </div>
+</section>
 
-          <div className="grid gap-8 md:grid-cols-3">
-            {principles.map((principle) => (
-              <article key={principle.label} className="border-l border-black/20 pl-7">
-                <p className="mb-6 text-[10px] uppercase tracking-[0.42em] text-black/95">
-                  {principle.label}
-                </p>
-                <h3 className="mb-5 text-3xl font-light tracking-[-0.04em]">
-                  {principle.title}
-                </h3>
-                <p className="text-sm font-normal leading-7 text-black/95">
-                  {principle.text}
-                </p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+<section className="px-9 py-28">
+  <div className="mx-auto grid max-w-[1500px] gap-16 md:grid-cols-[0.8fr_1.2fr]">
+    <div>
+      <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
+        Craftsmanship
+      </p>
 
-      <section className="mx-auto grid w-full max-w-[1500px] gap-16 px-9 py-28 md:grid-cols-[1fr_1fr] md:items-start">
-        <div>
-          <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
-            The atelier
-          </p>
-          <h2 className="max-w-3xl text-4xl font-light leading-tight tracking-[-0.05em] md:text-6xl">
-            The work begins at the bench, not in a catalogue.
-          </h2>
-        </div>
+      <h2 className="text-4xl font-light tracking-[-0.05em] md:text-6xl">
+        Material, patience and precision.
+      </h2>
+    </div>
 
-        <div className="space-y-7 text-base font-normal leading-8 text-black/95 md:text-lg">
-          <p>
-            The atelier is intentionally small. Each object passes through the
-            same direct sequence: material selection, cutting, turning, surface
-            treatment, finishing, assembly and testing.
-          </p>
-          <p>
-            The aim is not to imitate mass production. The aim is to build a
-            recognizable language of writing objects: tactile, disciplined and
-            calm enough to belong on a desk, in a collection or inside its own
-            cocoon presentation form.
-          </p>
-        </div>
-      </section>
+    <div className="max-w-3xl space-y-8 text-lg leading-9 text-black/95">
+      <p>
+        Alongside the atelier works a master craftsman with more than two
+        decades of woodworking experience. His patience at the lathe and his
+        sensitivity to material remain an essential part of how each object
+        takes shape.
+      </p>
 
-      <section className="border-t border-black/15 bg-[#fbfaf7] px-9 py-28">
-        <div className="mx-auto grid max-w-[1500px] gap-16 md:grid-cols-[0.9fr_1.1fr] md:items-center">
-          <div className="group overflow-hidden bg-[#eeeae2]">
-            <Image
-              src="/natura.jpg"
-              alt="LIGNORAE material study"
-              width={900}
-              height={700}
-              sizes="(max-width: 768px) 100vw, 680px"
-              className="h-auto w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
-            />
-          </div>
+      <p>
+        Every writing object is individually finished, inspected and registered.
+        Attention is intentionally directed toward small numbers rather than
+        industrial scale.
+      </p>
 
-          <div>
-            <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
-              People
-            </p>
-            <h2 className="max-w-3xl text-4xl font-light leading-tight tracking-[-0.05em] md:text-6xl">
-              A human-scale workshop, shaped by hands and decisions.
-            </h2>
-            <p className="mt-9 max-w-2xl text-base font-normal leading-8 text-black/95 md:text-lg">
-              Behind LIGNORAE is a small working team rather than an anonymous
-              production line. The value of each piece comes from attention,
-              repetition, correction and the willingness to let the material
-              decide part of the final expression.
-            </p>
-          </div>
-        </div>
-      </section>
+      <p>
+        The objective is not volume. The objective is care.
+      </p>
+    </div>
+  </div>
+</section>
 
-      <Footer />
-    </main>
-  );
-}
+<section className="border-y border-black/10 bg-[#fbfaf7] px-9 py-28">
+  <div className="mx-auto grid max-w-[1500px] gap-16 md:grid-cols-[0.8fr_1.2fr]">
+    <div>
+      <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
+        Registration & archive
+      </p>
+
+      <h2 className="text-4xl font-light tracking-[-0.05em] md:text-6xl">
+        Every object has a history.
+      </h2>
+    </div>
+
+    <div className="max-w-3xl space-y-8 text-lg leading-9 text-black/95">
+      <p>
+        Each piece is individually registered within the atelier archive.
+        Materials, technical specifications, production records and identifying
+        details are preserved as part of the object's permanent history.
+      </p>
+
+      <p>
+        This archive forms the foundation of The First One Hundred, the
+        founding edition of the atelier and the beginning of the LIGNORAE
+        registry.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section className="px-9 py-28">
+  <div className="mx-auto grid max-w-[1500px] gap-16 md:grid-cols-[0.8fr_1.2fr]">
+    <div>
+      <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
+        The Cocoon Box
+      </p>
+
+      <h2 className="text-4xl font-light tracking-[-0.05em] md:text-6xl">
+        More than packaging.
+      </h2>
+    </div>
+
+    <div className="max-w-3xl space-y-8 text-lg leading-9 text-black/95">
+      <p>
+        The Cocoon Box is conceived as an extension of the writing object
+        itself. Rather than serving as packaging, it forms part of the complete
+        presentation and ownership experience.
+      </p>
+
+      <p>
+        Each box is designed to belong to the object it accompanies, creating a
+        lasting relationship between instrument, material and archive.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section className="border-t border-black/10 px-9 py-28">
+  <div className="mx-auto max-w-4xl text-center">
+    <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
+      An atelier, not a factory
+    </p>
+
+    <h2 className="text-4xl font-light leading-tight tracking-[-0.05em] md:text-6xl">
+      Growth is not the objective.
+    </h2>
+
+    <p className="mx-auto mt-10 max-w-3xl text-lg leading-9 text-black/95">
+      LIGNORAE will remain an atelier. Production is intentionally limited and
+      will never be expanded beyond approximately sixty pieces per month,
+      regardless of demand. The aim is not industrial growth, but the
+      preservation of attention, craftsmanship and individuality.
+    </p>
+  </div>
+</section>
