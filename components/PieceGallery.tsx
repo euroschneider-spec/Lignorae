@@ -8,11 +8,7 @@ type GalleryImage = {
   alt: string;
 };
 
-export default function PieceGallery({
-  images,
-}: {
-  images: GalleryImage[];
-}) {
+export default function PieceGallery({ images }: { images: GalleryImage[] }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
@@ -34,17 +30,9 @@ export default function PieceGallery({
     if (!lightboxOpen) return;
 
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        setLightboxOpen(false);
-      }
-
-      if (event.key === "ArrowLeft") {
-        previousImage();
-      }
-
-      if (event.key === "ArrowRight") {
-        nextImage();
-      }
+      if (event.key === "Escape") setLightboxOpen(false);
+      if (event.key === "ArrowLeft") previousImage();
+      if (event.key === "ArrowRight") nextImage();
     }
 
     window.addEventListener("keydown", handleKeyDown);
@@ -58,11 +46,38 @@ export default function PieceGallery({
 
   return (
     <>
-      <div className="space-y-4">
+      <div className="grid gap-4 md:grid-cols-[88px_1fr]">
+        {images.length > 1 && (
+          <div className="order-2 grid grid-cols-4 gap-3 md:order-1 md:grid-cols-1">
+            {images.map((image, index) => (
+              <button
+                key={`${image.url}-${index}`}
+                type="button"
+                onClick={() => setSelectedIndex(index)}
+                className={`overflow-hidden border bg-[#eeeae2] transition ${
+                  selectedIndex === index
+                    ? "border-black"
+                    : "border-black/10 hover:border-black/40"
+                }`}
+                aria-label={`View image ${index + 1}`}
+              >
+                <Image
+                  src={image.url}
+                  alt={image.alt}
+                  width={180}
+                  height={180}
+                  className="aspect-square h-full w-full object-cover"
+                />
+              </button>
+            ))}
+          </div>
+        )}
+
         <button
           type="button"
           onClick={() => setLightboxOpen(true)}
-          className="group block w-full overflow-hidden bg-[#eeeae2]"
+          className="group order-1 block w-full overflow-hidden bg-[#eeeae2] md:order-2"
+          aria-label="Open image gallery"
         >
           <Image
             src={selectedImage.url}
@@ -73,31 +88,6 @@ export default function PieceGallery({
             className="h-auto w-full object-contain transition duration-700 group-hover:scale-[1.01]"
           />
         </button>
-
-        {images.length > 1 && (
-          <div className="grid grid-cols-4 gap-3">
-            {images.map((image, index) => (
-              <button
-                key={`${image.url}-${index}`}
-                type="button"
-                onClick={() => setSelectedIndex(index)}
-                className={`overflow-hidden border transition ${
-                  selectedIndex === index
-                    ? "border-black"
-                    : "border-black/10 hover:border-black/40"
-                }`}
-              >
-                <Image
-                  src={image.url}
-                  alt={image.alt}
-                  width={300}
-                  height={300}
-                  className="aspect-square h-full w-full object-cover"
-                />
-              </button>
-            ))}
-          </div>
-        )}
       </div>
 
       {lightboxOpen && (
@@ -118,8 +108,8 @@ export default function PieceGallery({
             <>
               <button
                 type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
+                onClick={(event) => {
+                  event.stopPropagation();
                   previousImage();
                 }}
                 className="absolute left-6 top-1/2 z-20 -translate-y-1/2 text-6xl font-light text-white transition hover:opacity-70"
@@ -130,8 +120,8 @@ export default function PieceGallery({
 
               <button
                 type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
+                onClick={(event) => {
+                  event.stopPropagation();
                   nextImage();
                 }}
                 className="absolute right-6 top-1/2 z-20 -translate-y-1/2 text-6xl font-light text-white transition hover:opacity-70"
@@ -144,7 +134,7 @@ export default function PieceGallery({
 
           <div
             className="flex h-full items-center justify-center p-8 md:p-12"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(event) => event.stopPropagation()}
           >
             <Image
               src={selectedImage.url}
