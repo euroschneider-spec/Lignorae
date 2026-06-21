@@ -73,14 +73,39 @@ const editorialSections = [
   },
 ];
 
+function ImageFrame({
+  src,
+  alt,
+  priority = false,
+}: {
+  src: string;
+  alt: string;
+  priority?: boolean;
+}) {
+  return (
+    <div className="flex min-h-[420px] items-center justify-center bg-[#eeeae2] p-8 md:min-h-[560px] md:p-14">
+      <div className="relative aspect-[4/3] w-full max-w-[680px]">
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          priority={priority}
+          sizes="(max-width: 768px) 100vw, 50vw"
+          className="object-contain object-center"
+        />
+      </div>
+    </div>
+  );
+}
+
 export default function AboutPage() {
   return (
     <main className="flex min-h-screen flex-col bg-[#f7f5f0] text-[#111111]">
       <Header />
 
       <section className="border-b border-black/10 pt-20">
-        <div className="grid min-h-[calc(100svh-80px)] md:grid-cols-2">
-          <div className="flex items-center px-9 py-24 md:px-14 lg:px-20">
+        <div className="grid md:grid-cols-2">
+          <div className="flex min-h-[620px] items-center px-9 py-24 md:px-14 lg:px-20">
             <div className="max-w-2xl">
               <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
                 About the atelier
@@ -100,16 +125,11 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <div className="relative min-h-[520px] border-t border-black/10 md:min-h-full md:border-l md:border-t-0">
-            <Image
-              src="/about-hero.jpg"
-              alt="LIGNORAE writing object in an editorial atelier setting"
-              fill
-              priority
-              sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover object-center"
-            />
-          </div>
+          <ImageFrame
+            src="/about-hero.jpg"
+            alt="LIGNORAE writing object in an editorial atelier setting"
+            priority
+          />
         </div>
       </section>
 
@@ -123,19 +143,9 @@ export default function AboutPage() {
               index % 2 === 1 ? "md:[&>*:first-child]:order-2" : ""
             }`}
           >
-            <div className="flex min-h-[420px] items-center justify-center bg-[#eeeae2] p-8 md:min-h-[560px] md:p-12">
-              <div className="relative aspect-[4/3] w-full max-w-[720px] overflow-hidden">
-                <Image
-                  src={section.image}
-                  alt={section.alt}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-contain object-center"
-                />
-              </div>
-            </div>
+            <ImageFrame src={section.image} alt={section.alt} />
 
-            <div className="flex items-center border-black/10 px-9 py-20 md:px-14 lg:px-20">
+            <div className="flex min-h-[520px] items-center px-9 py-20 md:px-14 lg:px-20">
               <div className="max-w-2xl">
                 <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
                   {section.eyebrow}
