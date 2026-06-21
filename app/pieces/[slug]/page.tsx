@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PieceGallery from "@/components/PieceGallery";
 import { prisma } from "@/lib/prisma";
 import { isPiecePublic } from "@/lib/catalogue";
 import { formatMoney } from "@/lib/money";
@@ -173,8 +173,6 @@ export default async function PieceDetailPage({
       images.findIndex((candidate) => candidate.url === image.url) === index
   );
 
-  const mainImage = uniqueGalleryImages[0]?.url || piece.detailImage || piece.image;
-
   const canShowBuyButton =
     piece.isPurchasable &&
     piece.priceCents !== null &&
@@ -198,6 +196,7 @@ export default async function PieceDetailPage({
   return (
     <main className="flex min-h-screen flex-col bg-[#f7f5f0] text-[#111111]">
       <Header />
+
       <ProductSchema
         piece={{
           name: piece.title,
@@ -213,47 +212,17 @@ export default async function PieceDetailPage({
         }}
       />
 
-      <section className="mx-auto w-full max-w-[1500px] flex-1 px-9 pb-24 pt-40">
+      <section className="mx-auto w-full max-w-[1500px] flex-1 px-6 pb-24 pt-32 md:px-9 md:pt-40">
         <Link
           href={collectionHref}
-          className="mb-14 inline-block text-[10px] uppercase tracking-[0.35em] text-black/95 transition hover:text-black"
+          className="mb-12 inline-block text-[10px] uppercase tracking-[0.35em] text-black/95 transition hover:text-black"
         >
-          ← Back to collection
+          ← Back to edition
         </Link>
 
         <div className="grid gap-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
           <div className="lg:sticky lg:top-28">
-            <div className="group overflow-hidden bg-[#eeeae2]">
-              <Image
-                src={mainImage}
-                alt={piece.title}
-                width={1400}
-                height={1000}
-                priority
-                sizes="(max-width: 1024px) 100vw, 760px"
-                className="h-auto w-full object-contain object-center transition duration-[1800ms] ease-out group-hover:scale-[1.02]"
-              />
-            </div>
-
-            {uniqueGalleryImages.length > 1 && (
-              <div className="mt-5 grid grid-cols-2 gap-5">
-                {uniqueGalleryImages.slice(1).map((image, index) => (
-                  <div
-                    key={`${image.url}-${index}`}
-                    className="overflow-hidden bg-[#eeeae2]"
-                  >
-                    <Image
-                      src={image.url}
-                      alt={image.alt}
-                      width={900}
-                      height={700}
-                      sizes="(max-width: 1024px) 50vw, 360px"
-                      className="h-auto w-full object-contain object-center"
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
+            <PieceGallery images={uniqueGalleryImages} />
           </div>
 
           <div className="lg:pt-8">
@@ -315,7 +284,7 @@ export default async function PieceDetailPage({
       </section>
 
       {piece.story && (
-        <section className="border-y border-black/10 bg-[#fbfaf7] px-9 py-28">
+        <section className="border-y border-black/10 bg-[#fbfaf7] px-6 py-24 md:px-9 md:py-28">
           <div className="mx-auto grid max-w-[1500px] gap-14 md:grid-cols-[0.75fr_1.25fr]">
             <div>
               <p className="mb-8 text-[11px] uppercase tracking-[0.48em] text-black/95">
