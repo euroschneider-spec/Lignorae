@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type GalleryImage = {
   url: string;
@@ -18,8 +18,6 @@ export default function PieceGallery({
 
   const selectedImage = images[selectedIndex];
 
-  if (images.length === 0) return null;
-
   function previousImage() {
     setSelectedIndex((current) =>
       current === 0 ? images.length - 1 : current - 1
@@ -32,6 +30,32 @@ export default function PieceGallery({
     );
   }
 
+  useEffect(() => {
+    if (!lightboxOpen) return;
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setLightboxOpen(false);
+      }
+
+      if (event.key === "ArrowLeft") {
+        previousImage();
+      }
+
+      if (event.key === "ArrowRight") {
+        nextImage();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [lightboxOpen]);
+
+  if (!images.length) return null;
+
   return (
     <>
       <div className="space-y-4">
@@ -43,8 +67,8 @@ export default function PieceGallery({
           <Image
             src={selectedImage.url}
             alt={selectedImage.alt}
-            width={1400}
-            height={1000}
+            width={1600}
+            height={1200}
             priority
             className="h-auto w-full object-contain transition duration-700 group-hover:scale-[1.01]"
           />
@@ -58,9 +82,9 @@ export default function PieceGallery({
                 type="button"
                 onClick={() => setSelectedIndex(index)}
                 className={`overflow-hidden border transition ${
-                  index === selectedIndex
+                  selectedIndex === index
                     ? "border-black"
-                    : "border-black/10"
+                    : "border-black/10 hover:border-black/40"
                 }`}
               >
                 <Image
@@ -77,11 +101,15 @@ export default function PieceGallery({
       </div>
 
       {lightboxOpen && (
-        <div className="fixed inset-0 z-[100] bg-black/95">
+        <div
+          className="fixed inset-0 z-[100] bg-black/95"
+          onClick={() => setLightboxOpen(false)}
+        >
           <button
             type="button"
             onClick={() => setLightboxOpen(false)}
-            className="absolute right-6 top-6 z-10 text-4xl text-white"
+            className="absolute right-8 top-6 z-20 text-5xl font-light text-white transition hover:opacity-70"
+            aria-label="Close gallery"
           >
             ×
           </button>
@@ -90,31 +118,48 @@ export default function PieceGallery({
             <>
               <button
                 type="button"
-                onClick={previousImage}
-                className="absolute left-6 top-1/2 z-10 -translate-y-1/2 text-5xl text-white"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  previousImage();
+                }}
+                className="absolute left-6 top-1/2 z-20 -translate-y-1/2 text-6xl font-light text-white transition hover:opacity-70"
+                aria-label="Previous image"
               >
                 ‹
               </button>
 
               <button
                 type="button"
-                onClick={nextImage}
-                className="absolute right-6 top-1/2 z-10 -translate-y-1/2 text-5xl text-white"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  nextImage();
+                }}
+                className="absolute right-6 top-1/2 z-20 -translate-y-1/2 text-6xl font-light text-white transition hover:opacity-70"
+                aria-label="Next image"
               >
                 ›
               </button>
             </>
           )}
 
-          <div className="flex h-full items-center justify-center p-10">
+          <div
+            className="flex h-full items-center justify-center p-8 md:p-12"
+            onClick={(e) => e.stopPropagation()}
+          >
             <Image
               src={selectedImage.url}
               alt={selectedImage.alt}
-              width={2200}
-              height={2200}
-              className="max-h-full w-auto object-contain"
+              width={2400}
+              height={2400}
+              className="max-h-[92vh] w-auto max-w-[92vw] object-contain"
             />
           </div>
+
+          {images.length > 1 && (
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-sm tracking-[0.25em] text-white/70">
+              {selectedIndex + 1} / {images.length}
+            </div>
+          )}
         </div>
       )}
     </>
