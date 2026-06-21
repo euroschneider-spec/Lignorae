@@ -167,10 +167,10 @@ export default async function PieceDetailPage({
 
   const status = piece.status.toLowerCase();
   const hasPrice = piece.priceCents !== null;
-  const canBuy = piece.isPurchasable && hasPrice && status === "available";
+  const canAcquire = piece.isPurchasable && hasPrice && status === "available";
   const isReserved = status === "reserved";
   const isSold = status === "sold";
-  const shouldShowEnquiry = !canBuy && !isReserved && !isSold;
+  const shouldShowEnquiry = !canAcquire && !isReserved && !isSold;
 
   const contactLabel = isReserved
     ? "Request availability"
@@ -251,7 +251,7 @@ export default async function PieceDetailPage({
             </div>
 
             <div className="mt-12 flex flex-col gap-4 sm:flex-row">
-              {canBuy && (
+              {canAcquire && (
                 <form action={startPieceCheckout}>
                   <input type="hidden" name="slug" value={piece.slug} />
                   <input type="hidden" name="locale" value="EN" />
@@ -259,7 +259,7 @@ export default async function PieceDetailPage({
                     type="submit"
                     className="inline-flex justify-center border border-black bg-black px-8 py-4 text-[10px] uppercase tracking-[0.35em] text-white transition hover:bg-transparent hover:text-black"
                   >
-                    Buy this piece
+                    Acquire this piece
                   </button>
                 </form>
               )}
