@@ -47,7 +47,7 @@ export async function generateMetadata({
     "/og-image.jpg";
 
   return {
-    title: `${piece.title} — ${piece.collection} Writing Object`,
+    title: `${piece.title} — ${getCollectionLabel(piece.collection)} Writing Object`,
     description,
     alternates: {
       canonical,
@@ -59,7 +59,7 @@ export async function generateMetadata({
       },
     },
     openGraph: {
-      title: `${piece.title} — LIGNORAE ${piece.collection}`,
+      title: `${piece.title} — LIGNORAE ${getCollectionLabel(piece.collection)}`,
       description,
       url: canonical,
       type: "website",
@@ -74,7 +74,7 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: `${piece.title} — LIGNORAE ${piece.collection}`,
+      title: `${piece.title} — LIGNORAE ${getCollectionLabel(piece.collection)}`,
       description,
       images: [image],
     },
@@ -121,6 +121,10 @@ function getCollectionLabel(collection: string) {
     return "The First One Hundred";
   }
 
+  if (normalizedCollection === "forma") return "FORMA";
+  if (normalizedCollection === "origins") return "ORIGINS";
+  if (normalizedCollection === "natura") return "NATURA";
+
   return collection;
 }
 
@@ -148,6 +152,8 @@ export default async function PieceDetailPage({
   const collectionHref = collectionSlug
     ? `/collections/${collectionSlug}`
     : "/collections";
+
+  const editionLabel = getCollectionLabel(piece.collection);
 
   const galleryImages = [
     { url: piece.image, alt: piece.title },
@@ -179,6 +185,7 @@ export default async function PieceDetailPage({
       : "Enquire";
 
   const specs = [
+    { label: "Edition", value: editionLabel },
     { label: "Status", value: getStatusLabel(piece.status) },
     {
       label: "Price",
@@ -187,9 +194,9 @@ export default async function PieceDetailPage({
           ? "On request"
           : formatMoney(piece.priceCents, piece.currency, "en-DE"),
     },
-    piece.year ? { label: "Year", value: String(piece.year) } : null,
     piece.material ? { label: "Material", value: piece.material } : null,
     piece.atelier ? { label: "Atelier", value: piece.atelier } : null,
+    piece.year ? { label: "Year", value: String(piece.year) } : null,
   ].filter(Boolean) as Array<{ label: string; value: string }>;
 
   return (
@@ -226,7 +233,7 @@ export default async function PieceDetailPage({
 
           <div className="lg:pt-8">
             <p className="mb-8 text-[11px] uppercase tracking-[0.42em] text-black/95">
-              {getCollectionLabel(piece.collection)}
+              {editionLabel}
             </p>
 
             <h1 className="max-w-3xl text-5xl font-light leading-[0.92] tracking-[-0.06em] text-black md:text-7xl">
